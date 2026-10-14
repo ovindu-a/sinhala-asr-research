@@ -1,0 +1,134 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-Ys7mwEuUOBftdiFo7ehTVM
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+└── 🔨 Created function train.
++ nvidia-smi --query-gpu=name,memory.total --format=csv && python scripts/train.py --train /data/manifests/openslr_probe/train.jsonl --dev /data/manifests/openslr_probe/dev.jsonl --out /runs/probe_frozen --unfreeze-top-k 0 --steps 2000 --workers 7 --packed-dir /data/packed/openslr_probe --eval-every 500
+name, memory.total [MiB]
+NVIDIA A100-SXM4-80GB, 81920 MiB
+train 16,402 utts / 20.0 h; dev 2,000; units 1,486
+
+[1ALoading weights:   0%|          | 0/1165 [00:00<?, ?it/s]
+[1ALoading weights:  22%|██▏       | 251/1165 [00:00<00:00, 2508.02it/s]
+[1ALoading weights:  45%|████▌     | 526/1165 [00:00<00:00, 2623.53it/s]
+[1ALoading weights:  68%|██████▊   | 795/1165 [00:00<00:00, 2626.09it/s]
+[1ALoading weights: 100%|██████████| 1165/1165 [00:00<00:00, 2990.11it/s]
+trainable params: 44.5M (encoder top 0: 0.0M)
+loaded /data/packed/openslr_probe/train.npy (2.30 GB) in 34s
+loaded /data/packed/openslr_probe/dev.npy (0.28 GB) in 13s
+dev target tokens mapped to <unk>: 0.32%
+{"step": 25, "loss": 40.5647, "lr": 0.0001, "grad_norm": 55.6088, "audio_hours_per_s": 0.4447, "s_per_step": 0.3342, "skipped": 0, "epoch": 2, "data_wait_frac": 0.1127, "gpu_mem_gb": 6.2853, "layer_w": [0.077, 0.077, 0.077, 0.077, 0.076, 0.077, 0.077, 0.077, 0.077, 0.076, 0.077, 0.077, 0.077]}
+{"step": 50, "loss": 16.104, "lr": 0.0001, "grad_norm": 12.5605, "audio_hours_per_s": 0.6023, "s_per_step": 0.249, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0515, "gpu_mem_gb": 6.2853, "layer_w": [0.077, 0.077, 0.078, 0.078, 0.077, 0.077, 0.076, 0.076, 0.076, 0.075, 0.077, 0.078, 0.078]}
+{"step": 75, "loss": 6.0804, "lr": 0.0002, "grad_norm": 2.1672, "audio_hours_per_s": 0.6113, "s_per_step": 0.2534, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0013, "gpu_mem_gb": 6.2853, "layer_w": [0.076, 0.077, 0.078, 0.078, 0.076, 0.076, 0.075, 0.075, 0.075, 0.076, 0.078, 0.079, 0.08]}
+{"step": 100, "loss": 5.9591, "lr": 0.0002, "grad_norm": 14.788, "audio_hours_per_s": 0.6179, "s_per_step": 0.2517, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2853, "layer_w": [0.074, 0.072, 0.072, 0.07, 0.063, 0.075, 0.07, 0.067, 0.068, 0.086, 0.092, 0.094, 0.097]}
+{"step": 125, "loss": 5.9617, "lr": 0.0002, "grad_norm": 14.0585, "audio_hours_per_s": 0.6115, "s_per_step": 0.2458, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0011, "gpu_mem_gb": 6.2853, "layer_w": [0.071, 0.065, 0.065, 0.061, 0.052, 0.073, 0.063, 0.059, 0.063, 0.092, 0.108, 0.114, 0.114]}
+{"step": 150, "loss": 5.9261, "lr": 0.0002, "grad_norm": 1.6363, "audio_hours_per_s": 0.5908, "s_per_step": 0.2558, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0392, "gpu_mem_gb": 6.2853, "layer_w": [0.068, 0.059, 0.06, 0.055, 0.046, 0.071, 0.059, 0.054, 0.06, 0.095, 0.118, 0.129, 0.126]}
+{"step": 175, "loss": 5.779, "lr": 0.0002, "grad_norm": 1.6188, "audio_hours_per_s": 0.5987, "s_per_step": 0.236, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0015, "gpu_mem_gb": 6.2881, "layer_w": [0.064, 0.051, 0.053, 0.048, 0.039, 0.065, 0.051, 0.046, 0.054, 0.097, 0.132, 0.15, 0.148]}
+{"step": 200, "loss": 5.7091, "lr": 0.0002, "grad_norm": 6.4381, "audio_hours_per_s": 0.6172, "s_per_step": 0.2523, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0013, "gpu_mem_gb": 6.2881, "layer_w": [0.061, 0.044, 0.047, 0.042, 0.033, 0.06, 0.045, 0.039, 0.047, 0.094, 0.141, 0.166, 0.18]}
+{"step": 225, "loss": 5.3843, "lr": 0.0002, "grad_norm": 6.565, "audio_hours_per_s": 0.6179, "s_per_step": 0.2555, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2881, "layer_w": [0.053, 0.036, 0.039, 0.034, 0.026, 0.051, 0.037, 0.031, 0.036, 0.078, 0.136, 0.207, 0.236]}
+{"step": 250, "loss": 4.6907, "lr": 0.0002, "grad_norm": 5.0238, "audio_hours_per_s": 0.5916, "s_per_step": 0.2488, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2904, "layer_w": [0.045, 0.03, 0.032, 0.028, 0.021, 0.04, 0.029, 0.024, 0.028, 0.064, 0.126, 0.239, 0.294]}
+{"step": 275, "loss": 3.9636, "lr": 0.0002, "grad_norm": 2.0794, "audio_hours_per_s": 0.5877, "s_per_step": 0.2518, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0227, "gpu_mem_gb": 6.2904, "layer_w": [0.04, 0.027, 0.028, 0.024, 0.018, 0.033, 0.023, 0.019, 0.023, 0.053, 0.111, 0.245, 0.355]}
+{"step": 300, "loss": 3.5173, "lr": 0.0002, "grad_norm": 4.9065, "audio_hours_per_s": 0.6171, "s_per_step": 0.2547, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0013, "gpu_mem_gb": 6.2904, "layer_w": [0.036, 0.025, 0.026, 0.022, 0.016, 0.029, 0.02, 0.017, 0.02, 0.045, 0.103, 0.228, 0.413]}
+{"step": 325, "loss": 3.1519, "lr": 0.0002, "grad_norm": 2.2591, "audio_hours_per_s": 0.6192, "s_per_step": 0.2536, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2904, "layer_w": [0.033, 0.023, 0.024, 0.02, 0.014, 0.026, 0.018, 0.015, 0.018, 0.042, 0.1, 0.214, 0.452]}
+{"step": 350, "loss": 2.9146, "lr": 0.0002, "grad_norm": 2.0027, "audio_hours_per_s": 0.5999, "s_per_step": 0.2373, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0015, "gpu_mem_gb": 6.2904, "layer_w": [0.03, 0.021, 0.022, 0.019, 0.013, 0.024, 0.017, 0.013, 0.016, 0.039, 0.099, 0.198, 0.488]}
+{"step": 375, "loss": 2.8146, "lr": 0.0002, "grad_norm": 1.924, "audio_hours_per_s": 0.6069, "s_per_step": 0.2474, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0015, "gpu_mem_gb": 6.2904, "layer_w": [0.028, 0.02, 0.02, 0.017, 0.012, 0.023, 0.016, 0.012, 0.014, 0.038, 0.102, 0.184, 0.514]}
+{"step": 400, "loss": 2.6451, "lr": 0.0002, "grad_norm": 3.3861, "audio_hours_per_s": 0.5977, "s_per_step": 0.2549, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0237, "gpu_mem_gb": 6.2904, "layer_w": [0.027, 0.019, 0.019, 0.016, 0.011, 0.022, 0.016, 0.012, 0.013, 0.039, 0.111, 0.182, 0.514]}
+{"step": 425, "loss": 2.5437, "lr": 0.0002, "grad_norm": 2.208, "audio_hours_per_s": 0.5944, "s_per_step": 0.2455, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0015, "gpu_mem_gb": 6.2904, "layer_w": [0.025, 0.018, 0.018, 0.015, 0.01, 0.022, 0.016, 0.011, 0.013, 0.04, 0.116, 0.172, 0.522]}
+{"step": 450, "loss": 2.472, "lr": 0.0002, "grad_norm": 2.1668, "audio_hours_per_s": 0.6236, "s_per_step": 0.253, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0013, "gpu_mem_gb": 6.2904, "layer_w": [0.024, 0.017, 0.017, 0.014, 0.01, 0.024, 0.017, 0.011, 0.012, 0.043, 0.128, 0.173, 0.509]}
+{"step": 475, "loss": 2.4865, "lr": 0.0002, "grad_norm": 4.8259, "audio_hours_per_s": 0.6116, "s_per_step": 0.2469, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0016, "gpu_mem_gb": 6.2904, "layer_w": [0.023, 0.017, 0.016, 0.013, 0.009, 0.024, 0.017, 0.01, 0.011, 0.043, 0.13, 0.165, 0.521]}
+{"step": 500, "loss": 2.3914, "lr": 0.0002, "grad_norm": 2.1462, "audio_hours_per_s": 0.6033, "s_per_step": 0.246, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2904, "layer_w": [0.022, 0.016, 0.016, 0.013, 0.009, 0.024, 0.017, 0.01, 0.011, 0.045, 0.134, 0.159, 0.525]}
+[eval step 500] WER 72.87% CER 27.24% (2000 utts)
+   ref: මන්ද
+   hyp: මන්ද
+   ref: උත්සහ කරනවා
+   hyp: උත්ස කරනන
+   ref: නොහැකි වීමය
+   hyp: නොහ කි වීම
+{"step": 525, "loss": 2.341, "lr": 0.0002, "grad_norm": 1.7669, "audio_hours_per_s": 0.6134, "s_per_step": 0.2539, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0011, "gpu_mem_gb": 6.2904, "layer_w": [0.02, 0.015, 0.015, 0.012, 0.009, 0.026, 0.018, 0.01, 0.011, 0.046, 0.141, 0.158, 0.52]}
+{"step": 550, "loss": 2.283, "lr": 0.0002, "grad_norm": 1.9305, "audio_hours_per_s": 0.5705, "s_per_step": 0.2549, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0405, "gpu_mem_gb": 6.2904, "layer_w": [0.02, 0.015, 0.014, 0.012, 0.008, 0.026, 0.018, 0.01, 0.01, 0.045, 0.138, 0.149, 0.536]}
+{"step": 575, "loss": 2.2226, "lr": 0.0002, "grad_norm": 1.9217, "audio_hours_per_s": 0.6131, "s_per_step": 0.253, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0015, "gpu_mem_gb": 6.2904, "layer_w": [0.019, 0.015, 0.014, 0.011, 0.008, 0.028, 0.019, 0.01, 0.01, 0.047, 0.144, 0.147, 0.529]}
+{"step": 600, "loss": 2.2186, "lr": 0.0002, "grad_norm": 3.1992, "audio_hours_per_s": 0.6063, "s_per_step": 0.2516, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0013, "gpu_mem_gb": 6.2904, "layer_w": [0.018, 0.014, 0.013, 0.011, 0.008, 0.028, 0.019, 0.009, 0.009, 0.048, 0.149, 0.146, 0.528]}
+{"step": 625, "loss": 2.1199, "lr": 0.0002, "grad_norm": 1.7901, "audio_hours_per_s": 0.6136, "s_per_step": 0.2455, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0013, "gpu_mem_gb": 6.2904, "layer_w": [0.017, 0.014, 0.013, 0.01, 0.007, 0.028, 0.019, 0.009, 0.009, 0.048, 0.149, 0.144, 0.534]}
+{"step": 650, "loss": 2.1552, "lr": 0.0002, "grad_norm": 2.1643, "audio_hours_per_s": 0.6138, "s_per_step": 0.2452, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0013, "gpu_mem_gb": 6.2904, "layer_w": [0.017, 0.013, 0.013, 0.01, 0.007, 0.03, 0.02, 0.009, 0.009, 0.051, 0.159, 0.145, 0.518]}
+{"step": 675, "loss": 2.1187, "lr": 0.0002, "grad_norm": 2.493, "audio_hours_per_s": 0.5982, "s_per_step": 0.2593, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0312, "gpu_mem_gb": 6.2904, "layer_w": [0.016, 0.012, 0.012, 0.009, 0.007, 0.031, 0.021, 0.009, 0.008, 0.051, 0.158, 0.142, 0.524]}
+{"step": 700, "loss": 2.0717, "lr": 0.0002, "grad_norm": 2.4992, "audio_hours_per_s": 0.6201, "s_per_step": 0.2468, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0011, "gpu_mem_gb": 6.2904, "layer_w": [0.016, 0.012, 0.012, 0.009, 0.007, 0.033, 0.021, 0.009, 0.008, 0.053, 0.161, 0.139, 0.52]}
+{"step": 725, "loss": 2.0607, "lr": 0.0002, "grad_norm": 2.2644, "audio_hours_per_s": 0.6077, "s_per_step": 0.2471, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0011, "gpu_mem_gb": 6.2904, "layer_w": [0.016, 0.012, 0.011, 0.009, 0.006, 0.033, 0.022, 0.009, 0.008, 0.054, 0.161, 0.137, 0.521]}
+{"step": 750, "loss": 2.044, "lr": 0.0002, "grad_norm": 1.8174, "audio_hours_per_s": 0.5957, "s_per_step": 0.246, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.011, 0.009, 0.006, 0.033, 0.021, 0.009, 0.008, 0.054, 0.163, 0.138, 0.52]}
+{"step": 775, "loss": 2.0216, "lr": 0.0001, "grad_norm": 2.1918, "audio_hours_per_s": 0.6155, "s_per_step": 0.2469, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.011, 0.008, 0.006, 0.035, 0.023, 0.009, 0.008, 0.056, 0.17, 0.139, 0.507]}
+{"step": 800, "loss": 1.9685, "lr": 0.0001, "grad_norm": 1.8074, "audio_hours_per_s": 0.6009, "s_per_step": 0.2588, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0331, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.011, 0.008, 0.006, 0.035, 0.022, 0.009, 0.008, 0.057, 0.171, 0.139, 0.507]}
+{"step": 825, "loss": 1.9817, "lr": 0.0001, "grad_norm": 2.111, "audio_hours_per_s": 0.6106, "s_per_step": 0.2488, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0011, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.011, 0.008, 0.006, 0.036, 0.023, 0.009, 0.008, 0.059, 0.177, 0.137, 0.5]}
+{"step": 850, "loss": 1.8835, "lr": 0.0001, "grad_norm": 1.9185, "audio_hours_per_s": 0.6124, "s_per_step": 0.2502, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.011, 0.008, 0.006, 0.04, 0.025, 0.009, 0.008, 0.062, 0.184, 0.14, 0.48]}
+{"step": 875, "loss": 1.9399, "lr": 0.0001, "grad_norm": 2.3373, "audio_hours_per_s": 0.6139, "s_per_step": 0.2455, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.012, 0.008, 0.006, 0.04, 0.025, 0.009, 0.008, 0.062, 0.183, 0.134, 0.486]}
+{"step": 900, "loss": 1.9087, "lr": 0.0001, "grad_norm": 2.6709, "audio_hours_per_s": 0.6123, "s_per_step": 0.2432, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.011, 0.008, 0.006, 0.039, 0.025, 0.009, 0.007, 0.061, 0.18, 0.132, 0.495]}
+{"step": 925, "loss": 1.894, "lr": 0.0001, "grad_norm": 2.2278, "audio_hours_per_s": 0.608, "s_per_step": 0.2473, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0009, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.011, 0.011, 0.008, 0.006, 0.039, 0.025, 0.009, 0.007, 0.061, 0.176, 0.128, 0.504]}
+{"step": 950, "loss": 1.8611, "lr": 0.0001, "grad_norm": 2.495, "audio_hours_per_s": 0.5984, "s_per_step": 0.2611, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0274, "gpu_mem_gb": 6.2904, "layer_w": [0.014, 0.011, 0.011, 0.008, 0.006, 0.041, 0.026, 0.009, 0.007, 0.063, 0.179, 0.13, 0.494]}
+{"step": 975, "loss": 1.799, "lr": 0.0001, "grad_norm": 2.4751, "audio_hours_per_s": 0.6123, "s_per_step": 0.2518, "skipped": 0, "epoch": 9, "data_wait_frac": 0.001, "gpu_mem_gb": 6.2904, "layer_w": [0.014, 0.011, 0.011, 0.008, 0.006, 0.044, 0.028, 0.01, 0.008, 0.066, 0.182, 0.135, 0.478]}
+{"step": 1000, "loss": 1.7968, "lr": 0.0001, "grad_norm": 2.3766, "audio_hours_per_s": 0.6033, "s_per_step": 0.2403, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0011, "gpu_mem_gb": 6.2904, "layer_w": [0.014, 0.012, 0.011, 0.008, 0.006, 0.045, 0.028, 0.01, 0.008, 0.067, 0.182, 0.134, 0.475]}
+[eval step 1000] WER 55.07% CER 17.61% (2000 utts)
+   ref: මන්ද
+   hyp: මන්ද
+   ref: උත්සහ කරනවා
+   hyp: උත්සා කරනන
+   ref: නොහැකි වීමය
+   hyp: නොහැකි වීමය
+{"step": 1025, "loss": 1.8193, "lr": 0.0001, "grad_norm": 2.6914, "audio_hours_per_s": 0.6171, "s_per_step": 0.2506, "skipped": 0, "epoch": 9, "data_wait_frac": 0.001, "gpu_mem_gb": 6.2904, "layer_w": [0.014, 0.012, 0.011, 0.008, 0.006, 0.045, 0.029, 0.01, 0.007, 0.067, 0.183, 0.133, 0.475]}
+{"step": 1050, "loss": 1.799, "lr": 0.0001, "grad_norm": 2.8708, "audio_hours_per_s": 0.6092, "s_per_step": 0.2401, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0011, "gpu_mem_gb": 6.2904, "layer_w": [0.014, 0.012, 0.011, 0.008, 0.006, 0.047, 0.03, 0.01, 0.007, 0.068, 0.184, 0.131, 0.473]}
+{"step": 1075, "loss": 1.7892, "lr": 0.0001, "grad_norm": 3.6585, "audio_hours_per_s": 0.5872, "s_per_step": 0.2562, "skipped": 0, "epoch": 10, "data_wait_frac": 0.0367, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.012, 0.008, 0.006, 0.049, 0.031, 0.01, 0.008, 0.069, 0.184, 0.131, 0.467]}
+{"step": 1100, "loss": 1.7495, "lr": 0.0001, "grad_norm": 2.5094, "audio_hours_per_s": 0.6243, "s_per_step": 0.253, "skipped": 0, "epoch": 10, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.012, 0.008, 0.006, 0.05, 0.031, 0.01, 0.008, 0.071, 0.183, 0.129, 0.465]}
+{"step": 1125, "loss": 1.6937, "lr": 0.0001, "grad_norm": 2.8212, "audio_hours_per_s": 0.6206, "s_per_step": 0.2536, "skipped": 0, "epoch": 10, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.012, 0.008, 0.006, 0.049, 0.031, 0.01, 0.008, 0.073, 0.185, 0.127, 0.463]}
+{"step": 1150, "loss": 1.7183, "lr": 0.0001, "grad_norm": 2.9705, "audio_hours_per_s": 0.5994, "s_per_step": 0.2441, "skipped": 0, "epoch": 10, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.012, 0.008, 0.006, 0.05, 0.032, 0.011, 0.008, 0.075, 0.185, 0.128, 0.458]}
+{"step": 1175, "loss": 1.7763, "lr": 0.0001, "grad_norm": 2.1912, "audio_hours_per_s": 0.6069, "s_per_step": 0.2474, "skipped": 0, "epoch": 10, "data_wait_frac": 0.0015, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.012, 0.012, 0.008, 0.006, 0.051, 0.033, 0.011, 0.008, 0.076, 0.186, 0.127, 0.456]}
+{"step": 1200, "loss": 1.6998, "lr": 0.0001, "grad_norm": 2.6703, "audio_hours_per_s": 0.5827, "s_per_step": 0.2532, "skipped": 0, "epoch": 11, "data_wait_frac": 0.0342, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.008, 0.006, 0.052, 0.033, 0.011, 0.008, 0.077, 0.187, 0.127, 0.451]}
+{"step": 1225, "loss": 1.6677, "lr": 0.0001, "grad_norm": 2.5863, "audio_hours_per_s": 0.61, "s_per_step": 0.2495, "skipped": 0, "epoch": 11, "data_wait_frac": 0.0015, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.009, 0.006, 0.053, 0.034, 0.011, 0.008, 0.08, 0.192, 0.128, 0.438]}
+{"step": 1250, "loss": 1.6704, "lr": 0.0001, "grad_norm": 2.3608, "audio_hours_per_s": 0.6091, "s_per_step": 0.2468, "skipped": 0, "epoch": 11, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.009, 0.006, 0.053, 0.035, 0.011, 0.008, 0.082, 0.193, 0.128, 0.434]}
+{"step": 1275, "loss": 1.677, "lr": 0.0001, "grad_norm": 2.6011, "audio_hours_per_s": 0.6131, "s_per_step": 0.2471, "skipped": 0, "epoch": 11, "data_wait_frac": 0.0015, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.009, 0.006, 0.053, 0.034, 0.011, 0.008, 0.083, 0.195, 0.127, 0.433]}
+{"step": 1300, "loss": 1.6525, "lr": 0.0001, "grad_norm": 2.4787, "audio_hours_per_s": 0.6029, "s_per_step": 0.2402, "skipped": 0, "epoch": 11, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.009, 0.006, 0.053, 0.034, 0.011, 0.008, 0.082, 0.194, 0.127, 0.434]}
+{"step": 1325, "loss": 1.6918, "lr": 0.0001, "grad_norm": 3.8251, "audio_hours_per_s": 0.5846, "s_per_step": 0.2617, "skipped": 0, "epoch": 12, "data_wait_frac": 0.0393, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.009, 0.006, 0.054, 0.035, 0.012, 0.008, 0.083, 0.191, 0.128, 0.435]}
+{"step": 1350, "loss": 1.599, "lr": 0.0001, "grad_norm": 2.149, "audio_hours_per_s": 0.6177, "s_per_step": 0.2499, "skipped": 0, "epoch": 12, "data_wait_frac": 0.0016, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.009, 0.006, 0.055, 0.036, 0.012, 0.008, 0.084, 0.191, 0.127, 0.432]}
+{"step": 1375, "loss": 1.6233, "lr": 0.0001, "grad_norm": 3.0372, "audio_hours_per_s": 0.5983, "s_per_step": 0.247, "skipped": 0, "epoch": 12, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.009, 0.007, 0.056, 0.037, 0.012, 0.008, 0.085, 0.194, 0.127, 0.424]}
+{"step": 1400, "loss": 1.6083, "lr": 0.0001, "grad_norm": 2.5814, "audio_hours_per_s": 0.6123, "s_per_step": 0.2479, "skipped": 0, "epoch": 12, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.009, 0.007, 0.056, 0.037, 0.012, 0.008, 0.086, 0.194, 0.128, 0.422]}
+{"step": 1425, "loss": 1.6126, "lr": 0.0, "grad_norm": 2.1245, "audio_hours_per_s": 0.6144, "s_per_step": 0.2521, "skipped": 0, "epoch": 12, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.012, 0.009, 0.007, 0.056, 0.037, 0.012, 0.008, 0.087, 0.194, 0.128, 0.422]}
+{"step": 1450, "loss": 1.6075, "lr": 0.0, "grad_norm": 3.4922, "audio_hours_per_s": 0.6124, "s_per_step": 0.2439, "skipped": 0, "epoch": 12, "data_wait_frac": 0.0011, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.013, 0.013, 0.009, 0.007, 0.057, 0.037, 0.012, 0.009, 0.088, 0.195, 0.129, 0.417]}
+{"step": 1475, "loss": 1.5336, "lr": 0.0, "grad_norm": 2.2208, "audio_hours_per_s": 0.5911, "s_per_step": 0.2557, "skipped": 0, "epoch": 13, "data_wait_frac": 0.027, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.014, 0.013, 0.009, 0.007, 0.058, 0.038, 0.013, 0.009, 0.089, 0.195, 0.13, 0.412]}
+{"step": 1500, "loss": 1.5809, "lr": 0.0, "grad_norm": 2.3163, "audio_hours_per_s": 0.6143, "s_per_step": 0.2537, "skipped": 0, "epoch": 13, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.007, 0.059, 0.039, 0.013, 0.009, 0.09, 0.197, 0.132, 0.404]}
+[eval step 1500] WER 48.84% CER 14.69% (2000 utts)
+   ref: මන්ද
+   hyp: මන්ද
+   ref: උත්සහ කරනවා
+   hyp: උත්සාහ කරනවා
+   ref: නොහැකි වීමය
+   hyp: නොහැකිවීම වීමය
+{"step": 1525, "loss": 1.5645, "lr": 0.0, "grad_norm": 2.4593, "audio_hours_per_s": 0.6108, "s_per_step": 0.2469, "skipped": 0, "epoch": 13, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.007, 0.059, 0.039, 0.013, 0.009, 0.091, 0.197, 0.13, 0.403]}
+{"step": 1550, "loss": 1.533, "lr": 0.0, "grad_norm": 2.9621, "audio_hours_per_s": 0.6172, "s_per_step": 0.2525, "skipped": 0, "epoch": 13, "data_wait_frac": 0.0015, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.007, 0.059, 0.039, 0.013, 0.009, 0.091, 0.195, 0.128, 0.407]}
+{"step": 1575, "loss": 1.5273, "lr": 0.0, "grad_norm": 2.342, "audio_hours_per_s": 0.6121, "s_per_step": 0.2475, "skipped": 0, "epoch": 13, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.007, 0.059, 0.039, 0.013, 0.009, 0.092, 0.195, 0.128, 0.406]}
+{"step": 1600, "loss": 1.4977, "lr": 0.0, "grad_norm": 2.7423, "audio_hours_per_s": 0.5805, "s_per_step": 0.2492, "skipped": 0, "epoch": 14, "data_wait_frac": 0.0347, "gpu_mem_gb": 6.2904, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.007, 0.06, 0.04, 0.013, 0.009, 0.092, 0.196, 0.129, 0.402]}
+{"step": 1625, "loss": 1.5401, "lr": 0.0, "grad_norm": 2.2982, "audio_hours_per_s": 0.6085, "s_per_step": 0.2459, "skipped": 0, "epoch": 14, "data_wait_frac": 0.0017, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.007, 0.061, 0.04, 0.014, 0.009, 0.093, 0.197, 0.129, 0.399]}
+{"step": 1650, "loss": 1.5496, "lr": 0.0, "grad_norm": 2.6538, "audio_hours_per_s": 0.6067, "s_per_step": 0.2458, "skipped": 0, "epoch": 14, "data_wait_frac": 0.0016, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.007, 0.061, 0.04, 0.014, 0.009, 0.093, 0.197, 0.13, 0.395]}
+{"step": 1675, "loss": 1.5053, "lr": 0.0, "grad_norm": 3.2431, "audio_hours_per_s": 0.6073, "s_per_step": 0.2528, "skipped": 0, "epoch": 14, "data_wait_frac": 0.0016, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.061, 0.041, 0.014, 0.009, 0.094, 0.198, 0.131, 0.392]}
+{"step": 1700, "loss": 1.5651, "lr": 0.0, "grad_norm": 3.0067, "audio_hours_per_s": 0.6114, "s_per_step": 0.2552, "skipped": 0, "epoch": 14, "data_wait_frac": 0.0017, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.062, 0.041, 0.014, 0.009, 0.094, 0.198, 0.13, 0.392]}
+{"step": 1725, "loss": 1.5065, "lr": 0.0, "grad_norm": 6.2776, "audio_hours_per_s": 0.5783, "s_per_step": 0.259, "skipped": 0, "epoch": 15, "data_wait_frac": 0.0455, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.062, 0.041, 0.014, 0.009, 0.095, 0.198, 0.13, 0.391]}
+{"step": 1750, "loss": 1.4683, "lr": 0.0, "grad_norm": 2.2224, "audio_hours_per_s": 0.6132, "s_per_step": 0.2543, "skipped": 0, "epoch": 15, "data_wait_frac": 0.0014, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.062, 0.042, 0.014, 0.009, 0.095, 0.199, 0.13, 0.388]}
+{"step": 1775, "loss": 1.4676, "lr": 0.0, "grad_norm": 2.4792, "audio_hours_per_s": 0.6116, "s_per_step": 0.2489, "skipped": 0, "epoch": 15, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.063, 0.042, 0.014, 0.009, 0.096, 0.199, 0.131, 0.386]}
+{"step": 1800, "loss": 1.4916, "lr": 0.0, "grad_norm": 4.4115, "audio_hours_per_s": 0.611, "s_per_step": 0.2532, "skipped": 0, "epoch": 15, "data_wait_frac": 0.0013, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.063, 0.042, 0.014, 0.009, 0.096, 0.199, 0.131, 0.384]}
+{"step": 1825, "loss": 1.4912, "lr": 0.0, "grad_norm": 2.462, "audio_hours_per_s": 0.6025, "s_per_step": 0.2367, "skipped": 0, "epoch": 15, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.063, 0.042, 0.014, 0.01, 0.096, 0.2, 0.131, 0.383]}
+{"step": 1850, "loss": 1.533, "lr": 0.0, "grad_norm": 2.558, "audio_hours_per_s": 0.613, "s_per_step": 0.2458, "skipped": 0, "epoch": 15, "data_wait_frac": 0.0008, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.063, 0.042, 0.015, 0.01, 0.096, 0.199, 0.131, 0.382]}
+{"step": 1875, "loss": 1.4806, "lr": 0.0, "grad_norm": 2.1267, "audio_hours_per_s": 0.5775, "s_per_step": 0.2548, "skipped": 0, "epoch": 16, "data_wait_frac": 0.0403, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.063, 0.043, 0.015, 0.01, 0.097, 0.199, 0.132, 0.381]}
+{"step": 1900, "loss": 1.4742, "lr": 0.0, "grad_norm": 3.0343, "audio_hours_per_s": 0.6171, "s_per_step": 0.2527, "skipped": 0, "epoch": 16, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.064, 0.043, 0.015, 0.01, 0.097, 0.199, 0.132, 0.38]}
+{"step": 1925, "loss": 1.4223, "lr": 0.0, "grad_norm": 2.3494, "audio_hours_per_s": 0.6117, "s_per_step": 0.2414, "skipped": 0, "epoch": 16, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.063, 0.043, 0.015, 0.01, 0.097, 0.199, 0.132, 0.379]}
+{"step": 1950, "loss": 1.502, "lr": 0.0, "grad_norm": 2.5784, "audio_hours_per_s": 0.6161, "s_per_step": 0.2542, "skipped": 0, "epoch": 16, "data_wait_frac": 0.0012, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.013, 0.01, 0.008, 0.064, 0.043, 0.015, 0.01, 0.098, 0.199, 0.132, 0.379]}
+{"step": 1975, "loss": 1.4607, "lr": 0.0, "grad_norm": 2.3485, "audio_hours_per_s": 0.6151, "s_per_step": 0.2465, "skipped": 0, "epoch": 16, "data_wait_frac": 0.0011, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.014, 0.011, 0.008, 0.064, 0.043, 0.015, 0.01, 0.098, 0.199, 0.132, 0.377]}
+{"step": 2000, "loss": 1.4656, "lr": 0.0, "grad_norm": 2.209, "audio_hours_per_s": 0.6017, "s_per_step": 0.2504, "skipped": 0, "epoch": 17, "data_wait_frac": 0.012, "gpu_mem_gb": 6.2961, "layer_w": [0.015, 0.014, 0.014, 0.011, 0.008, 0.064, 0.043, 0.015, 0.01, 0.098, 0.199, 0.132, 0.376]}
+[eval step 2000] WER 47.75% CER 14.14% (2000 utts)
+   ref: මන්ද
+   hyp: මන්ද
+   ref: උත්සහ කරනවා
+   hyp: උත්සාහ කරනවා
+   ref: නොහැකි වීමය
+   hyp: නොහැකිවීමය
+done; best dev CER 14.14%
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-Ys7mwEuUOBftdiFo7ehTVM

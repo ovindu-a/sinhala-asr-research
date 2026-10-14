@@ -1,0 +1,225 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-jVzTouC7OEICauKZppo6va
+Building image im-qiY2ONOvuVz5ItSvYqxDcl
+
+=> Step 0: FROM base
+
+=> Step 1: COPY --from=ghcr.io/astral-sh/uv:latest /uv /.uv/uv
+Getting image source signatures
+Copying blob sha256:cd39911837625b421ad90dd6a33b3ab56470794583bc57d1f665585f3153a159
+Copying blob sha256:f2eb7853ff114dc41ecf9800f9288774bd7d024b8866632399e08a9b8edad190
+Copying config sha256:f6e289b87a320629950d704181c971b5abb074bb26cfeca559d9deb871507007
+Writing manifest to image destination
+Unpacking OCI image
+   • unpacking rootfs ...     
+   • ... done                 
+   • unpacked image rootfs: /tmp/task-data/ta-01M4XV0ZJT1B1EWWE75DZ3VNYB/registry-unpackIETxFK
+
+=> Step 2: RUN /.uv/uv pip install --python $(command -v python) --compile-bytecode huggingface_hub jiwer numpy pyarrow 'quan-transcribe @ git+https://github.com/qnguyen3/QUAN-Transcribe' safetensors soundfile soxr 'torch>=2.6' tqdm 'transformers>=5.19'
+Using Python 3.12.10 environment at: /usr/local
+Resolved 62 packages in 550ms
+   Updating https://github.com/qnguyen3/QUAN-Transcribe (HEAD)
+Downloading nvidia-cudnn-cu13 (527.5MiB)
+Downloading torch (528.9MiB)
+Downloading nvidia-cublas (403.5MiB)
+Downloading nvidia-nccl-cu13 (206.0MiB)
+Downloading triton (236.5MiB)
+Downloading nvidia-cufft (204.2MiB)
+Downloading nvidia-cusolver (191.6MiB)
+Downloading nvidia-nvshmem-cu13 (57.6MiB)
+Downloading pyarrow (51.4MiB)
+Downloading nvidia-cusparselt-cu13 (162.3MiB)
+Downloading nvidia-cusparse (139.2MiB)
+Downloading nvidia-nvjitlink (40.5MiB)
+Downloading numpy (16.0MiB)
+Downloading nvidia-cuda-nvrtc (86.0MiB)
+Downloading transformers (12.0MiB)
+Downloading nvidia-curand (56.8MiB)
+Downloading sympy (6.0MiB)
+Downloading hf-xet (4.0MiB)
+Downloading nvidia-cuda-cupti (10.2MiB)
+Downloading cuda-bindings (6.8MiB)
+Downloading tokenizers (3.2MiB)
+Downloading networkx (2.0MiB)
+Downloading nvidia-cuda-runtime (2.1MiB)
+Downloading rapidfuzz (3.0MiB)
+Downloading soundfile (1.3MiB)
+Downloading pygments (1.2MiB)
+Downloading nvidia-cufile (1.2MiB)
+ Downloaded nvidia-cufile
+ Downloaded soundfile
+ Downloaded nvidia-cuda-runtime
+ Downloaded hf-xet
+ Downloaded rapidfuzz
+ Downloaded pygments
+ Downloaded tokenizers
+ Downloaded networkx
+ Downloaded cuda-bindings
+ Downloaded nvidia-cuda-cupti
+ Downloaded sympy
+ Downloaded numpy
+ Downloaded transformers
+ Downloaded nvidia-nvjitlink
+    Updated https://github.com/qnguyen3/QUAN-Transcribe (88ddcd2130a3c355d081bc002439f29e5e849060)
+   Building quan-transcribe @ git+https://github.com/qnguyen3/QUAN-Transcribe@88ddcd2130a3c355d081bc002439f29e5e849060
+ Downloaded nvidia-curand
+ Downloaded nvidia-nvshmem-cu13
+ Downloaded pyarrow
+ Downloaded nvidia-cuda-nvrtc
+      Built quan-transcribe @ git+https://github.com/qnguyen3/QUAN-Transcribe@88ddcd2130a3c355d081bc002439f29e5e849060
+ Downloaded nvidia-cusparse
+ Downloaded nvidia-cusparselt-cu13
+ Downloaded nvidia-nccl-cu13
+ Downloaded nvidia-cusolver
+ Downloaded nvidia-cufft
+ Downloaded triton
+ Downloaded nvidia-cublas
+ Downloaded nvidia-cudnn-cu13
+ Downloaded torch
+Prepared 62 packages in 6.81s
+Installed 62 packages in 968ms
+Bytecode compiled 9466 files in 2.08s
+ + annotated-doc==0.0.5
+ + anyio==4.15.1
+ + cffi==2.1.1
+ + click==8.5.0
+ + cuda-bindings==13.4.4
+ + cuda-pathfinder==1.8.3
+ + cuda-toolkit==13.0.3.0
+ + filelock==4.1.2
+ + fsspec==2026.9.0
+ + h11==0.16.0
+ + hf-xet==1.7.0
+ + httpcore2==2.13.1
+ + httpx2==2.13.1
+ + huggingface-hub==2.2.0
+ + idna==3.20
+ + jinja2==3.1.6
+ + jiwer==4.0.0
+ + markdown-it-py==4.2.0
+ + markupsafe==3.0.4
+ + mdurl==0.1.2
+ + mpmath==1.3.0
+ + networkx==3.7
+ + numpy==2.5.4
+ + nvidia-cublas==13.1.1.3
+ + nvidia-cuda-cupti==13.0.85
+ + nvidia-cuda-nvrtc==13.0.88
+ + nvidia-cuda-runtime==13.0.96
+ + nvidia-cudnn-cu13==9.24.0.43
+ + nvidia-cufft==12.0.0.61
+ + nvidia-cufile==1.15.1.6
+ + nvidia-curand==10.4.0.35
+ + nvidia-cusolver==12.0.4.66
+ + nvidia-cusparse==12.6.3.3
+ + nvidia-cusparselt-cu13==0.8.1
+ + nvidia-nccl-cu13==2.30.7
+ + nvidia-nvjitlink==13.4.92
+ + nvidia-nvshmem-cu13==3.4.5
+ + nvidia-nvtx==13.0.85
+ + packaging==26.3
+ + pyarrow==26.0.0
+ + pycparser==3.11
+ + pygments==2.21.0
+ + pyyaml==6.0.3
+ + quan-transcribe==1.0.0 (from git+https://github.com/qnguyen3/QUAN-Transcribe@88ddcd2130a3c355d081bc002439f29e5e849060)
+ + rapidfuzz==3.14.6
+ + regex==2026.9.29
+ + rich==15.0.0
+ + safetensors==0.8.0
+ + setuptools==84.0.0
+ + shellingham==1.5.4
+ + sounddevice==0.5.6
+ + soundfile==0.14.0
+ + soxr==1.1.0
+ + sympy==1.14.0
+ + tokenizers==0.23.3
+ + torch==2.14.1
+ + tqdm==4.70.1
+ + transformers==5.19.0
+ + triton==3.8.0
+ + truststore==0.10.5
+ + typer==0.27.3
+ + typing-extensions==4.16.0
+Saving image...
+Image saved, took 4.14s
+
+Built image im-qiY2ONOvuVz5ItSvYqxDcl in 16.87s
+
+
+Building image im-hPO2wkgl8tFb5xkrhNSai3
+
+=> Step 0: FROM base
+
+=> Step 1: ENV HF_HOME=/hf
+
+=> Step 2: ENV PYTHONPATH=/root/app
+
+=> Step 3: ENV PYTHONUNBUFFERED=1
+Saving image...
+Image saved, took 868.87ms
+
+Built image im-hPO2wkgl8tFb5xkrhNSai3 in 2.40s
+
+
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+└── 🔨 Created function train.
++ python scripts/03b_prep_openslr_hf.py --files 4 --audio-dir /data/openslr52_hf --out /data/manifests/openslr_probe --train-hours 20.0
+
+[1Atrain-00000-of-00023.parquet:   0%|          | 0/6445 [00:00<?, ?it/s]
+[1Atrain-00000-of-00023.parquet:  11%|█         | 703/6445 [00:10<01:21, 70.25it/s]
+[1Atrain-00000-of-00023.parquet:  22%|██▏       | 1406/6445 [00:20<01:13, 68.19it/s]
+[1Atrain-00000-of-00023.parquet:  32%|███▏      | 2078/6445 [00:30<01:04, 67.71it/s]
+[1Atrain-00000-of-00023.parquet:  43%|████▎     | 2750/6445 [00:40<00:55, 67.17it/s]
+[1Atrain-00000-of-00023.parquet:  53%|█████▎    | 3414/6445 [00:50<00:45, 66.65it/s]
+[1Atrain-00000-of-00023.parquet:  63%|██████▎   | 4084/6445 [01:00<00:35, 66.75it/s]
+[1Atrain-00000-of-00023.parquet:  74%|███████▍  | 4754/6445 [01:10<00:25, 66.56it/s]
+[1Atrain-00000-of-00023.parquet:  84%|████████▍ | 5416/6445 [01:21<00:15, 65.19it/s]
+[1Atrain-00000-of-00023.parquet:  94%|█████████▍| 6054/6445 [01:31<00:06, 64.75it/s]
+[1Atrain-00000-of-00023.parquet: 100%|██████████| 6445/6445 [01:37<00:00, 65.84it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+[1Atrain-00007-of-00023.parquet:   0%|          | 0/6445 [00:00<?, ?it/s]
+[1Atrain-00007-of-00023.parquet:  10%|█         | 647/6445 [00:10<01:29, 64.66it/s]
+[1Atrain-00007-of-00023.parquet:  20%|██        | 1313/6445 [00:20<01:18, 65.76it/s]
+[1Atrain-00007-of-00023.parquet:  31%|███       | 1979/6445 [00:30<01:08, 64.84it/s]
+[1Atrain-00007-of-00023.parquet:  41%|████▏     | 2670/6445 [00:40<00:56, 66.48it/s]
+[1Atrain-00007-of-00023.parquet:  52%|█████▏    | 3361/6445 [00:50<00:46, 66.43it/s]
+[1Atrain-00007-of-00023.parquet:  63%|██████▎   | 4038/6445 [01:00<00:36, 66.85it/s]
+[1Atrain-00007-of-00023.parquet:  73%|███████▎  | 4715/6445 [01:11<00:25, 66.76it/s]
+[1Atrain-00007-of-00023.parquet:  84%|████████▎ | 5394/6445 [01:21<00:15, 67.12it/s]
+[1Atrain-00007-of-00023.parquet:  94%|█████████▍| 6073/6445 [01:31<00:05, 67.20it/s]
+[1Atrain-00007-of-00023.parquet: 100%|██████████| 6445/6445 [01:36<00:00, 66.56it/s]
+
+[1Atrain-00014-of-00023.parquet:   0%|          | 0/6445 [00:00<?, ?it/s]
+[1Atrain-00014-of-00023.parquet:  10%|█         | 661/6445 [00:10<01:27, 66.04it/s]
+[1Atrain-00014-of-00023.parquet:  21%|██        | 1322/6445 [00:20<01:18, 65.42it/s]
+[1Atrain-00014-of-00023.parquet:  31%|███▏      | 2022/6445 [00:30<01:05, 67.49it/s]
+[1Atrain-00014-of-00023.parquet:  42%|████▏     | 2722/6445 [00:40<00:55, 67.33it/s]
+[1Atrain-00014-of-00023.parquet:  53%|█████▎    | 3424/6445 [00:50<00:44, 68.32it/s]
+[1Atrain-00014-of-00023.parquet:  64%|██████▍   | 4126/6445 [01:00<00:33, 68.94it/s]
+[1Atrain-00014-of-00023.parquet:  75%|███████▍  | 4828/6445 [01:10<00:23, 68.72it/s]
+[1Atrain-00014-of-00023.parquet:  86%|████████▌ | 5511/6445 [01:21<00:13, 67.97it/s]
+[1Atrain-00014-of-00023.parquet:  96%|█████████▌| 6175/6445 [01:31<00:04, 67.08it/s]
+[1Atrain-00014-of-00023.parquet: 100%|██████████| 6445/6445 [01:35<00:00, 67.76it/s]
+
+[1Atrain-00019-of-00023.parquet:   0%|          | 0/6445 [00:00<?, ?it/s]
+[1Atrain-00019-of-00023.parquet:  10%|▉         | 640/6445 [00:10<01:30, 63.93it/s]
+[1Atrain-00019-of-00023.parquet:  20%|█▉        | 1283/6445 [00:20<01:20, 64.14it/s]
+[1Atrain-00019-of-00023.parquet:  31%|███       | 1968/6445 [00:30<01:07, 66.11it/s]
+[1Atrain-00019-of-00023.parquet:  41%|████      | 2653/6445 [00:40<00:56, 67.04it/s]
+[1Atrain-00019-of-00023.parquet:  52%|█████▏    | 3338/6445 [00:50<00:46, 66.26it/s]
+[1Atrain-00019-of-00023.parquet:  62%|██████▏   | 3988/6445 [01:00<00:37, 65.28it/s]
+[1Atrain-00019-of-00023.parquet:  72%|███████▏  | 4629/6445 [01:10<00:27, 64.87it/s]
+[1Atrain-00019-of-00023.parquet:  82%|████████▏ | 5282/6445 [01:20<00:17, 64.89it/s]
+[1Atrain-00019-of-00023.parquet:  93%|█████████▎| 5971/6445 [01:30<00:07, 66.11it/s]
+[1Atrain-00019-of-00023.parquet: 100%|██████████| 6445/6445 [01:38<00:00, 65.75it/s]
+train: 16,402 utts, 20.00 h, 440 speakers
+dev: 2,000 utts, 2.40 h, 38 speakers
+dropped: {'digits': 133, 'empty': 0, 'too_long': 4, 'dup': 0} | train utts dropped for sharing text with dev: 348
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-jVzTouC7OEICauKZppo6va

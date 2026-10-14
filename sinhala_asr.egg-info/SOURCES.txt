@@ -1,0 +1,10 @@
+pyproject.toml
+sinhala_asr/__init__.py
+sinhala_asr/model.py
+sinhala_asr/text.py
+sinhala_asr/units.py
+sinhala_asr.egg-info/PKG-INFO
+sinhala_asr.egg-info/SOURCES.txt
+sinhala_asr.egg-info/dependency_links.txt
+sinhala_asr.egg-info/requires.txt
+sinhala_asr.egg-info/top_level.txt
