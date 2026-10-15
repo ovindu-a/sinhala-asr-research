@@ -1,0 +1,26 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-TzW6yC6qSA29dH82FIogYO
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+├── 🔨 Created function pack_v6.
+├── 🔨 Created function slr52_extra.
+├── 🔨 Created function train.
+├── 🔨 Created function evaluate.
+└── 🔨 Created function eval_whisper.
+
+[1ALoading weights:   0%|          | 0/1165 [00:00<?, ?it/s]
+[1ALoading weights:  28%|██▊       | 331/1165 [00:00<00:00, 2636.57it/s]
+[1ALoading weights:  63%|██████▎   | 736/1165 [00:00<00:00, 3327.94it/s]
+[1ALoading weights:  92%|█████████▏| 1075/1165 [00:00<00:00, 1100.37it/s]Loading weights: 100%|██████████| 1165/1165 [00:00<00:00, 1435.90it/s]
+loaded /data/packed/ss_v6/test (1.69 GB) in 2s
+overall    WER 19.48%  WER_seg 14.00%  CER 5.09%  CER_nospace 4.97%  (15860 utts)
+bizbrains  WER 41.15%  WER_seg 36.52%  CER 21.47%  CER_nospace 22.79%  (98 utts)
+linga      WER 22.77%  WER_seg 12.04%  CER 4.65%  CER_nospace 4.01%  (86 utts)
+openslr    WER 18.16%  WER_seg 12.72%  CER 4.29%  CER_nospace 4.13%  (15500 utts)
+youtube    WER 38.79%  WER_seg 31.46%  CER 13.66%  CER_nospace 13.97%  (176 utts)
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-TzW6yC6qSA29dH82FIogYO

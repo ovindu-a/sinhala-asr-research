@@ -1,0 +1,934 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-mqkeaT9n5u3ElngLCm0gPV
+Building image im-LWkBUB9OkiuwXBwf5RQ7Dz
+
+=> Step 0: FROM base
+
+=> Step 1: RUN apt-get update
+Hit:1 http://deb.debian.org/debian bookworm InRelease
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Hit:3 http://deb.debian.org/debian-security bookworm-security InRelease
+Fetched 55.4 kB in 1s (55.9 kB/s)
+Reading package lists...
+
+=> Step 2: RUN apt-get install -y build-essential cmake libboost-program-options-dev libboost-system-dev libboost-thread-dev libboost-test-dev zlib1g-dev libbz2-dev liblzma-dev
+Reading package lists...
+Building dependency tree...
+Reading state information...
+build-essential is already the newest version (12.9).
+The following additional packages will be installed:
+  bzip2-doc cmake-data libarchive13 libboost-atomic1.74-dev
+  libboost-atomic1.74.0 libboost-chrono1.74-dev libboost-chrono1.74.0
+  libboost-date-time1.74-dev libboost-date-time1.74.0
+  libboost-program-options1.74-dev libboost-program-options1.74.0
+  libboost-serialization1.74-dev libboost-serialization1.74.0
+  libboost-system1.74-dev libboost-system1.74.0 libboost-test1.74-dev
+  libboost-test1.74.0 libboost-thread1.74-dev libboost-thread1.74.0
+  libboost1.74-dev libicu72 libjsoncpp25 liblzma5 libproc2-0 librhash0 libuv1
+  libxml2 procps psmisc xz-utils
+Suggested packages:
+  cmake-doc cmake-format elpa-cmake-mode ninja-build lrzip libboost1.74-doc
+  libboost-container1.74-dev libboost-context1.74-dev
+  libboost-contract1.74-dev libboost-coroutine1.74-dev
+  libboost-exception1.74-dev libboost-fiber1.74-dev
+  libboost-filesystem1.74-dev libboost-graph1.74-dev
+  libboost-graph-parallel1.74-dev libboost-iostreams1.74-dev
+  libboost-locale1.74-dev libboost-log1.74-dev libboost-math1.74-dev
+  libboost-mpi1.74-dev libboost-mpi-python1.74-dev libboost-numpy1.74-dev
+  libboost-python1.74-dev libboost-random1.74-dev libboost-regex1.74-dev
+  libboost-stacktrace1.74-dev libboost-timer1.74-dev
+  libboost-type-erasure1.74-dev libboost-wave1.74-dev libboost1.74-tools-dev
+  libmpfrc++-dev libntl-dev libboost-nowide1.74-dev liblzma-doc
+The following NEW packages will be installed:
+  bzip2-doc cmake cmake-data libarchive13 libboost-atomic1.74-dev
+  libboost-atomic1.74.0 libboost-chrono1.74-dev libboost-chrono1.74.0
+  libboost-date-time1.74-dev libboost-date-time1.74.0
+  libboost-program-options-dev libboost-program-options1.74-dev
+  libboost-program-options1.74.0 libboost-serialization1.74-dev
+  libboost-serialization1.74.0 libboost-system-dev libboost-system1.74-dev
+  libboost-system1.74.0 libboost-test-dev libboost-test1.74-dev
+  libboost-test1.74.0 libboost-thread-dev libboost-thread1.74-dev
+  libboost-thread1.74.0 libboost1.74-dev libbz2-dev libicu72 libjsoncpp25
+  liblzma-dev libproc2-0 librhash0 libuv1 libxml2 procps psmisc zlib1g-dev
+The following packages will be upgraded:
+  liblzma5 xz-utils
+2 upgraded, 36 newly installed, 0 to remove and 58 not upgraded.
+Need to get 39.1 MB of archives.
+After this operation, 272 MB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian-security bookworm-security/main amd64 liblzma5 amd64 5.4.1-1+deb12u2 [206 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 libproc2-0 amd64 2:4.0.2-3 [62.8 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 procps amd64 2:4.0.2-3 [709 kB]
+Get:4 http://deb.debian.org/debian-security bookworm-security/main amd64 xz-utils amd64 5.4.1-1+deb12u2 [471 kB]
+Get:5 http://deb.debian.org/debian bookworm/main amd64 bzip2-doc all 1.0.8-5 [514 kB]
+Get:6 http://deb.debian.org/debian bookworm/main amd64 libicu72 amd64 72.1-3+deb12u1 [9376 kB]
+Get:7 http://deb.debian.org/debian bookworm/main amd64 libxml2 amd64 2.9.14+dfsg-1.3~deb12u6 [689 kB]
+Get:8 http://deb.debian.org/debian-security bookworm-security/main amd64 libarchive13 amd64 3.6.2-1+deb12u5 [345 kB]
+Get:9 http://deb.debian.org/debian bookworm/main amd64 libjsoncpp25 amd64 1.9.5-4 [78.6 kB]
+Get:10 http://deb.debian.org/debian bookworm/main amd64 librhash0 amd64 1.4.3-3 [134 kB]
+Get:11 http://deb.debian.org/debian bookworm/main amd64 libuv1 amd64 1.44.2-1+deb12u1 [136 kB]
+Get:12 http://deb.debian.org/debian bookworm/main amd64 cmake-data all 3.25.1-1 [2026 kB]
+Get:13 http://deb.debian.org/debian bookworm/main amd64 cmake amd64 3.25.1-1 [8692 kB]
+Get:14 http://deb.debian.org/debian bookworm/main amd64 libboost1.74-dev amd64 1.74.0+ds1-21 [9508 kB]
+Get:15 http://deb.debian.org/debian bookworm/main amd64 libboost-atomic1.74.0 amd64 1.74.0+ds1-21 [220 kB]
+Get:16 http://deb.debian.org/debian bookworm/main amd64 libboost-atomic1.74-dev amd64 1.74.0+ds1-21 [221 kB]
+Get:17 http://deb.debian.org/debian bookworm/main amd64 libboost-chrono1.74.0 amd64 1.74.0+ds1-21 [228 kB]
+Get:18 http://deb.debian.org/debian bookworm/main amd64 libboost-chrono1.74-dev amd64 1.74.0+ds1-21 [235 kB]
+Get:19 http://deb.debian.org/debian bookworm/main amd64 libboost-date-time1.74.0 amd64 1.74.0+ds1-21 [217 kB]
+Get:20 http://deb.debian.org/debian bookworm/main amd64 libboost-serialization1.74.0 amd64 1.74.0+ds1-21 [317 kB]
+Get:21 http://deb.debian.org/debian bookworm/main amd64 libboost-serialization1.74-dev amd64 1.74.0+ds1-21 [359 kB]
+Get:22 http://deb.debian.org/debian bookworm/main amd64 libboost-date-time1.74-dev amd64 1.74.0+ds1-21 [226 kB]
+Get:23 http://deb.debian.org/debian bookworm/main amd64 libboost-program-options1.74.0 amd64 1.74.0+ds1-21 [329 kB]
+Get:24 http://deb.debian.org/debian bookworm/main amd64 libboost-program-options1.74-dev amd64 1.74.0+ds1-21 [357 kB]
+Get:25 http://deb.debian.org/debian bookworm/main amd64 libboost-program-options-dev amd64 1.74.0.3 [4340 B]
+Get:26 http://deb.debian.org/debian bookworm/main amd64 libboost-system1.74.0 amd64 1.74.0+ds1-21 [218 kB]
+Get:27 http://deb.debian.org/debian bookworm/main amd64 libboost-system1.74-dev amd64 1.74.0+ds1-21 [219 kB]
+Get:28 http://deb.debian.org/debian bookworm/main amd64 libboost-system-dev amd64 1.74.0.3 [4468 B]
+Get:29 http://deb.debian.org/debian bookworm/main amd64 libboost-test1.74.0 amd64 1.74.0+ds1-21 [453 kB]
+Get:30 http://deb.debian.org/debian bookworm/main amd64 libboost-test1.74-dev amd64 1.74.0+ds1-21 [526 kB]
+Get:31 http://deb.debian.org/debian bookworm/main amd64 libboost-test-dev amd64 1.74.0.3 [4368 B]
+Get:32 http://deb.debian.org/debian bookworm/main amd64 libboost-thread1.74.0 amd64 1.74.0+ds1-21 [257 kB]
+Get:33 http://deb.debian.org/debian bookworm/main amd64 libboost-thread1.74-dev amd64 1.74.0+ds1-21 [267 kB]
+Get:34 http://deb.debian.org/debian bookworm/main amd64 libboost-thread-dev amd64 1.74.0.3 [4356 B]
+Get:35 http://deb.debian.org/debian bookworm/main amd64 libbz2-dev amd64 1.0.8-5+b1 [30.9 kB]
+Get:36 http://deb.debian.org/debian-security bookworm-security/main amd64 liblzma-dev amd64 5.4.1-1+deb12u2 [260 kB]
+Get:37 http://deb.debian.org/debian bookworm/main amd64 psmisc amd64 23.6-1 [259 kB]
+Get:38 http://deb.debian.org/debian bookworm/main amd64 zlib1g-dev amd64 1:1.2.13.dfsg-1 [916 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 39.1 MB in 0s (82.9 MB/s)
+(Reading database ... 
+[1A(Reading database ... 5%
+[1A(Reading database ... 10%
+[1A(Reading database ... 15%
+[1A(Reading database ... 20%
+[1A(Reading database ... 25%
+[1A(Reading database ... 30%(Reading database ... 35%
+[1A(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%
+[1A(Reading database ... 55%(Reading database ... 60%
+[1A(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%
+[1A(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%
+[1A(Reading database ... 100%(Reading database ... 17783 files and directories currently installed.)
+Preparing to unpack .../liblzma5_5.4.1-1+deb12u2_amd64.deb ...
+Unpacking liblzma5:amd64 (5.4.1-1+deb12u2) over (5.4.1-1) ...
+Setting up liblzma5:amd64 (5.4.1-1+deb12u2) ...
+Selecting previously unselected package libproc2-0:amd64.
+(Reading database ... 
+[1A(Reading database ... 5%
+[1A(Reading database ... 10%
+[1A(Reading database ... 15%
+[1A(Reading database ... 20%
+[1A(Reading database ... 25%
+[1A(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%
+[1A(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%
+[1A(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%
+[1A(Reading database ... 95%(Reading database ... 100%(Reading database ... 17783 files and directories currently installed.)
+Preparing to unpack .../00-libproc2-0_2%3a4.0.2-3_amd64.deb ...
+Unpacking libproc2-0:amd64 (2:4.0.2-3) ...
+Selecting previously unselected package procps.
+Preparing to unpack .../01-procps_2%3a4.0.2-3_amd64.deb ...
+Unpacking procps (2:4.0.2-3) ...
+Preparing to unpack .../02-xz-utils_5.4.1-1+deb12u2_amd64.deb ...
+Unpacking xz-utils (5.4.1-1+deb12u2) over (5.4.1-1) ...
+Selecting previously unselected package bzip2-doc.
+Preparing to unpack .../03-bzip2-doc_1.0.8-5_all.deb ...
+Unpacking bzip2-doc (1.0.8-5) ...
+Selecting previously unselected package libicu72:amd64.
+Preparing to unpack .../04-libicu72_72.1-3+deb12u1_amd64.deb ...
+Unpacking libicu72:amd64 (72.1-3+deb12u1) ...
+Selecting previously unselected package libxml2:amd64.
+Preparing to unpack .../05-libxml2_2.9.14+dfsg-1.3~deb12u6_amd64.deb ...
+Unpacking libxml2:amd64 (2.9.14+dfsg-1.3~deb12u6) ...
+Selecting previously unselected package libarchive13:amd64.
+Preparing to unpack .../06-libarchive13_3.6.2-1+deb12u5_amd64.deb ...
+Unpacking libarchive13:amd64 (3.6.2-1+deb12u5) ...
+Selecting previously unselected package libjsoncpp25:amd64.
+Preparing to unpack .../07-libjsoncpp25_1.9.5-4_amd64.deb ...
+Unpacking libjsoncpp25:amd64 (1.9.5-4) ...
+Selecting previously unselected package librhash0:amd64.
+Preparing to unpack .../08-librhash0_1.4.3-3_amd64.deb ...
+Unpacking librhash0:amd64 (1.4.3-3) ...
+Selecting previously unselected package libuv1:amd64.
+Preparing to unpack .../09-libuv1_1.44.2-1+deb12u1_amd64.deb ...
+Unpacking libuv1:amd64 (1.44.2-1+deb12u1) ...
+Selecting previously unselected package cmake-data.
+Preparing to unpack .../10-cmake-data_3.25.1-1_all.deb ...
+Unpacking cmake-data (3.25.1-1) ...
+Selecting previously unselected package cmake.
+Preparing to unpack .../11-cmake_3.25.1-1_amd64.deb ...
+Unpacking cmake (3.25.1-1) ...
+Selecting previously unselected package libboost1.74-dev:amd64.
+Preparing to unpack .../12-libboost1.74-dev_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost1.74-dev:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-atomic1.74.0:amd64.
+Preparing to unpack .../13-libboost-atomic1.74.0_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-atomic1.74.0:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-atomic1.74-dev:amd64.
+Preparing to unpack .../14-libboost-atomic1.74-dev_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-atomic1.74-dev:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-chrono1.74.0:amd64.
+Preparing to unpack .../15-libboost-chrono1.74.0_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-chrono1.74.0:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-chrono1.74-dev:amd64.
+Preparing to unpack .../16-libboost-chrono1.74-dev_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-chrono1.74-dev:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-date-time1.74.0:amd64.
+Preparing to unpack .../17-libboost-date-time1.74.0_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-date-time1.74.0:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-serialization1.74.0:amd64.
+Preparing to unpack .../18-libboost-serialization1.74.0_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-serialization1.74.0:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-serialization1.74-dev:amd64.
+Preparing to unpack .../19-libboost-serialization1.74-dev_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-serialization1.74-dev:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-date-time1.74-dev:amd64.
+Preparing to unpack .../20-libboost-date-time1.74-dev_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-date-time1.74-dev:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-program-options1.74.0:amd64.
+Preparing to unpack .../21-libboost-program-options1.74.0_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-program-options1.74.0:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-program-options1.74-dev:amd64.
+Preparing to unpack .../22-libboost-program-options1.74-dev_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-program-options1.74-dev:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-program-options-dev:amd64.
+Preparing to unpack .../23-libboost-program-options-dev_1.74.0.3_amd64.deb ...
+Unpacking libboost-program-options-dev:amd64 (1.74.0.3) ...
+Selecting previously unselected package libboost-system1.74.0:amd64.
+Preparing to unpack .../24-libboost-system1.74.0_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-system1.74.0:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-system1.74-dev:amd64.
+Preparing to unpack .../25-libboost-system1.74-dev_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-system1.74-dev:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-system-dev:amd64.
+Preparing to unpack .../26-libboost-system-dev_1.74.0.3_amd64.deb ...
+Unpacking libboost-system-dev:amd64 (1.74.0.3) ...
+Selecting previously unselected package libboost-test1.74.0:amd64.
+Preparing to unpack .../27-libboost-test1.74.0_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-test1.74.0:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-test1.74-dev:amd64.
+Preparing to unpack .../28-libboost-test1.74-dev_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-test1.74-dev:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-test-dev:amd64.
+Preparing to unpack .../29-libboost-test-dev_1.74.0.3_amd64.deb ...
+Unpacking libboost-test-dev:amd64 (1.74.0.3) ...
+Selecting previously unselected package libboost-thread1.74.0:amd64.
+Preparing to unpack .../30-libboost-thread1.74.0_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-thread1.74.0:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-thread1.74-dev:amd64.
+Preparing to unpack .../31-libboost-thread1.74-dev_1.74.0+ds1-21_amd64.deb ...
+Unpacking libboost-thread1.74-dev:amd64 (1.74.0+ds1-21) ...
+Selecting previously unselected package libboost-thread-dev:amd64.
+Preparing to unpack .../32-libboost-thread-dev_1.74.0.3_amd64.deb ...
+Unpacking libboost-thread-dev:amd64 (1.74.0.3) ...
+Selecting previously unselected package libbz2-dev:amd64.
+Preparing to unpack .../33-libbz2-dev_1.0.8-5+b1_amd64.deb ...
+Unpacking libbz2-dev:amd64 (1.0.8-5+b1) ...
+Selecting previously unselected package liblzma-dev:amd64.
+Preparing to unpack .../34-liblzma-dev_5.4.1-1+deb12u2_amd64.deb ...
+Unpacking liblzma-dev:amd64 (5.4.1-1+deb12u2) ...
+Selecting previously unselected package psmisc.
+Preparing to unpack .../35-psmisc_23.6-1_amd64.deb ...
+Unpacking psmisc (23.6-1) ...
+Selecting previously unselected package zlib1g-dev:amd64.
+Preparing to unpack .../36-zlib1g-dev_1%3a1.2.13.dfsg-1_amd64.deb ...
+Unpacking zlib1g-dev:amd64 (1:1.2.13.dfsg-1) ...
+Setting up libboost-chrono1.74.0:amd64 (1.74.0+ds1-21) ...
+Setting up libboost-system1.74.0:amd64 (1.74.0+ds1-21) ...
+Setting up bzip2-doc (1.0.8-5) ...
+Setting up libboost1.74-dev:amd64 (1.74.0+ds1-21) ...
+Setting up libicu72:amd64 (72.1-3+deb12u1) ...
+Setting up libboost-atomic1.74.0:amd64 (1.74.0+ds1-21) ...
+Setting up psmisc (23.6-1) ...
+Setting up libboost-program-options1.74.0:amd64 (1.74.0+ds1-21) ...
+Setting up libboost-chrono1.74-dev:amd64 (1.74.0+ds1-21) ...
+Setting up libboost-program-options1.74-dev:amd64 (1.74.0+ds1-21) ...
+Setting up libuv1:amd64 (1.44.2-1+deb12u1) ...
+Setting up libboost-test1.74.0:amd64 (1.74.0+ds1-21) ...
+Setting up libboost-program-options-dev:amd64 (1.74.0.3) ...
+Setting up libboost-system1.74-dev:amd64 (1.74.0+ds1-21) ...
+Setting up xz-utils (5.4.1-1+deb12u2) ...
+Setting up libproc2-0:amd64 (2:4.0.2-3) ...
+Setting up libjsoncpp25:amd64 (1.9.5-4) ...
+Setting up libboost-atomic1.74-dev:amd64 (1.74.0+ds1-21) ...
+Setting up liblzma-dev:amd64 (5.4.1-1+deb12u2) ...
+Setting up libboost-serialization1.74.0:amd64 (1.74.0+ds1-21) ...
+Setting up zlib1g-dev:amd64 (1:1.2.13.dfsg-1) ...
+Setting up librhash0:amd64 (1.4.3-3) ...
+Setting up procps (2:4.0.2-3) ...
+Setting up cmake-data (3.25.1-1) ...
+Setting up libboost-date-time1.74.0:amd64 (1.74.0+ds1-21) ...
+Setting up libboost-test1.74-dev:amd64 (1.74.0+ds1-21) ...
+Setting up libxml2:amd64 (2.9.14+dfsg-1.3~deb12u6) ...
+Setting up libboost-thread1.74.0:amd64 (1.74.0+ds1-21) ...
+Setting up libbz2-dev:amd64 (1.0.8-5+b1) ...
+Setting up libarchive13:amd64 (3.6.2-1+deb12u5) ...
+Setting up libboost-system-dev:amd64 (1.74.0.3) ...
+Setting up libboost-test-dev:amd64 (1.74.0.3) ...
+Setting up libboost-serialization1.74-dev:amd64 (1.74.0+ds1-21) ...
+Setting up cmake (3.25.1-1) ...
+Setting up libboost-date-time1.74-dev:amd64 (1.74.0+ds1-21) ...
+Setting up libboost-thread1.74-dev:amd64 (1.74.0+ds1-21) ...
+Setting up libboost-thread-dev:amd64 (1.74.0.3) ...
+Processing triggers for libc-bin (2.36-9+deb12u10) ...
+Saving image...
+Image saved, took 4.70s
+
+Built image im-LWkBUB9OkiuwXBwf5RQ7Dz in 27.44s
+
+
+Building image im-EpZgiXh1gxHt1iZ3n8KkyK
+
+=> Step 0: FROM base
+
+=> Step 1: RUN git clone --depth 1 https://github.com/kpu/kenlm /opt/kenlm && cd /opt/kenlm && mkdir build && cd build && cmake .. -DKENLM_MAX_ORDER=6 && make -j8 lmplz build_binary && cp bin/lmplz bin/build_binary /usr/local/bin/
+Cloning into '/opt/kenlm'...
+-- The C compiler identification is GNU 12.2.0
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Could NOT find Eigen3 (missing: Eigen3_DIR)
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found suitable version "1.74.0", minimum required is "1.41.0") found components: program_options system thread unit_test_framework
+-- Found Threads: TRUE  
+-- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.2.13") 
+-- Found BZip2: /usr/lib/x86_64-linux-gnu/libbz2.so (found version "1.0.8") 
+-- Looking for BZ2_bzCompressInit
+-- Looking for BZ2_bzCompressInit - found
+-- Looking for lzma_auto_decoder in /usr/lib/x86_64-linux-gnu/liblzma.so
+-- Looking for lzma_auto_decoder in /usr/lib/x86_64-linux-gnu/liblzma.so - found
+-- Looking for lzma_easy_encoder in /usr/lib/x86_64-linux-gnu/liblzma.so
+-- Looking for lzma_easy_encoder in /usr/lib/x86_64-linux-gnu/liblzma.so - found
+-- Looking for lzma_lzma_preset in /usr/lib/x86_64-linux-gnu/liblzma.so
+-- Looking for lzma_lzma_preset in /usr/lib/x86_64-linux-gnu/liblzma.so - found
+-- Found LibLZMA: /usr/lib/x86_64-linux-gnu/liblzma.so (found version "5.4.1") 
+-- Looking for clock_gettime in rt
+-- Looking for clock_gettime in rt - found
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /opt/kenlm/build
+[  1%] Building CXX object util/CMakeFiles/kenlm_util.dir/double-conversion/bignum-dtoa.cc.o
+[  3%] Building CXX object util/CMakeFiles/kenlm_util.dir/double-conversion/bignum.cc.o
+[  5%] Building CXX object util/CMakeFiles/kenlm_util.dir/double-conversion/cached-powers.cc.o
+[  6%] Building CXX object util/CMakeFiles/kenlm_util.dir/double-conversion/fast-dtoa.cc.o
+[  8%] Building CXX object util/CMakeFiles/kenlm_util.dir/double-conversion/fixed-dtoa.cc.o
+[ 10%] Building CXX object util/CMakeFiles/kenlm_util.dir/double-conversion/strtod.cc.o
+[ 11%] Building CXX object util/CMakeFiles/kenlm_util.dir/double-conversion/double-to-string.cc.o
+[ 13%] Building CXX object util/CMakeFiles/kenlm_util.dir/double-conversion/string-to-double.cc.o
+[ 15%] Building CXX object util/CMakeFiles/kenlm_util.dir/stream/chain.cc.o
+[ 16%] Building CXX object util/CMakeFiles/kenlm_util.dir/stream/count_records.cc.o
+[ 18%] Building CXX object util/CMakeFiles/kenlm_util.dir/stream/io.cc.o
+[ 20%] Building CXX object util/CMakeFiles/kenlm_util.dir/stream/line_input.cc.o
+[ 21%] Building CXX object util/CMakeFiles/kenlm_util.dir/stream/multi_progress.cc.o
+[ 23%] Building CXX object util/CMakeFiles/kenlm_util.dir/stream/rewindable_stream.cc.o
+[ 25%] Building CXX object util/CMakeFiles/kenlm_util.dir/bit_packing.cc.o
+[ 26%] Building CXX object util/CMakeFiles/kenlm_util.dir/ersatz_progress.cc.o
+[ 28%] Building CXX object util/CMakeFiles/kenlm_util.dir/exception.cc.o
+[ 30%] Building CXX object util/CMakeFiles/kenlm_util.dir/file.cc.o
+[ 31%] Building CXX object util/CMakeFiles/kenlm_util.dir/file_piece.cc.o
+[ 33%] Building CXX object util/CMakeFiles/kenlm_util.dir/float_to_string.cc.o
+[ 35%] Building CXX object util/CMakeFiles/kenlm_util.dir/integer_to_string.cc.o
+[ 36%] Building CXX object util/CMakeFiles/kenlm_util.dir/mmap.cc.o
+[ 38%] Building CXX object util/CMakeFiles/kenlm_util.dir/murmur_hash.cc.o
+[ 40%] Building CXX object util/CMakeFiles/kenlm_util.dir/parallel_read.cc.o
+[ 41%] Building CXX object util/CMakeFiles/kenlm_util.dir/pool.cc.o
+[ 43%] Building CXX object util/CMakeFiles/kenlm_util.dir/read_compressed.cc.o
+[ 45%] Building CXX object util/CMakeFiles/kenlm_util.dir/scoped.cc.o
+[ 46%] Building CXX object util/CMakeFiles/kenlm_util.dir/spaces.cc.o
+[ 48%] Building CXX object util/CMakeFiles/kenlm_util.dir/string_piece.cc.o
+[ 50%] Building CXX object util/CMakeFiles/kenlm_util.dir/usage.cc.o
+[ 51%] Linking CXX static library ../lib/libkenlm_util.a
+[ 51%] Built target kenlm_util
+[ 53%] Building CXX object lm/CMakeFiles/kenlm.dir/bhiksha.cc.o
+[ 55%] Building CXX object lm/CMakeFiles/kenlm.dir/binary_format.cc.o
+[ 56%] Building CXX object lm/CMakeFiles/kenlm.dir/config.cc.o
+[ 58%] Building CXX object lm/CMakeFiles/kenlm.dir/lm_exception.cc.o
+[ 60%] Building CXX object lm/CMakeFiles/kenlm.dir/model.cc.o
+[ 61%] Building CXX object lm/CMakeFiles/kenlm.dir/quantize.cc.o
+[ 63%] Building CXX object lm/CMakeFiles/kenlm.dir/read_arpa.cc.o
+[ 65%] Building CXX object lm/CMakeFiles/kenlm.dir/search_hashed.cc.o
+[ 66%] Building CXX object lm/CMakeFiles/kenlm.dir/search_trie.cc.o
+[ 68%] Building CXX object lm/CMakeFiles/kenlm.dir/sizes.cc.o
+[ 70%] Building CXX object lm/CMakeFiles/kenlm.dir/trie.cc.o
+[ 71%] Building CXX object lm/CMakeFiles/kenlm.dir/trie_sort.cc.o
+[ 73%] Building CXX object lm/CMakeFiles/kenlm.dir/value_build.cc.o
+In file included from /opt/kenlm/lm/search_trie.cc:11:
+/opt/kenlm/lm/trie_sort.hh:31:34: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+   31 | class EntryCompare : public std::binary_function<const void*, const void*, bool> {
+      |                                  ^~~~~~~~~~~~~~~
+In file included from /usr/include/c++/12/string:48,
+                 from /usr/include/c++/12/bits/locale_classes.h:40,
+                 from /usr/include/c++/12/bits/ios_base.h:41,
+                 from /usr/include/c++/12/ios:42,
+                 from /usr/include/c++/12/ostream:38,
+                 from /opt/kenlm/lm/../util/string_piece.hh:55,
+                 from /opt/kenlm/lm/../util/fake_ostream.hh:6,
+                 from /opt/kenlm/lm/../util/string_stream.hh:4,
+                 from /opt/kenlm/lm/../util/exception.hh:4,
+                 from /opt/kenlm/lm/lm_exception.hh:6,
+                 from /opt/kenlm/lm/config.hh:4,
+                 from /opt/kenlm/lm/search_trie.hh:4,
+                 from /opt/kenlm/lm/search_trie.cc:2:
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+In file included from /opt/kenlm/lm/search_trie.cc:19:
+/opt/kenlm/lm/../util/sized_iterator.hh:130:86: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  130 | template <class Delegate, class Proxy = SizedProxy> class SizedCompare : public std::binary_function<const Proxy &, const Proxy &, bool> {
+      |                                                                                      ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+/opt/kenlm/lm/../util/sized_iterator.hh:157:71: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  157 | template <class Delegate, unsigned Size> class JustPODDelegate : std::binary_function<const JustPOD<Size> &, const JustPOD<Size> &, bool> {
+      |                                                                       ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+[ 75%] Building CXX object lm/CMakeFiles/kenlm.dir/virtual_interface.cc.o
+In file included from /opt/kenlm/lm/trie_sort.cc:1:
+/opt/kenlm/lm/trie_sort.hh:31:34: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+   31 | class EntryCompare : public std::binary_function<const void*, const void*, bool> {
+      |                                  ^~~~~~~~~~~~~~~
+In file included from /usr/include/c++/12/string:48,
+                 from /usr/include/c++/12/bits/locale_classes.h:40,
+                 from /usr/include/c++/12/bits/ios_base.h:41,
+                 from /usr/include/c++/12/ios:42,
+                 from /usr/include/c++/12/ostream:38,
+                 from /opt/kenlm/lm/../util/string_piece.hh:55,
+                 from /opt/kenlm/lm/../util/fake_ostream.hh:6,
+                 from /opt/kenlm/lm/../util/string_stream.hh:4,
+                 from /opt/kenlm/lm/../util/exception.hh:4,
+                 from /opt/kenlm/lm/../util/file.hh:4,
+                 from /opt/kenlm/lm/trie_sort.hh:9:
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+In file included from /opt/kenlm/lm/trie_sort.cc:13:
+/opt/kenlm/lm/../util/sized_iterator.hh:130:86: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  130 | template <class Delegate, class Proxy = SizedProxy> class SizedCompare : public std::binary_function<const Proxy &, const Proxy &, bool> {
+      |                                                                                      ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+/opt/kenlm/lm/../util/sized_iterator.hh:157:71: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  157 | template <class Delegate, unsigned Size> class JustPODDelegate : std::binary_function<const JustPOD<Size> &, const JustPOD<Size> &, bool> {
+      |                                                                       ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+[ 76%] Building CXX object lm/CMakeFiles/kenlm.dir/vocab.cc.o
+[ 78%] Building CXX object lm/CMakeFiles/kenlm.dir/common/model_buffer.cc.o
+[ 80%] Building CXX object lm/CMakeFiles/kenlm.dir/common/print.cc.o
+In file included from /opt/kenlm/lm/vocab.cc:11:
+/opt/kenlm/lm/../util/joint_sort.hh:104:68: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  104 | template <class Proxy, class Less> class LessWrapper : public std::binary_function<const typename Proxy::value_type &, const typename Proxy::value_type &, bool> {
+      |                                                                    ^~~~~~~~~~~~~~~
+In file included from /usr/include/c++/12/string:48,
+                 from /usr/include/c++/12/bits/locale_classes.h:40,
+                 from /usr/include/c++/12/bits/ios_base.h:41,
+                 from /usr/include/c++/12/ios:42,
+                 from /usr/include/c++/12/ostream:38,
+                 from /opt/kenlm/lm/../util/string_piece.hh:55,
+                 from /opt/kenlm/lm/enumerate_vocab.hh:5,
+                 from /opt/kenlm/lm/vocab.hh:4,
+                 from /opt/kenlm/lm/vocab.cc:1:
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+[ 81%] Building CXX object lm/CMakeFiles/kenlm.dir/common/renumber.cc.o
+[ 83%] Building CXX object lm/CMakeFiles/kenlm.dir/common/size_option.cc.o
+In file included from /opt/kenlm/lm/common/model_buffer.cc:3:
+/opt/kenlm/lm/common/compare.hh:15:55: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+   15 | template <class Child> class Comparator : public std::binary_function<const void *, const void *, bool> {
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from /usr/include/c++/12/string:48,
+                 from /usr/include/c++/12/bits/locale_classes.h:40,
+                 from /usr/include/c++/12/bits/ios_base.h:41,
+                 from /usr/include/c++/12/ios:42,
+                 from /usr/include/c++/12/ostream:38,
+                 from /opt/kenlm/lm/common/../../util/string_piece.hh:55,
+                 from /opt/kenlm/lm/common/../../util/fake_ostream.hh:6,
+                 from /opt/kenlm/lm/common/../../util/string_stream.hh:4,
+                 from /opt/kenlm/lm/common/../../util/exception.hh:4,
+                 from /opt/kenlm/lm/common/../../util/file.hh:4,
+                 from /opt/kenlm/lm/common/model_buffer.hh:8,
+                 from /opt/kenlm/lm/common/model_buffer.cc:1:
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+/opt/kenlm/lm/common/compare.hh:173:69: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  173 | template <class Range> struct SuffixLexicographicLess : public std::binary_function<const Range, const Range, bool> {
+      |                                                                     ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+[ 85%] Linking CXX static library ../lib/libkenlm.a
+[ 85%] Built target kenlm
+[ 86%] Building CXX object lm/builder/CMakeFiles/kenlm_builder.dir/adjust_counts.cc.o
+[ 88%] Building CXX object lm/builder/CMakeFiles/kenlm_builder.dir/corpus_count.cc.o
+[ 90%] Building CXX object lm/builder/CMakeFiles/kenlm_builder.dir/initial_probabilities.cc.o
+[ 91%] Building CXX object lm/builder/CMakeFiles/kenlm_builder.dir/interpolate.cc.o
+[ 93%] Building CXX object lm/builder/CMakeFiles/kenlm_builder.dir/output.cc.o
+[ 95%] Building CXX object lm/builder/CMakeFiles/kenlm_builder.dir/pipeline.cc.o
+In file included from /opt/kenlm/lm/builder/combine_counts.hh:6,
+                 from /opt/kenlm/lm/builder/pipeline.cc:4:
+/opt/kenlm/lm/builder/../common/compare.hh:15:55: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+   15 | template <class Child> class Comparator : public std::binary_function<const void *, const void *, bool> {
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from /usr/include/c++/12/string:48,
+                 from /usr/include/c++/12/bits/locale_classes.h:40,
+                 from /usr/include/c++/12/bits/ios_base.h:41,
+                 from /usr/include/c++/12/ios:42,
+                 from /usr/include/c++/12/ostream:38,
+                 from /opt/kenlm/lm/builder/../../util/string_piece.hh:55,
+                 from /opt/kenlm/lm/builder/../../util/fake_ostream.hh:6,
+                 from /opt/kenlm/lm/builder/../../util/string_stream.hh:4,
+                 from /opt/kenlm/lm/builder/../../util/exception.hh:4,
+                 from /opt/kenlm/lm/builder/../lm_exception.hh:6,
+                 from /opt/kenlm/lm/builder/adjust_counts.hh:5,
+                 from /opt/kenlm/lm/builder/pipeline.hh:4,
+                 from /opt/kenlm/lm/builder/pipeline.cc:1:
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+/opt/kenlm/lm/builder/../common/compare.hh:173:69: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  173 | template <class Range> struct SuffixLexicographicLess : public std::binary_function<const Range, const Range, bool> {
+      |                                                                     ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+/opt/kenlm/lm/builder/corpus_count.cc:25:32: warning: ‘template<class _Arg, class _Result> struct std::unary_function’ is deprecated [-Wdeprecated-declarations]
+   25 | class DedupeHash : public std::unary_function<const WordIndex *, bool> {
+      |                                ^~~~~~~~~~~~~~
+In file included from /usr/include/c++/12/string:48,
+                 from /usr/include/c++/12/bits/locale_classes.h:40,
+                 from /usr/include/c++/12/bits/ios_base.h:41,
+                 from /usr/include/c++/12/ios:42,
+                 from /usr/include/c++/12/ostream:38,
+                 from /opt/kenlm/lm/builder/../../util/string_piece.hh:55,
+                 from /opt/kenlm/lm/builder/../../util/fake_ostream.hh:6,
+                 from /opt/kenlm/lm/builder/../../util/string_stream.hh:4,
+                 from /opt/kenlm/lm/builder/../../util/exception.hh:4,
+                 from /opt/kenlm/lm/builder/../lm_exception.hh:6,
+                 from /opt/kenlm/lm/builder/corpus_count.hh:4,
+                 from /opt/kenlm/lm/builder/corpus_count.cc:1:
+/usr/include/c++/12/bits/stl_function.h:117:12: note: declared here
+  117 |     struct unary_function
+      |            ^~~~~~~~~~~~~~
+/opt/kenlm/lm/builder/corpus_count.cc:37:34: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+   37 | class DedupeEquals : public std::binary_function<const WordIndex *, const WordIndex *, bool> {
+      |                                  ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+In file included from /opt/kenlm/lm/builder/../../util/stream/sort.hh:29,
+                 from /opt/kenlm/lm/builder/combine_counts.hh:8:
+/opt/kenlm/lm/builder/../../util/stream/../sized_iterator.hh:130:86: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  130 | template <class Delegate, class Proxy = SizedProxy> class SizedCompare : public std::binary_function<const Proxy &, const Proxy &, bool> {
+      |                                                                                      ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+/opt/kenlm/lm/builder/../../util/stream/../sized_iterator.hh:157:71: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  157 | template <class Delegate, unsigned Size> class JustPODDelegate : std::binary_function<const JustPOD<Size> &, const JustPOD<Size> &, bool> {
+      |                                                                       ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+/opt/kenlm/lm/builder/../../util/stream/sort.hh:203:33: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  203 |     class Greater : public std::binary_function<const Entry &, const Entry &, bool> {
+      |                                 ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+In file included from /opt/kenlm/lm/builder/interpolate.cc:5:
+/opt/kenlm/lm/builder/../common/compare.hh:15:55: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+   15 | template <class Child> class Comparator : public std::binary_function<const void *, const void *, bool> {
+      |                                                       ^~~~~~~~~~~~~~~
+In file included from /usr/include/c++/12/string:48,
+                 from /usr/include/c++/12/bits/locale_classes.h:40,
+                 from /usr/include/c++/12/bits/ios_base.h:41,
+                 from /usr/include/c++/12/ios:42,
+                 from /usr/include/c++/12/ostream:38,
+                 from /opt/kenlm/lm/builder/../../util/stream/../string_piece.hh:55,
+                 from /opt/kenlm/lm/builder/../../util/stream/../fake_ostream.hh:6,
+                 from /opt/kenlm/lm/builder/../../util/stream/../string_stream.hh:4,
+                 from /opt/kenlm/lm/builder/../../util/stream/../exception.hh:4,
+                 from /opt/kenlm/lm/builder/../../util/stream/../scoped.hh:5,
+                 from /opt/kenlm/lm/builder/../../util/stream/../fixed_array.hh:4,
+                 from /opt/kenlm/lm/builder/../../util/stream/multi_stream.hh:4,
+                 from /opt/kenlm/lm/builder/interpolate.hh:6,
+                 from /opt/kenlm/lm/builder/interpolate.cc:1:
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+/opt/kenlm/lm/builder/../common/compare.hh:173:69: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+  173 | template <class Range> struct SuffixLexicographicLess : public std::binary_function<const Range, const Range, bool> {
+      |                                                                     ^~~~~~~~~~~~~~~
+/usr/include/c++/12/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+[ 96%] Linking CXX static library ../../lib/libkenlm_builder.a
+[ 96%] Built target kenlm_builder
+[ 98%] Building CXX object lm/builder/CMakeFiles/lmplz.dir/lmplz_main.cc.o
+[100%] Linking CXX executable ../../bin/lmplz
+[100%] Built target lmplz
+[ 58%] Built target kenlm_util
+[ 96%] Built target kenlm
+[ 98%] Building CXX object lm/CMakeFiles/build_binary.dir/build_binary_main.cc.o
+[100%] Linking CXX executable ../bin/build_binary
+[100%] Built target build_binary
+Saving image...
+Image saved, took 1.30s
+
+Built image im-EpZgiXh1gxHt1iZ3n8KkyK in 20.00s
+
+
+Building image im-5Vjg5f1rn3gGchsjNCGwt1
+
+=> Step 0: FROM base
+
+=> Step 1: COPY --from=ghcr.io/astral-sh/uv:latest /uv /.uv/uv
+Getting image source signatures
+Copying blob sha256:cd39911837625b421ad90dd6a33b3ab56470794583bc57d1f665585f3153a159
+Copying blob sha256:f2eb7853ff114dc41ecf9800f9288774bd7d024b8866632399e08a9b8edad190
+Copying config sha256:f6e289b87a320629950d704181c971b5abb074bb26cfeca559d9deb871507007
+Writing manifest to image destination
+Unpacking OCI image
+   • unpacking rootfs ...     
+   • ... done                 
+   • unpacked image rootfs: /tmp/task-data/ta-01M4YPXDHSS6YGBNDESKA81SVB/registry-unpack2dxyM5
+
+=> Step 2: RUN /.uv/uv pip install --python $(command -v python) --compile-bytecode https://github.com/kpu/kenlm/archive/master.zip pyahocorasick
+Using Python 3.12.10 environment at: /usr/local
+Resolved 2 packages in 2.18s
+   Building kenlm @ https://github.com/kpu/kenlm/archive/master.zip
+      Built kenlm @ https://github.com/kpu/kenlm/archive/master.zip
+Prepared 2 packages in 28.71s
+Installed 2 packages in 3ms
+ + kenlm==0.2.0 (from https://github.com/kpu/kenlm/archive/master.zip)
+ + pyahocorasick==2.3.1
+Saving image...
+Image saved, took 1.23s
+
+Built image im-5Vjg5f1rn3gGchsjNCGwt1 in 34.55s
+
+
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+├── 🔨 Created function pack_v6.
+├── 🔨 Created function slr52_extra.
+├── 🔨 Created function train.
+├── 🔨 Created function evaluate.
+├── 🔨 Created function eval_whisper.
+├── 🔨 Created function build_lm.
+├── 🔨 Created function lm_dump.
+└── 🔨 Created function lm_decode.
++ nvidia-smi --query-gpu=name,memory.total --format=csv
+name, memory.total [MiB]
+NVIDIA H100 80GB HBM3, 81559 MiB
+train 171,163 utts / 174.3 h; dev 2,000; units 2,776
+
+[1ALoading weights:   0%|          | 0/1165 [00:00<?, ?it/s]
+[1ALoading weights:  27%|██▋       | 314/1165 [00:00<00:00, 2838.51it/s]
+[1ALoading weights:  51%|█████▏    | 598/1165 [00:00<00:00, 2593.57it/s]
+[1ALoading weights: 100%|██████████| 1165/1165 [00:00<00:00, 3716.95it/s]
+loaded weights from /runs/v6_top6/best
+trainable params: 246.6M (encoder top 8: 201.4M)
+loaded /tmp/packed/train (20.08 GB) in 19s
+loaded /tmp/packed/dev (0.21 GB) in 0s
+dev target tokens mapped to <unk>: 0.25%
+{"step": 25, "loss": 1.0303, "lr": 0.0, "grad_norm": 2.8981, "audio_hours_per_s": 0.2665, "s_per_step": 0.8474, "skipped": 0, "epoch": 2, "data_wait_frac": 0.072, "gpu_mem_gb": 58.502, "layer_w": [0.03, 0.02, 0.028, 0.045, 0.054, 0.016, 0.01, 0.01, 0.012, 0.043, 0.092, 0.112, 0.529]}
+{"step": 50, "loss": 1.1333, "lr": 0.0, "grad_norm": 3.738, "audio_hours_per_s": 0.4194, "s_per_step": 0.5523, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.5711, "layer_w": [0.03, 0.02, 0.028, 0.045, 0.054, 0.016, 0.01, 0.01, 0.012, 0.043, 0.092, 0.112, 0.528]}
+{"step": 75, "loss": 1.1643, "lr": 0.0, "grad_norm": 3.4887, "audio_hours_per_s": 0.3948, "s_per_step": 0.509, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6407, "layer_w": [0.03, 0.02, 0.027, 0.044, 0.053, 0.016, 0.01, 0.01, 0.012, 0.043, 0.091, 0.11, 0.535]}
+{"step": 100, "loss": 1.0091, "lr": 0.0001, "grad_norm": 5.9527, "audio_hours_per_s": 0.4315, "s_per_step": 0.5215, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6407, "layer_w": [0.03, 0.02, 0.028, 0.045, 0.054, 0.016, 0.01, 0.01, 0.012, 0.043, 0.091, 0.111, 0.533]}
+{"step": 125, "loss": 0.939, "lr": 0.0001, "grad_norm": 4.0061, "audio_hours_per_s": 0.4514, "s_per_step": 0.5438, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6407, "layer_w": [0.029, 0.019, 0.027, 0.044, 0.053, 0.016, 0.01, 0.01, 0.012, 0.042, 0.089, 0.109, 0.542]}
+{"step": 150, "loss": 0.9585, "lr": 0.0001, "grad_norm": 3.0504, "audio_hours_per_s": 0.4289, "s_per_step": 0.5408, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6407, "layer_w": [0.028, 0.019, 0.027, 0.043, 0.052, 0.015, 0.009, 0.009, 0.012, 0.042, 0.088, 0.107, 0.549]}
+{"step": 175, "loss": 0.9376, "lr": 0.0001, "grad_norm": 2.9567, "audio_hours_per_s": 0.4514, "s_per_step": 0.5426, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.028, 0.018, 0.026, 0.043, 0.052, 0.015, 0.009, 0.009, 0.012, 0.042, 0.088, 0.108, 0.549]}
+{"step": 200, "loss": 0.9292, "lr": 0.0001, "grad_norm": 2.7291, "audio_hours_per_s": 0.4304, "s_per_step": 0.5516, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.6407, "layer_w": [0.028, 0.018, 0.026, 0.042, 0.051, 0.015, 0.009, 0.009, 0.012, 0.041, 0.086, 0.106, 0.557]}
+{"step": 225, "loss": 1.0244, "lr": 0.0001, "grad_norm": 2.8393, "audio_hours_per_s": 0.4223, "s_per_step": 0.4947, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6407, "layer_w": [0.027, 0.018, 0.026, 0.042, 0.051, 0.015, 0.009, 0.009, 0.012, 0.04, 0.085, 0.105, 0.561]}
+{"step": 250, "loss": 0.9618, "lr": 0.0001, "grad_norm": 2.5394, "audio_hours_per_s": 0.4404, "s_per_step": 0.5174, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6407, "layer_w": [0.027, 0.018, 0.025, 0.041, 0.051, 0.014, 0.009, 0.009, 0.012, 0.04, 0.083, 0.103, 0.568]}
+{"step": 275, "loss": 1.0043, "lr": 0.0001, "grad_norm": 3.4603, "audio_hours_per_s": 0.4293, "s_per_step": 0.5357, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6407, "layer_w": [0.028, 0.018, 0.025, 0.041, 0.051, 0.014, 0.009, 0.009, 0.012, 0.04, 0.083, 0.103, 0.567]}
+{"step": 300, "loss": 0.9373, "lr": 0.0001, "grad_norm": 2.0409, "audio_hours_per_s": 0.432, "s_per_step": 0.5491, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.027, 0.017, 0.025, 0.041, 0.051, 0.014, 0.009, 0.009, 0.012, 0.04, 0.083, 0.104, 0.568]}
+{"step": 325, "loss": 0.941, "lr": 0.0001, "grad_norm": 3.8292, "audio_hours_per_s": 0.4463, "s_per_step": 0.5404, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.027, 0.017, 0.025, 0.041, 0.05, 0.014, 0.009, 0.009, 0.012, 0.039, 0.081, 0.102, 0.573]}
+{"step": 350, "loss": 0.9735, "lr": 0.0001, "grad_norm": 2.871, "audio_hours_per_s": 0.4316, "s_per_step": 0.5103, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.027, 0.017, 0.025, 0.041, 0.05, 0.014, 0.009, 0.009, 0.011, 0.039, 0.082, 0.103, 0.573]}
+{"step": 375, "loss": 1.0578, "lr": 0.0001, "grad_norm": 5.455, "audio_hours_per_s": 0.4146, "s_per_step": 0.5369, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.027, 0.017, 0.025, 0.041, 0.051, 0.014, 0.009, 0.009, 0.012, 0.039, 0.082, 0.102, 0.572]}
+{"step": 400, "loss": 1.085, "lr": 0.0001, "grad_norm": 2.3397, "audio_hours_per_s": 0.4131, "s_per_step": 0.5122, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.027, 0.017, 0.024, 0.04, 0.051, 0.014, 0.009, 0.009, 0.012, 0.039, 0.081, 0.101, 0.577]}
+{"step": 425, "loss": 1.0171, "lr": 0.0001, "grad_norm": 8.246, "audio_hours_per_s": 0.4256, "s_per_step": 0.5334, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.026, 0.016, 0.024, 0.04, 0.051, 0.014, 0.009, 0.009, 0.012, 0.039, 0.08, 0.101, 0.58]}
+{"step": 450, "loss": 0.9624, "lr": 0.0001, "grad_norm": 2.484, "audio_hours_per_s": 0.4432, "s_per_step": 0.5157, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.026, 0.016, 0.024, 0.04, 0.05, 0.014, 0.009, 0.009, 0.011, 0.038, 0.079, 0.101, 0.582]}
+{"step": 475, "loss": 1.022, "lr": 0.0001, "grad_norm": 3.7259, "audio_hours_per_s": 0.4072, "s_per_step": 0.5153, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.026, 0.016, 0.024, 0.039, 0.05, 0.014, 0.009, 0.009, 0.011, 0.038, 0.079, 0.101, 0.584]}
+{"step": 500, "loss": 0.9102, "lr": 0.0001, "grad_norm": 2.5555, "audio_hours_per_s": 0.4499, "s_per_step": 0.5287, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6407, "layer_w": [0.027, 0.016, 0.024, 0.039, 0.05, 0.014, 0.009, 0.009, 0.011, 0.038, 0.078, 0.099, 0.588]}
+{"step": 525, "loss": 0.9439, "lr": 0.0001, "grad_norm": 2.0516, "audio_hours_per_s": 0.4535, "s_per_step": 0.5166, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.027, 0.016, 0.024, 0.04, 0.051, 0.014, 0.009, 0.009, 0.011, 0.038, 0.078, 0.098, 0.585]}
+{"step": 550, "loss": 1.0153, "lr": 0.0001, "grad_norm": 2.5607, "audio_hours_per_s": 0.4231, "s_per_step": 0.5164, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.027, 0.016, 0.023, 0.039, 0.05, 0.014, 0.009, 0.009, 0.011, 0.038, 0.078, 0.098, 0.588]}
+{"step": 575, "loss": 1.0159, "lr": 0.0001, "grad_norm": 2.6698, "audio_hours_per_s": 0.4196, "s_per_step": 0.5024, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.027, 0.016, 0.023, 0.039, 0.05, 0.013, 0.009, 0.009, 0.011, 0.038, 0.078, 0.099, 0.587]}
+{"step": 600, "loss": 0.9423, "lr": 0.0001, "grad_norm": 2.138, "audio_hours_per_s": 0.442, "s_per_step": 0.5207, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6472, "layer_w": [0.026, 0.016, 0.023, 0.039, 0.05, 0.013, 0.009, 0.009, 0.011, 0.038, 0.078, 0.099, 0.586]}
+{"step": 625, "loss": 0.9651, "lr": 0.0001, "grad_norm": 2.405, "audio_hours_per_s": 0.4459, "s_per_step": 0.5264, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6472, "layer_w": [0.025, 0.015, 0.023, 0.039, 0.05, 0.013, 0.009, 0.009, 0.012, 0.039, 0.078, 0.099, 0.588]}
+{"step": 650, "loss": 0.9116, "lr": 0.0001, "grad_norm": 3.1231, "audio_hours_per_s": 0.4541, "s_per_step": 0.5397, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.025, 0.015, 0.023, 0.039, 0.05, 0.013, 0.009, 0.009, 0.011, 0.038, 0.078, 0.098, 0.593]}
+{"step": 675, "loss": 1.0496, "lr": 0.0001, "grad_norm": 2.8038, "audio_hours_per_s": 0.4258, "s_per_step": 0.4822, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6472, "layer_w": [0.025, 0.015, 0.022, 0.039, 0.05, 0.013, 0.009, 0.009, 0.011, 0.038, 0.077, 0.098, 0.595]}
+{"step": 700, "loss": 0.9547, "lr": 0.0001, "grad_norm": 1.8718, "audio_hours_per_s": 0.4339, "s_per_step": 0.505, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6472, "layer_w": [0.025, 0.015, 0.023, 0.039, 0.049, 0.013, 0.008, 0.009, 0.011, 0.038, 0.077, 0.097, 0.594]}
+{"step": 725, "loss": 0.9803, "lr": 0.0001, "grad_norm": 6.2919, "audio_hours_per_s": 0.4278, "s_per_step": 0.5313, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6472, "layer_w": [0.025, 0.015, 0.022, 0.038, 0.049, 0.013, 0.008, 0.009, 0.011, 0.038, 0.077, 0.097, 0.597]}
+{"step": 750, "loss": 0.9121, "lr": 0.0001, "grad_norm": 2.4873, "audio_hours_per_s": 0.4471, "s_per_step": 0.5398, "skipped": 0, "epoch": 2, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.026, 0.015, 0.022, 0.038, 0.049, 0.013, 0.008, 0.009, 0.012, 0.039, 0.079, 0.1, 0.59]}
+{"step": 775, "loss": 1.089, "lr": 0.0001, "grad_norm": 2.069, "audio_hours_per_s": 0.401, "s_per_step": 0.4836, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0296, "gpu_mem_gb": 58.6472, "layer_w": [0.025, 0.015, 0.022, 0.037, 0.048, 0.012, 0.008, 0.009, 0.011, 0.039, 0.078, 0.098, 0.597]}
+{"step": 800, "loss": 0.886, "lr": 0.0001, "grad_norm": 3.279, "audio_hours_per_s": 0.4319, "s_per_step": 0.5182, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.026, 0.016, 0.023, 0.039, 0.049, 0.013, 0.008, 0.009, 0.012, 0.039, 0.08, 0.098, 0.59]}
+{"step": 825, "loss": 0.8459, "lr": 0.0001, "grad_norm": 1.8699, "audio_hours_per_s": 0.4519, "s_per_step": 0.5601, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.026, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.011, 0.039, 0.079, 0.099, 0.592]}
+{"step": 850, "loss": 0.9002, "lr": 0.0001, "grad_norm": 4.0689, "audio_hours_per_s": 0.4311, "s_per_step": 0.5338, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.026, 0.016, 0.023, 0.039, 0.049, 0.013, 0.008, 0.009, 0.012, 0.039, 0.08, 0.102, 0.585]}
+{"step": 875, "loss": 0.8763, "lr": 0.0001, "grad_norm": 2.5432, "audio_hours_per_s": 0.464, "s_per_step": 0.5359, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.6472, "layer_w": [0.027, 0.016, 0.023, 0.039, 0.049, 0.013, 0.008, 0.009, 0.012, 0.039, 0.08, 0.102, 0.583]}
+{"step": 900, "loss": 0.8163, "lr": 0.0001, "grad_norm": 2.4369, "audio_hours_per_s": 0.4685, "s_per_step": 0.551, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.027, 0.016, 0.023, 0.039, 0.05, 0.013, 0.008, 0.009, 0.012, 0.04, 0.08, 0.101, 0.583]}
+{"step": 925, "loss": 0.976, "lr": 0.0001, "grad_norm": 2.4531, "audio_hours_per_s": 0.4324, "s_per_step": 0.4998, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.6472, "layer_w": [0.026, 0.016, 0.023, 0.039, 0.049, 0.012, 0.008, 0.009, 0.012, 0.04, 0.08, 0.1, 0.586]}
+{"step": 950, "loss": 0.8352, "lr": 0.0001, "grad_norm": 2.824, "audio_hours_per_s": 0.4522, "s_per_step": 0.5572, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.027, 0.016, 0.023, 0.039, 0.05, 0.012, 0.008, 0.009, 0.012, 0.04, 0.079, 0.1, 0.585]}
+{"step": 975, "loss": 0.9513, "lr": 0.0001, "grad_norm": 2.6522, "audio_hours_per_s": 0.4255, "s_per_step": 0.5134, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.026, 0.016, 0.023, 0.039, 0.049, 0.012, 0.008, 0.009, 0.012, 0.04, 0.078, 0.1, 0.588]}
+{"step": 1000, "loss": 1.0435, "lr": 0.0001, "grad_norm": 2.9047, "audio_hours_per_s": 0.412, "s_per_step": 0.4811, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.027, 0.015, 0.023, 0.039, 0.049, 0.012, 0.008, 0.009, 0.012, 0.039, 0.077, 0.1, 0.59]}
+[eval step 1000] WER 24.82% WER_seg 18.10% CER 7.33% CER_nospace 7.29% (2000 utts)
+   ref: ඔය වගේ
+   hyp: ඔය වගේ
+   ref: ඉස්කෝලෙදි විතරයි
+   hyp: ඉස්කෝලෙදි විතරයි
+   ref: මේක මං හැදුවේ
+   hyp: මේක මං ඇදුව
+{"step": 1025, "loss": 0.8745, "lr": 0.0001, "grad_norm": 2.1039, "audio_hours_per_s": 0.1912, "s_per_step": 1.2749, "skipped": 0, "epoch": 3, "data_wait_frac": 0.5709, "gpu_mem_gb": 58.6472, "layer_w": [0.026, 0.016, 0.023, 0.039, 0.05, 0.013, 0.008, 0.009, 0.012, 0.04, 0.079, 0.102, 0.583]}
+{"step": 1050, "loss": 1.0279, "lr": 0.0001, "grad_norm": 6.3773, "audio_hours_per_s": 0.3856, "s_per_step": 0.4529, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0008, "gpu_mem_gb": 58.6472, "layer_w": [0.026, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.039, 0.077, 0.102, 0.589]}
+{"step": 1075, "loss": 0.8891, "lr": 0.0001, "grad_norm": 2.8033, "audio_hours_per_s": 0.4459, "s_per_step": 0.5274, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.6472, "layer_w": [0.027, 0.015, 0.022, 0.039, 0.05, 0.012, 0.008, 0.009, 0.012, 0.039, 0.077, 0.103, 0.587]}
+{"step": 1100, "loss": 0.8641, "lr": 0.0001, "grad_norm": 2.1486, "audio_hours_per_s": 0.452, "s_per_step": 0.5167, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.039, 0.078, 0.102, 0.588]}
+{"step": 1125, "loss": 0.8812, "lr": 0.0001, "grad_norm": 3.5317, "audio_hours_per_s": 0.4462, "s_per_step": 0.5268, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.039, 0.078, 0.102, 0.589]}
+{"step": 1150, "loss": 0.8569, "lr": 0.0001, "grad_norm": 3.3244, "audio_hours_per_s": 0.4464, "s_per_step": 0.5299, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.039, 0.077, 0.102, 0.59]}
+{"step": 1175, "loss": 1.0046, "lr": 0.0001, "grad_norm": 6.2564, "audio_hours_per_s": 0.4198, "s_per_step": 0.4859, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.038, 0.076, 0.102, 0.592]}
+{"step": 1200, "loss": 0.9335, "lr": 0.0001, "grad_norm": 2.408, "audio_hours_per_s": 0.4363, "s_per_step": 0.5202, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.015, 0.022, 0.039, 0.049, 0.012, 0.008, 0.009, 0.012, 0.039, 0.077, 0.104, 0.587]}
+{"step": 1225, "loss": 0.9651, "lr": 0.0001, "grad_norm": 2.8963, "audio_hours_per_s": 0.4181, "s_per_step": 0.4909, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.039, 0.076, 0.101, 0.594]}
+{"step": 1250, "loss": 0.8436, "lr": 0.0001, "grad_norm": 3.6414, "audio_hours_per_s": 0.4577, "s_per_step": 0.5388, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.039, 0.076, 0.101, 0.595]}
+{"step": 1275, "loss": 0.934, "lr": 0.0001, "grad_norm": 22.7558, "audio_hours_per_s": 0.4314, "s_per_step": 0.5196, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.04, 0.077, 0.102, 0.59]}
+{"step": 1300, "loss": 1.0287, "lr": 0.0001, "grad_norm": 2.7023, "audio_hours_per_s": 0.4269, "s_per_step": 0.513, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0008, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.015, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.04, 0.077, 0.101, 0.592]}
+{"step": 1325, "loss": 1.0117, "lr": 0.0001, "grad_norm": 2.2762, "audio_hours_per_s": 0.417, "s_per_step": 0.4938, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.014, 0.022, 0.038, 0.049, 0.012, 0.008, 0.009, 0.013, 0.041, 0.079, 0.104, 0.583]}
+{"step": 1350, "loss": 1.0495, "lr": 0.0001, "grad_norm": 4.2744, "audio_hours_per_s": 0.4219, "s_per_step": 0.4826, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.014, 0.021, 0.038, 0.048, 0.012, 0.008, 0.009, 0.012, 0.04, 0.078, 0.101, 0.592]}
+{"step": 1375, "loss": 0.9653, "lr": 0.0001, "grad_norm": 6.3865, "audio_hours_per_s": 0.4099, "s_per_step": 0.5528, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0008, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.014, 0.021, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.04, 0.079, 0.101, 0.589]}
+{"step": 1400, "loss": 0.9297, "lr": 0.0001, "grad_norm": 4.4119, "audio_hours_per_s": 0.4342, "s_per_step": 0.5205, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.014, 0.021, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.04, 0.079, 0.102, 0.589]}
+{"step": 1425, "loss": 0.9582, "lr": 0.0001, "grad_norm": 2.7508, "audio_hours_per_s": 0.4374, "s_per_step": 0.5227, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.014, 0.021, 0.037, 0.048, 0.012, 0.008, 0.009, 0.012, 0.039, 0.076, 0.1, 0.598]}
+{"step": 1450, "loss": 1.0073, "lr": 0.0001, "grad_norm": 2.7818, "audio_hours_per_s": 0.4292, "s_per_step": 0.4993, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.037, 0.048, 0.012, 0.008, 0.009, 0.012, 0.039, 0.077, 0.1, 0.596]}
+{"step": 1475, "loss": 0.9017, "lr": 0.0001, "grad_norm": 2.3518, "audio_hours_per_s": 0.4334, "s_per_step": 0.527, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.014, 0.021, 0.038, 0.048, 0.012, 0.008, 0.009, 0.012, 0.039, 0.077, 0.101, 0.595]}
+{"step": 1500, "loss": 0.8824, "lr": 0.0001, "grad_norm": 6.1201, "audio_hours_per_s": 0.4321, "s_per_step": 0.538, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.026, 0.014, 0.021, 0.038, 0.048, 0.012, 0.008, 0.009, 0.012, 0.039, 0.076, 0.103, 0.594]}
+{"step": 1525, "loss": 1.0029, "lr": 0.0001, "grad_norm": 3.7657, "audio_hours_per_s": 0.4201, "s_per_step": 0.5263, "skipped": 0, "epoch": 3, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.038, 0.049, 0.012, 0.008, 0.009, 0.012, 0.039, 0.077, 0.102, 0.592]}
+{"step": 1550, "loss": 0.899, "lr": 0.0001, "grad_norm": 1.9329, "audio_hours_per_s": 0.421, "s_per_step": 0.5651, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0414, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.038, 0.048, 0.012, 0.008, 0.009, 0.012, 0.039, 0.076, 0.101, 0.596]}
+{"step": 1575, "loss": 0.8383, "lr": 0.0001, "grad_norm": 2.4362, "audio_hours_per_s": 0.4482, "s_per_step": 0.5286, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.049, 0.012, 0.008, 0.009, 0.013, 0.04, 0.078, 0.104, 0.587]}
+{"step": 1600, "loss": 0.8775, "lr": 0.0001, "grad_norm": 2.5564, "audio_hours_per_s": 0.4372, "s_per_step": 0.5293, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.039, 0.049, 0.012, 0.008, 0.009, 0.013, 0.04, 0.078, 0.105, 0.583]}
+{"step": 1625, "loss": 0.8102, "lr": 0.0001, "grad_norm": 3.3489, "audio_hours_per_s": 0.4465, "s_per_step": 0.5187, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.038, 0.049, 0.012, 0.008, 0.009, 0.013, 0.04, 0.079, 0.105, 0.584]}
+{"step": 1650, "loss": 0.8518, "lr": 0.0001, "grad_norm": 2.5384, "audio_hours_per_s": 0.4388, "s_per_step": 0.5292, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.05, 0.012, 0.008, 0.009, 0.013, 0.041, 0.08, 0.106, 0.579]}
+{"step": 1675, "loss": 0.9073, "lr": 0.0001, "grad_norm": 2.2561, "audio_hours_per_s": 0.4245, "s_per_step": 0.5017, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.038, 0.049, 0.012, 0.008, 0.009, 0.013, 0.04, 0.078, 0.105, 0.585]}
+{"step": 1700, "loss": 0.9261, "lr": 0.0001, "grad_norm": 2.8988, "audio_hours_per_s": 0.4117, "s_per_step": 0.4872, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.05, 0.012, 0.008, 0.009, 0.013, 0.04, 0.078, 0.107, 0.582]}
+{"step": 1725, "loss": 0.9098, "lr": 0.0001, "grad_norm": 29.9273, "audio_hours_per_s": 0.4402, "s_per_step": 0.5007, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.05, 0.012, 0.008, 0.01, 0.013, 0.04, 0.077, 0.106, 0.582]}
+{"step": 1750, "loss": 0.8763, "lr": 0.0001, "grad_norm": 6.5228, "audio_hours_per_s": 0.4381, "s_per_step": 0.5023, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.038, 0.05, 0.012, 0.008, 0.01, 0.013, 0.04, 0.077, 0.107, 0.583]}
+{"step": 1775, "loss": 0.8362, "lr": 0.0001, "grad_norm": 1.9765, "audio_hours_per_s": 0.4479, "s_per_step": 0.5388, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.05, 0.012, 0.008, 0.01, 0.013, 0.04, 0.077, 0.108, 0.58]}
+{"step": 1800, "loss": 0.8326, "lr": 0.0001, "grad_norm": 8.2706, "audio_hours_per_s": 0.4426, "s_per_step": 0.5441, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.05, 0.012, 0.008, 0.01, 0.013, 0.04, 0.076, 0.109, 0.581]}
+{"step": 1825, "loss": 0.9712, "lr": 0.0001, "grad_norm": 2.3941, "audio_hours_per_s": 0.4238, "s_per_step": 0.4974, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.05, 0.012, 0.008, 0.01, 0.013, 0.04, 0.076, 0.107, 0.584]}
+{"step": 1850, "loss": 0.9095, "lr": 0.0001, "grad_norm": 2.3715, "audio_hours_per_s": 0.4327, "s_per_step": 0.5117, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.05, 0.012, 0.008, 0.01, 0.013, 0.04, 0.076, 0.107, 0.583]}
+{"step": 1875, "loss": 0.9247, "lr": 0.0001, "grad_norm": 8.2308, "audio_hours_per_s": 0.4341, "s_per_step": 0.4869, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.051, 0.012, 0.008, 0.01, 0.014, 0.041, 0.076, 0.109, 0.579]}
+{"step": 1900, "loss": 0.9255, "lr": 0.0001, "grad_norm": 2.6679, "audio_hours_per_s": 0.4281, "s_per_step": 0.4994, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.051, 0.012, 0.008, 0.01, 0.014, 0.04, 0.076, 0.106, 0.583]}
+{"step": 1925, "loss": 0.8904, "lr": 0.0001, "grad_norm": 5.1267, "audio_hours_per_s": 0.4205, "s_per_step": 0.5044, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.051, 0.012, 0.008, 0.01, 0.014, 0.041, 0.077, 0.106, 0.58]}
+{"step": 1950, "loss": 0.8393, "lr": 0.0001, "grad_norm": 3.422, "audio_hours_per_s": 0.4506, "s_per_step": 0.5373, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.021, 0.039, 0.051, 0.012, 0.008, 0.01, 0.014, 0.041, 0.077, 0.108, 0.576]}
+{"step": 1975, "loss": 0.8171, "lr": 0.0001, "grad_norm": 2.6635, "audio_hours_per_s": 0.4551, "s_per_step": 0.5273, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.039, 0.051, 0.012, 0.008, 0.01, 0.014, 0.041, 0.077, 0.107, 0.58]}
+{"step": 2000, "loss": 0.9268, "lr": 0.0001, "grad_norm": 4.6311, "audio_hours_per_s": 0.4122, "s_per_step": 0.5109, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.013, 0.021, 0.039, 0.051, 0.012, 0.008, 0.01, 0.014, 0.041, 0.077, 0.108, 0.58]}
+[eval step 2000] WER 25.07% WER_seg 18.46% CER 7.36% CER_nospace 7.32% (2000 utts)
+   ref: ඔය වගේ
+   hyp: ඔය වගේ
+   ref: ඉස්කෝලෙදි විතරයි
+   hyp: ඉස්කෝලෙදි විතරයි
+   ref: මේක මං හැදුවේ
+   hyp: මේක මං හැදුව
+{"step": 2025, "loss": 0.8535, "lr": 0.0001, "grad_norm": 2.6181, "audio_hours_per_s": 0.1538, "s_per_step": 1.4635, "skipped": 0, "epoch": 4, "data_wait_frac": 0.6492, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.021, 0.039, 0.051, 0.012, 0.008, 0.01, 0.014, 0.041, 0.078, 0.11, 0.574]}
+{"step": 2050, "loss": 0.89, "lr": 0.0001, "grad_norm": 2.0466, "audio_hours_per_s": 0.4333, "s_per_step": 0.5023, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.021, 0.039, 0.051, 0.012, 0.008, 0.01, 0.014, 0.041, 0.078, 0.108, 0.577]}
+{"step": 2075, "loss": 0.8848, "lr": 0.0001, "grad_norm": 3.8379, "audio_hours_per_s": 0.4358, "s_per_step": 0.5158, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.04, 0.052, 0.012, 0.008, 0.01, 0.014, 0.042, 0.079, 0.109, 0.571]}
+{"step": 2100, "loss": 0.8091, "lr": 0.0001, "grad_norm": 3.1686, "audio_hours_per_s": 0.4613, "s_per_step": 0.5315, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.04, 0.052, 0.012, 0.008, 0.01, 0.014, 0.042, 0.078, 0.106, 0.576]}
+{"step": 2125, "loss": 0.881, "lr": 0.0001, "grad_norm": 1.9521, "audio_hours_per_s": 0.4522, "s_per_step": 0.5112, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.04, 0.052, 0.012, 0.008, 0.01, 0.014, 0.042, 0.077, 0.106, 0.576]}
+{"step": 2150, "loss": 0.8336, "lr": 0.0001, "grad_norm": 2.2629, "audio_hours_per_s": 0.4437, "s_per_step": 0.5241, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.04, 0.053, 0.012, 0.008, 0.01, 0.014, 0.042, 0.077, 0.107, 0.574]}
+{"step": 2175, "loss": 0.9277, "lr": 0.0001, "grad_norm": 4.2064, "audio_hours_per_s": 0.4116, "s_per_step": 0.5231, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.041, 0.053, 0.012, 0.008, 0.01, 0.014, 0.042, 0.078, 0.107, 0.57]}
+{"step": 2200, "loss": 0.8372, "lr": 0.0001, "grad_norm": 2.0361, "audio_hours_per_s": 0.4466, "s_per_step": 0.5414, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.021, 0.04, 0.053, 0.012, 0.008, 0.01, 0.014, 0.042, 0.077, 0.108, 0.573]}
+{"step": 2225, "loss": 0.8876, "lr": 0.0001, "grad_norm": 1.735, "audio_hours_per_s": 0.4302, "s_per_step": 0.5124, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.022, 0.04, 0.053, 0.012, 0.008, 0.01, 0.015, 0.042, 0.077, 0.108, 0.573]}
+{"step": 2250, "loss": 0.8764, "lr": 0.0001, "grad_norm": 1.9114, "audio_hours_per_s": 0.4304, "s_per_step": 0.539, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.04, 0.053, 0.012, 0.008, 0.01, 0.015, 0.042, 0.077, 0.108, 0.572]}
+{"step": 2275, "loss": 0.8091, "lr": 0.0001, "grad_norm": 3.0344, "audio_hours_per_s": 0.4564, "s_per_step": 0.5213, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.041, 0.052, 0.011, 0.008, 0.01, 0.015, 0.042, 0.077, 0.107, 0.574]}
+{"step": 2300, "loss": 0.8989, "lr": 0.0001, "grad_norm": 2.3592, "audio_hours_per_s": 0.4397, "s_per_step": 0.4966, "skipped": 0, "epoch": 4, "data_wait_frac": 0.0011, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.041, 0.052, 0.011, 0.008, 0.01, 0.015, 0.042, 0.077, 0.108, 0.571]}
+{"step": 2325, "loss": 0.8054, "lr": 0.0001, "grad_norm": 2.2183, "audio_hours_per_s": 0.4347, "s_per_step": 0.5581, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0387, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.041, 0.053, 0.011, 0.008, 0.01, 0.015, 0.042, 0.077, 0.109, 0.568]}
+{"step": 2350, "loss": 0.8934, "lr": 0.0001, "grad_norm": 3.1256, "audio_hours_per_s": 0.416, "s_per_step": 0.4897, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.041, 0.052, 0.011, 0.008, 0.01, 0.015, 0.043, 0.077, 0.11, 0.568]}
+{"step": 2375, "loss": 0.8518, "lr": 0.0001, "grad_norm": 3.0994, "audio_hours_per_s": 0.4272, "s_per_step": 0.5111, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.041, 0.053, 0.012, 0.008, 0.011, 0.015, 0.043, 0.078, 0.109, 0.566]}
+{"step": 2400, "loss": 0.8312, "lr": 0.0001, "grad_norm": 5.1325, "audio_hours_per_s": 0.4317, "s_per_step": 0.5398, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.022, 0.042, 0.054, 0.012, 0.009, 0.011, 0.016, 0.044, 0.078, 0.108, 0.564]}
+{"step": 2425, "loss": 0.7836, "lr": 0.0001, "grad_norm": 3.6995, "audio_hours_per_s": 0.4327, "s_per_step": 0.5141, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.042, 0.054, 0.012, 0.009, 0.011, 0.016, 0.044, 0.079, 0.109, 0.56]}
+{"step": 2450, "loss": 0.8256, "lr": 0.0001, "grad_norm": 1.8712, "audio_hours_per_s": 0.4296, "s_per_step": 0.5055, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.042, 0.054, 0.012, 0.009, 0.011, 0.016, 0.044, 0.079, 0.109, 0.558]}
+{"step": 2475, "loss": 0.8459, "lr": 0.0001, "grad_norm": 2.8064, "audio_hours_per_s": 0.4269, "s_per_step": 0.5153, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.015, 0.023, 0.043, 0.055, 0.012, 0.009, 0.011, 0.016, 0.045, 0.08, 0.109, 0.556]}
+{"step": 2500, "loss": 0.7651, "lr": 0.0001, "grad_norm": 2.9725, "audio_hours_per_s": 0.4574, "s_per_step": 0.519, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.043, 0.055, 0.012, 0.009, 0.011, 0.016, 0.045, 0.08, 0.11, 0.552]}
+{"step": 2525, "loss": 0.9144, "lr": 0.0001, "grad_norm": 6.9466, "audio_hours_per_s": 0.4155, "s_per_step": 0.4941, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.043, 0.056, 0.012, 0.009, 0.011, 0.016, 0.045, 0.08, 0.11, 0.551]}
+{"step": 2550, "loss": 0.8102, "lr": 0.0001, "grad_norm": 4.1633, "audio_hours_per_s": 0.4433, "s_per_step": 0.5103, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.043, 0.056, 0.012, 0.009, 0.011, 0.016, 0.044, 0.078, 0.108, 0.556]}
+{"step": 2575, "loss": 0.8432, "lr": 0.0001, "grad_norm": 5.7911, "audio_hours_per_s": 0.4336, "s_per_step": 0.4712, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.043, 0.056, 0.012, 0.009, 0.011, 0.016, 0.044, 0.078, 0.108, 0.556]}
+{"step": 2600, "loss": 0.8936, "lr": 0.0001, "grad_norm": 3.1486, "audio_hours_per_s": 0.4233, "s_per_step": 0.4774, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.043, 0.055, 0.012, 0.009, 0.011, 0.016, 0.044, 0.077, 0.108, 0.56]}
+{"step": 2625, "loss": 0.8389, "lr": 0.0001, "grad_norm": 6.3575, "audio_hours_per_s": 0.4434, "s_per_step": 0.5347, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.043, 0.055, 0.012, 0.009, 0.011, 0.016, 0.044, 0.077, 0.108, 0.56]}
+{"step": 2650, "loss": 0.817, "lr": 0.0001, "grad_norm": 2.939, "audio_hours_per_s": 0.4406, "s_per_step": 0.5252, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.043, 0.055, 0.012, 0.009, 0.011, 0.016, 0.044, 0.077, 0.108, 0.56]}
+{"step": 2675, "loss": 0.8991, "lr": 0.0001, "grad_norm": 2.3494, "audio_hours_per_s": 0.4439, "s_per_step": 0.4861, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.022, 0.043, 0.055, 0.012, 0.009, 0.011, 0.016, 0.044, 0.077, 0.109, 0.56]}
+{"step": 2700, "loss": 0.8194, "lr": 0.0001, "grad_norm": 3.0988, "audio_hours_per_s": 0.4411, "s_per_step": 0.53, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.044, 0.056, 0.012, 0.009, 0.011, 0.017, 0.044, 0.077, 0.11, 0.556]}
+{"step": 2725, "loss": 0.8666, "lr": 0.0001, "grad_norm": 4.196, "audio_hours_per_s": 0.4318, "s_per_step": 0.484, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.043, 0.056, 0.012, 0.009, 0.011, 0.017, 0.044, 0.077, 0.109, 0.558]}
+{"step": 2750, "loss": 0.9426, "lr": 0.0001, "grad_norm": 5.551, "audio_hours_per_s": 0.4239, "s_per_step": 0.4937, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.023, 0.044, 0.056, 0.012, 0.009, 0.011, 0.017, 0.045, 0.076, 0.11, 0.556]}
+{"step": 2775, "loss": 0.7648, "lr": 0.0001, "grad_norm": 2.0948, "audio_hours_per_s": 0.4566, "s_per_step": 0.5536, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.044, 0.056, 0.012, 0.009, 0.011, 0.017, 0.045, 0.077, 0.11, 0.554]}
+{"step": 2800, "loss": 0.8527, "lr": 0.0001, "grad_norm": 4.8802, "audio_hours_per_s": 0.4357, "s_per_step": 0.5192, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.023, 0.044, 0.056, 0.012, 0.009, 0.012, 0.017, 0.044, 0.076, 0.109, 0.556]}
+{"step": 2825, "loss": 0.8037, "lr": 0.0001, "grad_norm": 2.3109, "audio_hours_per_s": 0.4462, "s_per_step": 0.5242, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.044, 0.057, 0.012, 0.009, 0.012, 0.017, 0.045, 0.077, 0.11, 0.553]}
+{"step": 2850, "loss": 0.8009, "lr": 0.0001, "grad_norm": 1.9336, "audio_hours_per_s": 0.4553, "s_per_step": 0.4975, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.045, 0.057, 0.012, 0.009, 0.012, 0.017, 0.045, 0.079, 0.111, 0.546]}
+{"step": 2875, "loss": 0.8111, "lr": 0.0001, "grad_norm": 4.2932, "audio_hours_per_s": 0.424, "s_per_step": 0.5587, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.044, 0.056, 0.012, 0.009, 0.012, 0.017, 0.045, 0.078, 0.109, 0.553]}
+{"step": 2900, "loss": 0.9095, "lr": 0.0001, "grad_norm": 6.1283, "audio_hours_per_s": 0.4183, "s_per_step": 0.5069, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.044, 0.056, 0.012, 0.009, 0.012, 0.017, 0.044, 0.077, 0.108, 0.557]}
+{"step": 2925, "loss": 0.8143, "lr": 0.0001, "grad_norm": 11.0327, "audio_hours_per_s": 0.4454, "s_per_step": 0.5233, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.057, 0.012, 0.009, 0.012, 0.017, 0.045, 0.078, 0.11, 0.549]}
+{"step": 2950, "loss": 0.754, "lr": 0.0001, "grad_norm": 1.8821, "audio_hours_per_s": 0.4503, "s_per_step": 0.5259, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.057, 0.012, 0.009, 0.012, 0.017, 0.045, 0.078, 0.11, 0.551]}
+{"step": 2975, "loss": 0.7489, "lr": 0.0001, "grad_norm": 2.3827, "audio_hours_per_s": 0.4587, "s_per_step": 0.5192, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.044, 0.057, 0.012, 0.009, 0.012, 0.017, 0.045, 0.078, 0.111, 0.549]}
+{"step": 3000, "loss": 0.7768, "lr": 0.0001, "grad_norm": 2.0912, "audio_hours_per_s": 0.455, "s_per_step": 0.5356, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.057, 0.012, 0.009, 0.012, 0.017, 0.045, 0.078, 0.111, 0.55]}
+[eval step 3000] WER 23.27% WER_seg 17.13% CER 6.89% CER_nospace 6.88% (2000 utts)
+   ref: ඔය වගේ
+   hyp: ඔය වගේ
+   ref: ඉස්කෝලෙදි විතරයි
+   hyp: ඉස්කෝලෙදි විතරයි
+   ref: මේක මං හැදුවේ
+   hyp: මේක මං ඇදුව
+{"step": 3025, "loss": 0.7872, "lr": 0.0001, "grad_norm": 2.9772, "audio_hours_per_s": 0.1943, "s_per_step": 1.2577, "skipped": 0, "epoch": 5, "data_wait_frac": 0.5706, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.023, 0.044, 0.056, 0.012, 0.009, 0.012, 0.017, 0.045, 0.078, 0.11, 0.552]}
+{"step": 3050, "loss": 0.7792, "lr": 0.0001, "grad_norm": 3.5447, "audio_hours_per_s": 0.4332, "s_per_step": 0.5302, "skipped": 0, "epoch": 5, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.023, 0.045, 0.057, 0.012, 0.009, 0.012, 0.018, 0.045, 0.078, 0.111, 0.549]}
+{"step": 3075, "loss": 0.7737, "lr": 0.0001, "grad_norm": 2.8264, "audio_hours_per_s": 0.4548, "s_per_step": 0.5395, "skipped": 0, "epoch": 5, "data_wait_frac": 0.001, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.014, 0.023, 0.045, 0.057, 0.012, 0.009, 0.012, 0.018, 0.045, 0.078, 0.111, 0.548]}
+{"step": 3100, "loss": 0.9047, "lr": 0.0001, "grad_norm": 3.2456, "audio_hours_per_s": 0.4025, "s_per_step": 0.514, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0134, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.014, 0.023, 0.044, 0.057, 0.012, 0.009, 0.012, 0.018, 0.046, 0.078, 0.111, 0.55]}
+{"step": 3125, "loss": 0.7555, "lr": 0.0001, "grad_norm": 3.4001, "audio_hours_per_s": 0.4413, "s_per_step": 0.4969, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.058, 0.012, 0.009, 0.012, 0.018, 0.046, 0.079, 0.111, 0.545]}
+{"step": 3150, "loss": 0.7862, "lr": 0.0001, "grad_norm": 2.5585, "audio_hours_per_s": 0.4439, "s_per_step": 0.5386, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.058, 0.012, 0.009, 0.012, 0.018, 0.046, 0.079, 0.112, 0.543]}
+{"step": 3175, "loss": 0.7688, "lr": 0.0001, "grad_norm": 2.3819, "audio_hours_per_s": 0.4431, "s_per_step": 0.5167, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.058, 0.012, 0.009, 0.012, 0.018, 0.046, 0.079, 0.111, 0.543]}
+{"step": 3200, "loss": 0.8056, "lr": 0.0001, "grad_norm": 1.9784, "audio_hours_per_s": 0.4363, "s_per_step": 0.5029, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.059, 0.012, 0.009, 0.012, 0.019, 0.047, 0.079, 0.112, 0.539]}
+{"step": 3225, "loss": 0.8214, "lr": 0.0001, "grad_norm": 2.4678, "audio_hours_per_s": 0.4423, "s_per_step": 0.4635, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.059, 0.012, 0.009, 0.012, 0.019, 0.046, 0.079, 0.111, 0.543]}
+{"step": 3250, "loss": 0.7788, "lr": 0.0001, "grad_norm": 3.6323, "audio_hours_per_s": 0.4245, "s_per_step": 0.5358, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0008, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.058, 0.012, 0.009, 0.012, 0.018, 0.046, 0.078, 0.11, 0.545]}
+{"step": 3275, "loss": 0.8542, "lr": 0.0001, "grad_norm": 2.1797, "audio_hours_per_s": 0.4136, "s_per_step": 0.4945, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.059, 0.012, 0.009, 0.012, 0.019, 0.047, 0.079, 0.111, 0.54]}
+{"step": 3300, "loss": 0.7707, "lr": 0.0, "grad_norm": 2.7603, "audio_hours_per_s": 0.461, "s_per_step": 0.5183, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.045, 0.06, 0.012, 0.009, 0.013, 0.019, 0.047, 0.079, 0.112, 0.539]}
+{"step": 3325, "loss": 0.7553, "lr": 0.0, "grad_norm": 2.7844, "audio_hours_per_s": 0.448, "s_per_step": 0.518, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.06, 0.012, 0.009, 0.013, 0.019, 0.047, 0.079, 0.111, 0.538]}
+{"step": 3350, "loss": 0.8391, "lr": 0.0, "grad_norm": 2.2385, "audio_hours_per_s": 0.4269, "s_per_step": 0.4884, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.06, 0.012, 0.009, 0.013, 0.019, 0.047, 0.079, 0.112, 0.537]}
+{"step": 3375, "loss": 0.8331, "lr": 0.0, "grad_norm": 2.7712, "audio_hours_per_s": 0.4318, "s_per_step": 0.5024, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.06, 0.012, 0.009, 0.013, 0.019, 0.047, 0.078, 0.111, 0.54]}
+{"step": 3400, "loss": 0.6979, "lr": 0.0, "grad_norm": 1.8246, "audio_hours_per_s": 0.4616, "s_per_step": 0.5255, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.06, 0.012, 0.009, 0.013, 0.019, 0.048, 0.079, 0.113, 0.536]}
+{"step": 3425, "loss": 0.7551, "lr": 0.0, "grad_norm": 1.7129, "audio_hours_per_s": 0.4515, "s_per_step": 0.5367, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.06, 0.012, 0.009, 0.013, 0.019, 0.048, 0.079, 0.112, 0.537]}
+{"step": 3450, "loss": 0.8041, "lr": 0.0, "grad_norm": 1.9594, "audio_hours_per_s": 0.4463, "s_per_step": 0.5391, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.06, 0.011, 0.009, 0.013, 0.019, 0.048, 0.078, 0.111, 0.539]}
+{"step": 3475, "loss": 0.8603, "lr": 0.0, "grad_norm": 3.5182, "audio_hours_per_s": 0.4366, "s_per_step": 0.5263, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.015, 0.023, 0.046, 0.06, 0.011, 0.009, 0.013, 0.019, 0.048, 0.078, 0.112, 0.539]}
+{"step": 3500, "loss": 0.7912, "lr": 0.0, "grad_norm": 4.3831, "audio_hours_per_s": 0.4436, "s_per_step": 0.5086, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.06, 0.011, 0.009, 0.013, 0.02, 0.048, 0.079, 0.113, 0.535]}
+{"step": 3525, "loss": 0.7643, "lr": 0.0, "grad_norm": 7.6857, "audio_hours_per_s": 0.4236, "s_per_step": 0.5213, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.06, 0.012, 0.009, 0.013, 0.02, 0.048, 0.08, 0.114, 0.532]}
+{"step": 3550, "loss": 0.8132, "lr": 0.0, "grad_norm": 2.0432, "audio_hours_per_s": 0.4495, "s_per_step": 0.5371, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.046, 0.06, 0.011, 0.009, 0.013, 0.02, 0.048, 0.08, 0.113, 0.533]}
+{"step": 3575, "loss": 0.7938, "lr": 0.0, "grad_norm": 3.4209, "audio_hours_per_s": 0.444, "s_per_step": 0.5284, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.047, 0.061, 0.011, 0.009, 0.013, 0.02, 0.049, 0.08, 0.114, 0.53]}
+{"step": 3600, "loss": 0.7751, "lr": 0.0, "grad_norm": 3.9345, "audio_hours_per_s": 0.447, "s_per_step": 0.525, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.047, 0.061, 0.011, 0.009, 0.013, 0.02, 0.048, 0.08, 0.115, 0.529]}
+{"step": 3625, "loss": 0.8585, "lr": 0.0, "grad_norm": 3.2723, "audio_hours_per_s": 0.4277, "s_per_step": 0.4847, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.047, 0.061, 0.011, 0.009, 0.013, 0.02, 0.048, 0.079, 0.113, 0.533]}
+{"step": 3650, "loss": 0.837, "lr": 0.0, "grad_norm": 6.0915, "audio_hours_per_s": 0.4248, "s_per_step": 0.4786, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.047, 0.061, 0.011, 0.009, 0.013, 0.02, 0.049, 0.08, 0.114, 0.53]}
+{"step": 3675, "loss": 0.8377, "lr": 0.0, "grad_norm": 2.3142, "audio_hours_per_s": 0.437, "s_per_step": 0.52, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.023, 0.047, 0.061, 0.011, 0.009, 0.013, 0.02, 0.048, 0.08, 0.113, 0.531]}
+{"step": 3700, "loss": 0.7511, "lr": 0.0, "grad_norm": 3.1272, "audio_hours_per_s": 0.4552, "s_per_step": 0.5187, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.047, 0.061, 0.011, 0.009, 0.013, 0.02, 0.048, 0.079, 0.112, 0.533]}
+{"step": 3725, "loss": 0.8623, "lr": 0.0, "grad_norm": 2.4898, "audio_hours_per_s": 0.4194, "s_per_step": 0.4898, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.047, 0.061, 0.011, 0.009, 0.013, 0.02, 0.048, 0.078, 0.112, 0.533]}
+{"step": 3750, "loss": 0.8507, "lr": 0.0, "grad_norm": 2.2467, "audio_hours_per_s": 0.422, "s_per_step": 0.4824, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.047, 0.062, 0.011, 0.009, 0.013, 0.021, 0.049, 0.079, 0.112, 0.531]}
+{"step": 3775, "loss": 0.7439, "lr": 0.0, "grad_norm": 2.2772, "audio_hours_per_s": 0.4544, "s_per_step": 0.5464, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.047, 0.062, 0.011, 0.009, 0.013, 0.021, 0.049, 0.078, 0.112, 0.532]}
+{"step": 3800, "loss": 0.739, "lr": 0.0, "grad_norm": 2.5906, "audio_hours_per_s": 0.4523, "s_per_step": 0.5525, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.048, 0.062, 0.011, 0.009, 0.013, 0.021, 0.049, 0.079, 0.112, 0.53]}
+{"step": 3825, "loss": 0.7743, "lr": 0.0, "grad_norm": 2.6062, "audio_hours_per_s": 0.4478, "s_per_step": 0.4945, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.048, 0.062, 0.011, 0.009, 0.013, 0.021, 0.049, 0.079, 0.112, 0.529]}
+{"step": 3850, "loss": 0.7707, "lr": 0.0, "grad_norm": 2.0434, "audio_hours_per_s": 0.4448, "s_per_step": 0.5309, "skipped": 0, "epoch": 6, "data_wait_frac": 0.0009, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.048, 0.062, 0.011, 0.009, 0.013, 0.021, 0.049, 0.08, 0.113, 0.526]}
+{"step": 3875, "loss": 0.7691, "lr": 0.0, "grad_norm": 2.6072, "audio_hours_per_s": 0.4272, "s_per_step": 0.5436, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0379, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.048, 0.062, 0.011, 0.009, 0.013, 0.021, 0.049, 0.08, 0.113, 0.525]}
+{"step": 3900, "loss": 0.7321, "lr": 0.0, "grad_norm": 2.7453, "audio_hours_per_s": 0.4488, "s_per_step": 0.506, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.023, 0.048, 0.062, 0.011, 0.009, 0.013, 0.021, 0.049, 0.08, 0.113, 0.525]}
+{"step": 3925, "loss": 0.7047, "lr": 0.0, "grad_norm": 3.0839, "audio_hours_per_s": 0.4558, "s_per_step": 0.5236, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.029, 0.015, 0.024, 0.048, 0.063, 0.011, 0.009, 0.013, 0.021, 0.049, 0.08, 0.114, 0.523]}
+{"step": 3950, "loss": 0.8524, "lr": 0.0, "grad_norm": 5.7693, "audio_hours_per_s": 0.4142, "s_per_step": 0.5251, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0008, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.048, 0.063, 0.011, 0.009, 0.013, 0.021, 0.05, 0.08, 0.113, 0.524]}
+{"step": 3975, "loss": 0.7195, "lr": 0.0, "grad_norm": 3.8184, "audio_hours_per_s": 0.4569, "s_per_step": 0.5239, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0007, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.049, 0.063, 0.011, 0.009, 0.014, 0.022, 0.05, 0.081, 0.114, 0.52]}
+{"step": 4000, "loss": 0.66, "lr": 0.0, "grad_norm": 2.4981, "audio_hours_per_s": 0.4604, "s_per_step": 0.543, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.049, 0.063, 0.011, 0.009, 0.014, 0.022, 0.05, 0.08, 0.114, 0.522]}
+[eval step 4000] WER 22.69% WER_seg 16.69% CER 6.74% CER_nospace 6.71% (2000 utts)
+   ref: ඔය වගේ
+   hyp: ඔය වගේ
+   ref: ඉස්කෝලෙදි විතරයි
+   hyp: ඉස්කෝලෙදි විතරයි
+   ref: මේක මං හැදුවේ
+   hyp: ඒක මං හැදුව
+{"step": 4025, "loss": 0.8123, "lr": 0.0, "grad_norm": 1.8398, "audio_hours_per_s": 0.1721, "s_per_step": 1.3218, "skipped": 0, "epoch": 7, "data_wait_frac": 0.5834, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.049, 0.063, 0.011, 0.009, 0.014, 0.022, 0.051, 0.081, 0.116, 0.517]}
+{"step": 4050, "loss": 0.8151, "lr": 0.0, "grad_norm": 2.4472, "audio_hours_per_s": 0.4278, "s_per_step": 0.4656, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0006, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.049, 0.064, 0.011, 0.009, 0.014, 0.022, 0.051, 0.081, 0.116, 0.515]}
+{"step": 4075, "loss": 0.7841, "lr": 0.0, "grad_norm": 3.6453, "audio_hours_per_s": 0.4348, "s_per_step": 0.516, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.049, 0.064, 0.011, 0.009, 0.014, 0.022, 0.051, 0.08, 0.115, 0.518]}
+{"step": 4100, "loss": 0.8189, "lr": 0.0, "grad_norm": 2.6071, "audio_hours_per_s": 0.4319, "s_per_step": 0.5071, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.049, 0.064, 0.011, 0.009, 0.014, 0.022, 0.051, 0.081, 0.115, 0.517]}
+{"step": 4125, "loss": 0.7036, "lr": 0.0, "grad_norm": 3.3671, "audio_hours_per_s": 0.4607, "s_per_step": 0.535, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.05, 0.064, 0.011, 0.009, 0.014, 0.022, 0.051, 0.08, 0.115, 0.517]}
+{"step": 4150, "loss": 0.8118, "lr": 0.0, "grad_norm": 68.2737, "audio_hours_per_s": 0.4337, "s_per_step": 0.4923, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.049, 0.064, 0.011, 0.009, 0.014, 0.022, 0.051, 0.08, 0.115, 0.518]}
+{"step": 4175, "loss": 0.684, "lr": 0.0, "grad_norm": 2.0953, "audio_hours_per_s": 0.4661, "s_per_step": 0.5329, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.049, 0.064, 0.011, 0.009, 0.014, 0.022, 0.051, 0.081, 0.115, 0.517]}
+{"step": 4200, "loss": 0.7731, "lr": 0.0, "grad_norm": 1.8743, "audio_hours_per_s": 0.4361, "s_per_step": 0.4904, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.05, 0.064, 0.011, 0.009, 0.014, 0.022, 0.051, 0.08, 0.115, 0.518]}
+{"step": 4225, "loss": 0.7201, "lr": 0.0, "grad_norm": 5.5921, "audio_hours_per_s": 0.4583, "s_per_step": 0.534, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.05, 0.064, 0.011, 0.009, 0.014, 0.022, 0.051, 0.08, 0.115, 0.517]}
+{"step": 4250, "loss": 0.8328, "lr": 0.0, "grad_norm": 2.942, "audio_hours_per_s": 0.4314, "s_per_step": 0.4417, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.05, 0.065, 0.011, 0.009, 0.014, 0.023, 0.051, 0.08, 0.115, 0.516]}
+{"step": 4275, "loss": 0.7677, "lr": 0.0, "grad_norm": 2.6337, "audio_hours_per_s": 0.453, "s_per_step": 0.4912, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.05, 0.064, 0.011, 0.009, 0.014, 0.023, 0.051, 0.079, 0.115, 0.517]}
+{"step": 4300, "loss": 0.7796, "lr": 0.0, "grad_norm": 19.0, "audio_hours_per_s": 0.4485, "s_per_step": 0.4793, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.05, 0.064, 0.011, 0.009, 0.014, 0.023, 0.051, 0.079, 0.115, 0.518]}
+{"step": 4325, "loss": 0.7956, "lr": 0.0, "grad_norm": 2.8482, "audio_hours_per_s": 0.4333, "s_per_step": 0.5176, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.065, 0.011, 0.009, 0.014, 0.023, 0.051, 0.08, 0.116, 0.513]}
+{"step": 4350, "loss": 0.7138, "lr": 0.0, "grad_norm": 1.7303, "audio_hours_per_s": 0.4539, "s_per_step": 0.5473, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.065, 0.011, 0.009, 0.014, 0.023, 0.051, 0.08, 0.115, 0.513]}
+{"step": 4375, "loss": 0.7196, "lr": 0.0, "grad_norm": 3.3593, "audio_hours_per_s": 0.448, "s_per_step": 0.5072, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.065, 0.011, 0.009, 0.014, 0.023, 0.051, 0.08, 0.116, 0.512]}
+{"step": 4400, "loss": 0.8842, "lr": 0.0, "grad_norm": 3.3216, "audio_hours_per_s": 0.4153, "s_per_step": 0.4769, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.065, 0.011, 0.009, 0.014, 0.023, 0.052, 0.08, 0.116, 0.512]}
+{"step": 4425, "loss": 0.8215, "lr": 0.0, "grad_norm": 2.1737, "audio_hours_per_s": 0.4167, "s_per_step": 0.4635, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.065, 0.011, 0.009, 0.014, 0.023, 0.051, 0.08, 0.116, 0.512]}
+{"step": 4450, "loss": 0.7492, "lr": 0.0, "grad_norm": 6.1512, "audio_hours_per_s": 0.4548, "s_per_step": 0.4845, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.065, 0.011, 0.009, 0.014, 0.023, 0.051, 0.08, 0.115, 0.513]}
+{"step": 4475, "loss": 0.6861, "lr": 0.0, "grad_norm": 2.9416, "audio_hours_per_s": 0.4617, "s_per_step": 0.5185, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.065, 0.011, 0.009, 0.014, 0.023, 0.051, 0.079, 0.115, 0.513]}
+{"step": 4500, "loss": 0.7579, "lr": 0.0, "grad_norm": 2.6063, "audio_hours_per_s": 0.4357, "s_per_step": 0.5209, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.066, 0.011, 0.009, 0.014, 0.024, 0.052, 0.08, 0.116, 0.511]}
+{"step": 4525, "loss": 0.7573, "lr": 0.0, "grad_norm": 2.1649, "audio_hours_per_s": 0.4474, "s_per_step": 0.516, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.065, 0.011, 0.009, 0.014, 0.023, 0.052, 0.079, 0.115, 0.513]}
+{"step": 4550, "loss": 0.763, "lr": 0.0, "grad_norm": 3.8328, "audio_hours_per_s": 0.44, "s_per_step": 0.5094, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.066, 0.011, 0.009, 0.014, 0.024, 0.052, 0.08, 0.115, 0.511]}
+{"step": 4575, "loss": 0.7894, "lr": 0.0, "grad_norm": 3.5514, "audio_hours_per_s": 0.4338, "s_per_step": 0.5199, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.066, 0.011, 0.009, 0.014, 0.024, 0.052, 0.08, 0.116, 0.51]}
+{"step": 4600, "loss": 0.7035, "lr": 0.0, "grad_norm": 1.9504, "audio_hours_per_s": 0.4596, "s_per_step": 0.5349, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.024, 0.051, 0.066, 0.011, 0.009, 0.014, 0.024, 0.052, 0.079, 0.115, 0.512]}
+{"step": 4625, "loss": 0.7249, "lr": 0.0, "grad_norm": 6.5785, "audio_hours_per_s": 0.4416, "s_per_step": 0.5224, "skipped": 0, "epoch": 7, "data_wait_frac": 0.0008, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.051, 0.066, 0.011, 0.009, 0.014, 0.024, 0.052, 0.08, 0.116, 0.509]}
+{"step": 4650, "loss": 0.657, "lr": 0.0, "grad_norm": 2.2101, "audio_hours_per_s": 0.4426, "s_per_step": 0.5681, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0314, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.052, 0.067, 0.011, 0.009, 0.015, 0.024, 0.052, 0.08, 0.116, 0.507]}
+{"step": 4675, "loss": 0.715, "lr": 0.0, "grad_norm": 1.8202, "audio_hours_per_s": 0.4531, "s_per_step": 0.5197, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.052, 0.067, 0.011, 0.009, 0.015, 0.024, 0.052, 0.081, 0.116, 0.506]}
+{"step": 4700, "loss": 0.7192, "lr": 0.0, "grad_norm": 3.4214, "audio_hours_per_s": 0.4489, "s_per_step": 0.5467, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.052, 0.067, 0.011, 0.009, 0.015, 0.024, 0.053, 0.081, 0.116, 0.504]}
+{"step": 4725, "loss": 0.8104, "lr": 0.0, "grad_norm": 2.518, "audio_hours_per_s": 0.4406, "s_per_step": 0.4566, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.052, 0.067, 0.011, 0.009, 0.015, 0.024, 0.052, 0.08, 0.115, 0.508]}
+{"step": 4750, "loss": 0.7748, "lr": 0.0, "grad_norm": 3.498, "audio_hours_per_s": 0.4327, "s_per_step": 0.5232, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.052, 0.067, 0.011, 0.009, 0.015, 0.024, 0.052, 0.08, 0.115, 0.508]}
+{"step": 4775, "loss": 0.7272, "lr": 0.0, "grad_norm": 5.1961, "audio_hours_per_s": 0.4498, "s_per_step": 0.5328, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.052, 0.067, 0.011, 0.009, 0.015, 0.025, 0.053, 0.08, 0.116, 0.506]}
+{"step": 4800, "loss": 0.7061, "lr": 0.0, "grad_norm": 2.973, "audio_hours_per_s": 0.4552, "s_per_step": 0.4835, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.052, 0.067, 0.011, 0.009, 0.015, 0.025, 0.053, 0.08, 0.116, 0.506]}
+{"step": 4825, "loss": 0.7892, "lr": 0.0, "grad_norm": 2.0909, "audio_hours_per_s": 0.4362, "s_per_step": 0.5021, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.052, 0.068, 0.011, 0.009, 0.015, 0.025, 0.053, 0.081, 0.116, 0.503]}
+{"step": 4850, "loss": 0.7545, "lr": 0.0, "grad_norm": 2.1143, "audio_hours_per_s": 0.4515, "s_per_step": 0.5008, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.011, 0.009, 0.015, 0.025, 0.053, 0.08, 0.115, 0.502]}
+{"step": 4875, "loss": 0.7556, "lr": 0.0, "grad_norm": 3.0042, "audio_hours_per_s": 0.4236, "s_per_step": 0.4793, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.052, 0.068, 0.011, 0.009, 0.015, 0.025, 0.053, 0.08, 0.115, 0.505]}
+{"step": 4900, "loss": 0.7477, "lr": 0.0, "grad_norm": 3.1659, "audio_hours_per_s": 0.4367, "s_per_step": 0.5009, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.011, 0.009, 0.015, 0.025, 0.053, 0.081, 0.116, 0.502]}
+{"step": 4925, "loss": 0.7179, "lr": 0.0, "grad_norm": 2.1011, "audio_hours_per_s": 0.454, "s_per_step": 0.5478, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.025, 0.053, 0.08, 0.116, 0.502]}
+{"step": 4950, "loss": 0.7949, "lr": 0.0, "grad_norm": 8.4163, "audio_hours_per_s": 0.44, "s_per_step": 0.4927, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.025, 0.053, 0.08, 0.115, 0.504]}
+{"step": 4975, "loss": 0.6499, "lr": 0.0, "grad_norm": 2.6324, "audio_hours_per_s": 0.4662, "s_per_step": 0.5368, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.025, 0.053, 0.08, 0.115, 0.504]}
+{"step": 5000, "loss": 0.6952, "lr": 0.0, "grad_norm": 3.2348, "audio_hours_per_s": 0.4644, "s_per_step": 0.5174, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.025, 0.053, 0.08, 0.116, 0.502]}
+[eval step 5000] WER 22.15% WER_seg 16.07% CER 6.53% CER_nospace 6.49% (2000 utts)
+   ref: ඔය වගේ
+   hyp: ඔය වගේ
+   ref: ඉස්කෝලෙදි විතරයි
+   hyp: ඉස්කෝලෙදි විතරයි
+   ref: මේක මං හැදුවේ
+   hyp: මේක මං හැදුව
+{"step": 5025, "loss": 0.742, "lr": 0.0, "grad_norm": 3.3401, "audio_hours_per_s": 0.1337, "s_per_step": 1.6939, "skipped": 0, "epoch": 8, "data_wait_frac": 0.6961, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.025, 0.053, 0.08, 0.116, 0.501]}
+{"step": 5050, "loss": 0.7053, "lr": 0.0, "grad_norm": 3.241, "audio_hours_per_s": 0.4529, "s_per_step": 0.5023, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.025, 0.053, 0.08, 0.115, 0.503]}
+{"step": 5075, "loss": 0.7076, "lr": 0.0, "grad_norm": 14.9383, "audio_hours_per_s": 0.4481, "s_per_step": 0.4964, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.025, 0.053, 0.08, 0.115, 0.502]}
+{"step": 5100, "loss": 0.7326, "lr": 0.0, "grad_norm": 2.7137, "audio_hours_per_s": 0.453, "s_per_step": 0.5152, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.501]}
+{"step": 5125, "loss": 0.7392, "lr": 0.0, "grad_norm": 5.2344, "audio_hours_per_s": 0.4429, "s_per_step": 0.4978, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.501]}
+{"step": 5150, "loss": 0.7579, "lr": 0.0, "grad_norm": 2.185, "audio_hours_per_s": 0.4418, "s_per_step": 0.5012, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.499]}
+{"step": 5175, "loss": 0.7887, "lr": 0.0, "grad_norm": 3.314, "audio_hours_per_s": 0.4384, "s_per_step": 0.477, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.499]}
+{"step": 5200, "loss": 0.754, "lr": 0.0, "grad_norm": 1.8026, "audio_hours_per_s": 0.4346, "s_per_step": 0.5215, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.053, 0.068, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.5]}
+{"step": 5225, "loss": 0.6815, "lr": 0.0, "grad_norm": 2.404, "audio_hours_per_s": 0.4465, "s_per_step": 0.5301, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.015, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.498]}
+{"step": 5250, "loss": 0.6541, "lr": 0.0, "grad_norm": 2.0475, "audio_hours_per_s": 0.4658, "s_per_step": 0.5125, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.499]}
+{"step": 5275, "loss": 0.6696, "lr": 0.0, "grad_norm": 2.0566, "audio_hours_per_s": 0.4593, "s_per_step": 0.5044, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.497]}
+{"step": 5300, "loss": 0.7915, "lr": 0.0, "grad_norm": 3.2243, "audio_hours_per_s": 0.4349, "s_per_step": 0.4603, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.497]}
+{"step": 5325, "loss": 0.7097, "lr": 0.0, "grad_norm": 2.748, "audio_hours_per_s": 0.4519, "s_per_step": 0.4823, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.496]}
+{"step": 5350, "loss": 0.7255, "lr": 0.0, "grad_norm": 7.0956, "audio_hours_per_s": 0.4488, "s_per_step": 0.5027, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.495]}
+{"step": 5375, "loss": 0.7293, "lr": 0.0, "grad_norm": 3.8532, "audio_hours_per_s": 0.4467, "s_per_step": 0.5195, "skipped": 0, "epoch": 8, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.497]}
+{"step": 5400, "loss": 0.8152, "lr": 0.0, "grad_norm": 1.6439, "audio_hours_per_s": 0.4068, "s_per_step": 0.4886, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0399, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.496]}
+{"step": 5425, "loss": 0.7031, "lr": 0.0, "grad_norm": 2.6636, "audio_hours_per_s": 0.4074, "s_per_step": 0.5467, "skipped": 0, "epoch": 9, "data_wait_frac": 0.001, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.055, 0.081, 0.116, 0.495]}
+{"step": 5450, "loss": 0.727, "lr": 0.0, "grad_norm": 2.7235, "audio_hours_per_s": 0.4374, "s_per_step": 0.5386, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0008, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.026, 0.054, 0.081, 0.116, 0.496]}
+{"step": 5475, "loss": 0.6301, "lr": 0.0, "grad_norm": 3.2187, "audio_hours_per_s": 0.4612, "s_per_step": 0.5378, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.054, 0.069, 0.01, 0.009, 0.015, 0.027, 0.055, 0.081, 0.116, 0.495]}
+{"step": 5500, "loss": 0.7309, "lr": 0.0, "grad_norm": 3.9552, "audio_hours_per_s": 0.4441, "s_per_step": 0.4641, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.069, 0.01, 0.009, 0.015, 0.027, 0.055, 0.081, 0.116, 0.495]}
+{"step": 5525, "loss": 0.7443, "lr": 0.0, "grad_norm": 2.9268, "audio_hours_per_s": 0.4331, "s_per_step": 0.4738, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.069, 0.01, 0.009, 0.015, 0.027, 0.055, 0.081, 0.116, 0.495]}
+{"step": 5550, "loss": 0.6798, "lr": 0.0, "grad_norm": 3.5719, "audio_hours_per_s": 0.4508, "s_per_step": 0.5197, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.015, 0.027, 0.055, 0.081, 0.116, 0.494]}
+{"step": 5575, "loss": 0.7514, "lr": 0.0, "grad_norm": 2.3577, "audio_hours_per_s": 0.4353, "s_per_step": 0.4666, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.081, 0.117, 0.493]}
+{"step": 5600, "loss": 0.7385, "lr": 0.0, "grad_norm": 2.0081, "audio_hours_per_s": 0.4449, "s_per_step": 0.5019, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.069, 0.01, 0.009, 0.015, 0.027, 0.055, 0.08, 0.116, 0.494]}
+{"step": 5625, "loss": 0.6681, "lr": 0.0, "grad_norm": 2.3719, "audio_hours_per_s": 0.4527, "s_per_step": 0.5387, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.08, 0.116, 0.494]}
+{"step": 5650, "loss": 0.7008, "lr": 0.0, "grad_norm": 2.3165, "audio_hours_per_s": 0.4541, "s_per_step": 0.517, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.081, 0.116, 0.493]}
+{"step": 5675, "loss": 0.638, "lr": 0.0, "grad_norm": 4.2271, "audio_hours_per_s": 0.4626, "s_per_step": 0.5344, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.08, 0.116, 0.494]}
+{"step": 5700, "loss": 0.7201, "lr": 0.0, "grad_norm": 2.201, "audio_hours_per_s": 0.4475, "s_per_step": 0.5027, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0005, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.081, 0.116, 0.493]}
+{"step": 5725, "loss": 0.653, "lr": 0.0, "grad_norm": 1.9353, "audio_hours_per_s": 0.4567, "s_per_step": 0.5505, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.081, 0.116, 0.492]}
+{"step": 5750, "loss": 0.814, "lr": 0.0, "grad_norm": 2.7868, "audio_hours_per_s": 0.411, "s_per_step": 0.4888, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.081, 0.116, 0.492]}
+{"step": 5775, "loss": 0.718, "lr": 0.0, "grad_norm": 1.7011, "audio_hours_per_s": 0.4451, "s_per_step": 0.5449, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.081, 0.116, 0.491]}
+{"step": 5800, "loss": 0.7012, "lr": 0.0, "grad_norm": 2.3069, "audio_hours_per_s": 0.459, "s_per_step": 0.5197, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.026, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.081, 0.116, 0.49]}
+{"step": 5825, "loss": 0.746, "lr": 0.0, "grad_norm": 2.652, "audio_hours_per_s": 0.4397, "s_per_step": 0.4837, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.026, 0.056, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.081, 0.116, 0.49]}
+{"step": 5850, "loss": 0.6902, "lr": 0.0, "grad_norm": 3.3666, "audio_hours_per_s": 0.4533, "s_per_step": 0.535, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.026, 0.056, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.081, 0.116, 0.491]}
+{"step": 5875, "loss": 0.6849, "lr": 0.0, "grad_norm": 2.3994, "audio_hours_per_s": 0.4561, "s_per_step": 0.5182, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.08, 0.116, 0.492]}
+{"step": 5900, "loss": 0.6621, "lr": 0.0, "grad_norm": 5.3441, "audio_hours_per_s": 0.4602, "s_per_step": 0.5022, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.08, 0.116, 0.492]}
+{"step": 5925, "loss": 0.7511, "lr": 0.0, "grad_norm": 2.0388, "audio_hours_per_s": 0.44, "s_per_step": 0.5, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.027, 0.016, 0.025, 0.055, 0.07, 0.01, 0.009, 0.016, 0.027, 0.055, 0.08, 0.116, 0.492]}
+{"step": 5950, "loss": 0.7167, "lr": 0.0, "grad_norm": 7.5253, "audio_hours_per_s": 0.4397, "s_per_step": 0.522, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0003, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.026, 0.056, 0.07, 0.01, 0.009, 0.016, 0.028, 0.055, 0.081, 0.116, 0.491]}
+{"step": 5975, "loss": 0.7684, "lr": 0.0, "grad_norm": 2.2138, "audio_hours_per_s": 0.4309, "s_per_step": 0.5052, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.026, 0.056, 0.07, 0.01, 0.009, 0.016, 0.028, 0.055, 0.081, 0.116, 0.491]}
+{"step": 6000, "loss": 0.6393, "lr": 0.0, "grad_norm": 2.6103, "audio_hours_per_s": 0.4526, "s_per_step": 0.4852, "skipped": 0, "epoch": 9, "data_wait_frac": 0.0004, "gpu_mem_gb": 58.654, "layer_w": [0.028, 0.016, 0.026, 0.056, 0.07, 0.01, 0.009, 0.016, 0.028, 0.055, 0.081, 0.116, 0.49]}
+[eval step 6000] WER 22.19% WER_seg 16.06% CER 6.58% CER_nospace 6.55% (2000 utts)
+   ref: ඔය වගේ
+   hyp: ඔය වගේ
+   ref: ඉස්කෝලෙදි විතරයි
+   hyp: ඉස්කෝලෙදි විතරයි
+   ref: මේක මං හැදුවේ
+   hyp: මේක මං හැදුව
+done at step 6000; best dev CER 6.53%
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-mqkeaT9n5u3ElngLCm0gPV

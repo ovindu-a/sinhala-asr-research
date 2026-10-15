@@ -1,0 +1,26 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-mG2kgDj16zI9D4CqEmvAqL
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+├── 🔨 Created function pack_v6.
+├── 🔨 Created function slr52_extra.
+├── 🔨 Created function train.
+├── 🔨 Created function evaluate.
+├── 🔨 Created function eval_whisper.
+├── 🔨 Created function build_lm.
+├── 🔨 Created function lm_dump.
+└── 🔨 Created function lm_decode.
++ python scripts/08_lm_decode.py decode --ckpt /runs/v6x_top8/best --lm /data/lm/si_4gram --out /runs/v6x_top8/best/lm --alphas 0.35 --betas 1.0
+alpha 0.35 beta 1.0: WER 17.88% WER_seg 12.58% CER 6.53%
+best on dev2k {'alpha': 0.35, 'beta': 1.0, 'wer': 0.1787980589772303, 'cer': 0.06533942558746736, 'cer_nospace': 0.06498744387793927, 'wer_seg': 0.1257932064203061, 'utts': 1000}
+overall    WER 14.72%  WER_seg 8.95%  CER 3.68%  CER_nospace 3.41%  (15860 utts)
+bizbrains  WER 35.55%  WER_seg 31.76%  CER 20.55%  CER_nospace 21.63%  (98 utts)
+linga      WER 21.20%  WER_seg 9.42%  CER 3.83%  CER_nospace 3.02%  (86 utts)
+openslr    WER 13.51%  WER_seg 7.68%  CER 2.87%  CER_nospace 2.56%  (15500 utts)
+youtube    WER 30.46%  WER_seg 25.59%  CER 11.63%  CER_nospace 12.07%  (176 utts)
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-mG2kgDj16zI9D4CqEmvAqL

@@ -1,0 +1,60 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-DJR4lvtxZjLBAdlarAHJHc
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+├── 🔨 Created function pack_v6.
+├── 🔨 Created function slr52_extra.
+├── 🔨 Created function train.
+├── 🔨 Created function evaluate.
+└── 🔨 Created function eval_whisper.
++ python scripts/06_slr52_extra.py --v6-train-manifest /data/manifests/ss_v6/train.jsonl --v6-packed /data/packed/ss_v6/train --out v6_plus_slr52
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+v6 train: 123,205 rows, Counter({'openslr': 119280, 'youtube': 2456, 'bizbrains': 781, 'linga': 688})
+v6 validation: 15,763 rows, Counter({'openslr': 15146, 'youtube': 433, 'bizbrains': 98, 'linga': 86})
+v6 test: 15,860 rows, Counter({'openslr': 15500, 'youtube': 176, 'bizbrains': 98, 'linga': 86})
+SLR-52: 185,293 utts, 478 speakers
+v6 validation: 2,726 openslr clips matched by unique sentence -> 57 speakers
+v6 test: 2,789 openslr clips matched by unique sentence -> 58 speakers
+v6 train: 21,828 openslr clips matched by unique sentence -> 387 speakers
+held-out (val+test) speakers: 110; also matched in v6 train: 19 (>=3 matches on both sides: 1)
+SLR-52 utts from held-out speakers (excluded): 43,236
+EXTRA: 48,547 utts (~58 h at SLR-52's ~4.3 s/utt), 368 speakers
+
+[1Apack extra:   0%|          | 0/29 [00:00<?, ?it/s]
+[1Apack extra:   3%|▎         | 1/29 [00:06<03:04,  6.59s/it]
+[1Apack extra:   7%|▋         | 2/29 [00:11<02:27,  5.47s/it]
+[1Apack extra:  10%|█         | 3/29 [00:15<02:05,  4.83s/it]
+[1Apack extra:  14%|█▍        | 4/29 [00:19<01:49,  4.40s/it]
+[1Apack extra:  17%|█▋        | 5/29 [00:23<01:44,  4.37s/it]
+[1Apack extra:  21%|██        | 6/29 [00:27<01:39,  4.32s/it]
+[1Apack extra:  24%|██▍       | 7/29 [00:32<01:37,  4.45s/it]
+[1Apack extra:  28%|██▊       | 8/29 [00:36<01:31,  4.38s/it]
+[1Apack extra:  31%|███       | 9/29 [00:41<01:29,  4.50s/it]
+[1Apack extra:  34%|███▍      | 10/29 [00:45<01:25,  4.49s/it]
+[1Apack extra:  38%|███▊      | 11/29 [00:48<01:12,  4.05s/it]
+[1Apack extra:  41%|████▏     | 12/29 [00:53<01:10,  4.17s/it]
+[1Apack extra:  45%|████▍     | 13/29 [00:57<01:07,  4.25s/it]
+[1Apack extra:  48%|████▊     | 14/29 [01:02<01:04,  4.30s/it]
+[1Apack extra:  52%|█████▏    | 15/29 [01:06<01:00,  4.30s/it]
+[1Apack extra:  55%|█████▌    | 16/29 [01:10<00:56,  4.33s/it]
+[1Apack extra:  59%|█████▊    | 17/29 [01:15<00:54,  4.52s/it]
+[1Apack extra:  62%|██████▏   | 18/29 [01:19<00:45,  4.16s/it]
+[1Apack extra:  66%|██████▌   | 19/29 [01:23<00:42,  4.28s/it]
+[1Apack extra:  69%|██████▉   | 20/29 [01:28<00:39,  4.43s/it]
+[1Apack extra:  72%|███████▏  | 21/29 [01:33<00:36,  4.52s/it]
+[1Apack extra:  76%|███████▌  | 22/29 [01:38<00:32,  4.61s/it]
+[1Apack extra:  79%|███████▉  | 23/29 [01:41<00:25,  4.17s/it]
+[1Apack extra:  83%|████████▎ | 24/29 [01:45<00:20,  4.20s/it]
+[1Apack extra:  86%|████████▌ | 25/29 [01:49<00:16,  4.22s/it]
+[1Apack extra:  90%|████████▉ | 26/29 [01:54<00:12,  4.31s/it]
+[1Apack extra:  93%|█████████▎| 27/29 [01:58<00:08,  4.34s/it]
+[1Apack extra:  97%|█████████▋| 28/29 [02:02<00:04,  4.31s/it]
+[1Apack extra: 100%|██████████| 29/29 [02:07<00:00,  4.29s/it]
+[1Apack extra: 100%|██████████| 29/29 [02:07<00:00,  4.38s/it]
+wrote v6_plus_slr52: 171,163 utts, 174.3 h (v6 113.0 h + extra 61.3 h)
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-DJR4lvtxZjLBAdlarAHJHc

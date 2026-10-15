@@ -1,0 +1,121 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-sAYmkMbEnUM6GVfShwpWBV
+Building image im-5Vjg5f1rn3gGchsjNCGwt1
+
+=> Step 0: FROM base
+
+=> Step 1: COPY --from=ghcr.io/astral-sh/uv:latest /uv /.uv/uv
+Getting image source signatures
+Copying blob sha256:cd39911837625b421ad90dd6a33b3ab56470794583bc57d1f665585f3153a159
+Copying blob sha256:f2eb7853ff114dc41ecf9800f9288774bd7d024b8866632399e08a9b8edad190
+Copying config sha256:f6e289b87a320629950d704181c971b5abb074bb26cfeca559d9deb871507007
+Writing manifest to image destination
+Unpacking OCI image
+   • unpacking rootfs ...     
+   • ... done                 
+   • unpacked image rootfs: /tmp/task-data/ta-01M4YPXDHSS6YGBNDESKA81SVB/registry-unpack2dxyM5
+
+=> Step 2: RUN /.uv/uv pip install --python $(command -v python) --compile-bytecode https://github.com/kpu/kenlm/archive/master.zip pyahocorasick
+Using Python 3.12.10 environment at: /usr/local
+Resolved 2 packages in 2.18s
+   Building kenlm @ https://github.com/kpu/kenlm/archive/master.zip
+      Built kenlm @ https://github.com/kpu/kenlm/archive/master.zip
+Prepared 2 packages in 28.71s
+Installed 2 packages in 3ms
+ + kenlm==0.2.0 (from https://github.com/kpu/kenlm/archive/master.zip)
+ + pyahocorasick==2.3.1
+Saving image...
+Image saved, took 1.23s
+
+Built image im-5Vjg5f1rn3gGchsjNCGwt1 in 34.55s
+
+
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+├── 🔨 Created function pack_v6.
+├── 🔨 Created function slr52_extra.
+├── 🔨 Created function train.
+├── 🔨 Created function evaluate.
+├── 🔨 Created function eval_whisper.
+├── 🔨 Created function build_lm.
+├── 🔨 Created function lm_dump.
+└── 🔨 Created function lm_decode.
++ python scripts/07_build_lm.py --out /data/lm/si_4gram --train-manifests /data/manifests/v6_plus_slr52/train.jsonl --exclude /data/manifests/ss_v6/test.jsonl /data/manifests/ss_v6/dev2k.jsonl --max-web-words 150000000
+exclusion patterns: 16,407
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+[1Awiki:   0%|          | 0/23065 [00:00<?, ?it/s]
+[1Awiki: 100%|██████████| 23065/23065 [00:18<00:00, 1239.36it/s]
+
+[1Afineweb2:   0%|          | 0/1186 [00:00<?, ?it/s]
+[1Afineweb2:   2%|▏         | 26/1186 [00:30<22:32,  1.17s/it]
+[1Afineweb2:   2%|▏         | 26/1186 [00:40<22:32,  1.17s/it]
+[1Afineweb2:   4%|▍         | 52/1186 [01:01<22:12,  1.17s/it]
+[1Afineweb2:   4%|▍         | 52/1186 [01:19<22:12,  1.17s/it]
+[1Afineweb2:   7%|▋         | 80/1186 [01:31<20:57,  1.14s/it]
+[1Afineweb2:   7%|▋         | 80/1186 [01:49<20:57,  1.14s/it]
+[1Afineweb2:   9%|▉         | 109/1186 [02:02<19:45,  1.10s/it]
+[1Afineweb2:   9%|▉         | 109/1186 [02:19<19:45,  1.10s/it]
+[1Afineweb2:  12%|█▏        | 139/1186 [02:33<18:44,  1.07s/it]
+[1Afineweb2:  12%|█▏        | 139/1186 [02:49<18:44,  1.07s/it]
+[1Afineweb2:  14%|█▍        | 167/1186 [03:03<18:13,  1.07s/it]
+[1Afineweb2:  14%|█▍        | 167/1186 [03:19<18:13,  1.07s/it]
+[1Afineweb2:  16%|█▋        | 195/1186 [03:33<17:44,  1.07s/it]
+[1Afineweb2:  16%|█▋        | 195/1186 [03:49<17:44,  1.07s/it]
+[1Afineweb2:  19%|█▉        | 225/1186 [04:03<16:52,  1.05s/it]
+[1Afineweb2:  19%|█▉        | 225/1186 [04:19<16:52,  1.05s/it]
+[1Afineweb2:  22%|██▏       | 255/1186 [04:33<16:07,  1.04s/it]
+[1Afineweb2:  22%|██▏       | 255/1186 [04:49<16:07,  1.04s/it]
+[1Afineweb2:  24%|██▍       | 287/1186 [05:04<15:10,  1.01s/it]
+[1Afineweb2:  24%|██▍       | 287/1186 [05:19<15:10,  1.01s/it]
+[1Afineweb2:  27%|██▋       | 318/1186 [05:34<14:27,  1.00it/s]
+[1Afineweb2:  27%|██▋       | 318/1186 [05:49<14:27,  1.00it/s]
+[1Afineweb2:  30%|██▉       | 351/1186 [06:05<13:37,  1.02it/s]
+[1Afineweb2:  30%|██▉       | 353/1186 [06:08<14:28,  1.04s/it]
+corpus: {'train_sent': 171163, 'train_words': 813184, 'wiki_sent': 508189, 'wiki_words': 7434255, 'wiki_dropped_leak': 2939, 'web_sent': 10396916, 'web_words': 150025513, 'web_dropped_leak': 131254}
+=== 1/5 Counting and sorting n-grams ===
+Reading /__modal/volumes/vo-5jHwOMejWPdKcjLkhrfpis/lm/si_4gram/corpus.txt
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Unigram tokens 158272952 types 2411454
+=== 2/5 Calculating and sorting adjusted counts ===
+Chain sizes: 1:28937448 2:74170351616 3:139069407232 4:222511054848
+Statistics:
+1 2411454 D1=0.706978 D2=1.01872 D3+=1.33153
+2 11797984/37887995 D1=0.78436 D2=1.09014 D3+=1.3291
+3 16802805/93777850 D1=0.883323 D2=1.19842 D3+=1.35333
+4 13371221/117232074 D1=0.847375 D2=1.43794 D3+=1.75904
+Memory estimate for binary LM:
+type      MB
+probing  943 assuming -p 1.5
+probing 1116 assuming -r models -p 1.5
+trie     512 without quantization
+trie     315 assuming -q 8 -b 8 quantization 
+trie     453 assuming -a 22 array pointer compression
+trie     256 assuming -a 22 -q 8 -b 8 array pointer compression and quantization
+=== 3/5 Calculating and sorting initial probabilities ===
+Chain sizes: 1:28937448 2:188767744 3:336056100 4:320909304
+=== 4/5 Calculating and writing order-interpolated probabilities ===
+Chain sizes: 1:28937448 2:188767744 3:336056100 4:320909304
+=== 5/5 Writing ARPA model ===
+Name:lmplz      VmRSS:71312 kB  RSSMax:88018668 kB      user:184.32     sys:35.4        CPU:219.72      real:264.655
+Reading /data/lm/si_4gram/lm.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Identifying n-grams omitted by SRI
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Quantizing
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Writing trie
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+SUCCESS
+lm: /data/lm/si_4gram/lm.bin 0.39 GB
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-sAYmkMbEnUM6GVfShwpWBV

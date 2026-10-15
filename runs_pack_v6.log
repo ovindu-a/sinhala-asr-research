@@ -1,0 +1,44 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-4n3Bema8NeZ6IK3BdO3DB1
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+├── 🔨 Created function pack_v6.
+├── 🔨 Created function train.
+└── 🔨 Created function evaluate.
++ python scripts/05_pack_parquet.py --file data/stratified_v6/validation.parquet --out /data/packed/ss_v6/dev2k --manifest /data/manifests/ss_v6/dev2k.jsonl --subsample 2000
+
+[1Avalidation:   0%|          | 0/15763 [00:00<?, ?it/s]
+[1Avalidation: 100%|██████████| 15763/15763 [00:07<00:00, 2071.99it/s]
+validation: kept 2,000 / 15,763 rows, 1.86 h, 0.21 GB; dropped {'digits': 0, 'empty': 0, 'dur': 0, 'decode': 0}
++ python scripts/05_pack_parquet.py --file data/stratified_v6/test.parquet --out /data/packed/ss_v6/test --manifest /data/manifests/ss_v6/test.jsonl
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+[1Atest:   0%|          | 0/15860 [00:00<?, ?it/s]
+[1Atest:  48%|████▊     | 7691/15860 [00:15<00:15, 512.72it/s]
+[1Atest: 100%|██████████| 15860/15860 [00:26<00:00, 589.45it/s]
+test: kept 15,860 / 15,860 rows, 14.66 h, 1.69 GB; dropped {'digits': 0, 'empty': 0, 'dur': 0, 'decode': 0}
++ python scripts/05_pack_parquet.py --file data/stratified_v6/train.parquet --out /data/packed/ss_v6/train --manifest /data/manifests/ss_v6/train.jsonl --drop-digits
+
+[1Atrain:   0%|          | 0/123205 [00:00<?, ?it/s]
+[1Atrain:   5%|▍         | 6001/123205 [00:15<04:56, 395.55it/s]
+[1Atrain:  11%|█▏        | 14000/123205 [00:28<04:36, 395.55it/s]
+[1Atrain:  13%|█▎        | 15469/123205 [00:30<03:21, 533.50it/s]
+[1Atrain:  20%|██        | 24937/123205 [00:46<02:56, 557.40it/s]
+[1Atrain:  26%|██▌       | 31858/123205 [00:58<02:43, 557.40it/s]
+[1Atrain:  28%|██▊       | 34001/123205 [01:01<02:35, 572.85it/s]
+[1Atrain:  39%|███▊      | 47505/123205 [01:16<01:49, 688.79it/s]
+[1Atrain:  47%|████▋     | 58000/123205 [01:28<01:34, 688.79it/s]
+[1Atrain:  50%|████▉     | 61282/123205 [01:31<01:20, 765.93it/s]
+[1Atrain:  62%|██████▏   | 75886/123205 [01:46<00:56, 833.27it/s]
+[1Atrain:  70%|███████   | 86801/123205 [01:58<00:43, 833.27it/s]
+[1Atrain:  73%|███████▎  | 89956/123205 [02:01<00:38, 866.42it/s]
+[1Atrain:  84%|████████▍ | 104026/123205 [02:17<00:21, 875.22it/s]
+[1Atrain:  93%|█████████▎| 114553/123205 [02:28<00:09, 875.22it/s]
+[1Atrain:  96%|█████████▌| 118404/123205 [02:32<00:05, 900.60it/s]train: 100%|██████████| 123205/123205 [02:37<00:00, 784.43it/s]
+train: kept 122,617 / 123,205 rows, 112.95 h, 13.01 GB; dropped {'digits': 588, 'empty': 0, 'dur': 0, 'decode': 0}
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-4n3Bema8NeZ6IK3BdO3DB1

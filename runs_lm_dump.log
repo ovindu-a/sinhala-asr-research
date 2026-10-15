@@ -1,0 +1,58 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-TuL2oDmdsfPZY63bWrevC4
+Building image im-5Vjg5f1rn3gGchsjNCGwt1
+
+=> Step 0: FROM base
+
+=> Step 1: COPY --from=ghcr.io/astral-sh/uv:latest /uv /.uv/uv
+Getting image source signatures
+Copying blob sha256:cd39911837625b421ad90dd6a33b3ab56470794583bc57d1f665585f3153a159
+Copying blob sha256:f2eb7853ff114dc41ecf9800f9288774bd7d024b8866632399e08a9b8edad190
+Copying config sha256:f6e289b87a320629950d704181c971b5abb074bb26cfeca559d9deb871507007
+Writing manifest to image destination
+Unpacking OCI image
+   • unpacking rootfs ...     
+   • ... done                 
+   • unpacked image rootfs: /tmp/task-data/ta-01M4YPXDHSS6YGBNDESKA81SVB/registry-unpack2dxyM5
+
+=> Step 2: RUN /.uv/uv pip install --python $(command -v python) --compile-bytecode https://github.com/kpu/kenlm/archive/master.zip pyahocorasick
+Using Python 3.12.10 environment at: /usr/local
+Resolved 2 packages in 2.18s
+   Building kenlm @ https://github.com/kpu/kenlm/archive/master.zip
+      Built kenlm @ https://github.com/kpu/kenlm/archive/master.zip
+Prepared 2 packages in 28.71s
+Installed 2 packages in 3ms
+ + kenlm==0.2.0 (from https://github.com/kpu/kenlm/archive/master.zip)
+ + pyahocorasick==2.3.1
+Saving image...
+Image saved, took 1.23s
+
+Built image im-5Vjg5f1rn3gGchsjNCGwt1 in 34.55s
+
+
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+├── 🔨 Created function pack_v6.
+├── 🔨 Created function slr52_extra.
+├── 🔨 Created function train.
+├── 🔨 Created function evaluate.
+├── 🔨 Created function eval_whisper.
+├── 🔨 Created function build_lm.
+├── 🔨 Created function lm_dump.
+└── 🔨 Created function lm_decode.
++ python scripts/08_lm_decode.py dump --ckpt /runs/v6_top6/best --split dev2k --split test --manifests /data/manifests/ss_v6 --packed /data/packed/ss_v6 --out /runs/v6_top6/best/lm
+
+[1ALoading weights:   0%|          | 0/1165 [00:00<?, ?it/s]
+[1ALoading weights:  29%|██▉       | 335/1165 [00:00<00:00, 3306.81it/s]
+[1ALoading weights:  60%|█████▉    | 698/1165 [00:00<00:00, 3475.83it/s]
+[1ALoading weights:  90%|████████▉ | 1046/1165 [00:00<00:00, 2942.21it/s]Loading weights: 100%|██████████| 1165/1165 [00:00<00:00, 3369.88it/s]
+loaded /data/packed/ss_v6/dev2k (0.21 GB) in 1s
+dumped dev2k: 2,000 utts
+loaded /data/packed/ss_v6/test (1.69 GB) in 3s
+dumped test: 15,860 utts
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-TuL2oDmdsfPZY63bWrevC4

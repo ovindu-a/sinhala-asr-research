@@ -1,0 +1,27 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-3BXPu6wooaGPdZAr3BZn9X
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+├── 🔨 Created function pack_v6.
+├── 🔨 Created function slr52_extra.
+├── 🔨 Created function train.
+├── 🔨 Created function evaluate.
+└── 🔨 Created function eval_whisper.
++ python scripts/06_slr52_extra.py --v6-train-manifest /data/manifests/ss_v6/train.jsonl --v6-packed /data/packed/ss_v6/train --out v6_plus_slr52 --dry-run
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+v6 train: 123,205 rows, Counter({'openslr': 119280, 'youtube': 2456, 'bizbrains': 781, 'linga': 688})
+v6 validation: 15,763 rows, Counter({'openslr': 15146, 'youtube': 433, 'bizbrains': 98, 'linga': 86})
+v6 test: 15,860 rows, Counter({'openslr': 15500, 'youtube': 176, 'bizbrains': 98, 'linga': 86})
+SLR-52: 185,293 utts, 478 speakers
+v6 validation: 2,726 openslr clips matched by unique sentence -> 57 speakers
+v6 test: 2,789 openslr clips matched by unique sentence -> 58 speakers
+v6 train: 21,828 openslr clips matched by unique sentence -> 387 speakers
+held-out (val+test) speakers: 110; also matched in v6 train: 19 (>=3 matches on both sides: 1)
+SLR-52 utts from held-out speakers (excluded): 43,236
+EXTRA: 48,547 utts (~58 h at SLR-52's ~4.3 s/utt), 368 speakers
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-3BXPu6wooaGPdZAr3BZn9X

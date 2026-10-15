@@ -1,0 +1,28 @@
+✓ Initialized. View run at 
+https://modal.com/apps/ovindu-a/main/ap-gW1dyMJMy7MRFPVUdJB1KP
+✓ Created objects.
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/modal_app.py
+├── 🔨 Created mount /Users/ovindu/Desktop/Repos/sinhala-asr/scripts
+├── 🔨 Created mount PythonPackage:sinhala_asr
+├── 🔨 Created function prep.
+├── 🔨 Created function pack.
+├── 🔨 Created function pack_v6.
+├── 🔨 Created function slr52_extra.
+├── 🔨 Created function train.
+├── 🔨 Created function evaluate.
+├── 🔨 Created function eval_whisper.
+├── 🔨 Created function build_lm.
+├── 🔨 Created function lm_dump.
+└── 🔨 Created function lm_decode.
++ python scripts/08_lm_decode.py dump --ckpt /runs/v6x_top8/best --split dev2k --split test --manifests /data/manifests/ss_v6 --packed /data/packed/ss_v6 --out /runs/v6x_top8/best/lm
+
+[1ALoading weights:   0%|          | 0/1165 [00:00<?, ?it/s]
+[1ALoading weights:  22%|██▏       | 260/1165 [00:00<00:00, 2500.75it/s]
+[1ALoading weights:  52%|█████▏    | 605/1165 [00:00<00:00, 2906.26it/s]
+[1ALoading weights:  77%|███████▋  | 895/1165 [00:00<00:00, 2532.15it/s]Loading weights: 100%|██████████| 1165/1165 [00:00<00:00, 3118.84it/s]
+loaded /data/packed/ss_v6/dev2k (0.21 GB) in 0s
+dumped dev2k: 2,000 utts
+loaded /data/packed/ss_v6/test (1.69 GB) in 1s
+dumped test: 15,860 utts
+✓ App completed. View run at 
+https://modal.com/apps/ovindu-a/main/ap-gW1dyMJMy7MRFPVUdJB1KP

@@ -3,7 +3,7 @@
 Goal: QUAN-style ASR (frozen EmbeddingGemma 2 audio encoder + CTC reader) for Sinhala.
 
 ## Budget
-**Modal hard cap: $15 total** (user instruction, 2026-10-14). Log every Modal job below *before* launching
+**Modal cap: $25 total** (raised from $15 by the user on 2026-10-15). Keep storage small: per run only `last/` + `best/`, overwritten in place. Log every Modal job below *before* launching
 the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (check modal.com/pricing).
 
 | Date | Job | Resources | Wall time | Est. cost | Running total |
@@ -14,6 +14,24 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-15 | pack audio (`modal_app.py::pack`) → /data/packed/openslr_probe | 8 CPU, 16 GB | ~20 min | ~$0.15 | ~$1.10 |
 | 2026-10-15 | probe_frozen + probe_top2 (packed), 2000 steps each | 2× A100-80GB | ~12 / ~16 min | ~$1.20 | ~$2.30 |
 | 2026-10-15 | **Checked `modal billing summary`: Ephemeral Apps $2.34 this month (all credits), billed $0.00** | | | | **$2.34 actual** |
+
+| 2026-10-15 | deleted step-1 data/checkpoints from volumes (kept metrics) | – | – | – | – |
+| 2026-10-15 | pack_v6 (SinhaSpeech stratified_v6 → packed PCM: train/dev2k/test) | 8 CPU, 16 GB | ~10 min | ~$0.10 | ~$2.45 |
+| 2026-10-15 | eval_whisper baseline (whisper-small-sinhala-run12-best) on v6 test | H100 | ~15 min est. | ~$1.2 | ~$3.65 |
+| 2026-10-15 | v6_top2 + v6_top6: 113 h v6 train, 7500 steps × 1000 s batch (~18 epochs) | 2× H100, 8 CPU, 48 GB | ~60–80 min each (max 165) | est. ~$9, max ~$25 if both hit timeout → watch | ~$12.7 |
+
+| 2026-10-15 | `modal billing summary` after v6 runs + whisper + top6 test eval | | | | **$9.36 actual** |
+| 2026-10-15 | slr52_extra analysis (1st try via HfFileSystem: too slow, stopped ~35 min) + fast rerun | 8 CPU | ~45 min | ~$0.5 | ~$9.9 |
+| 2026-10-15 | slr52_extra pack (48.5k SLR-52 utts, ~58 h, non-held-out speakers) merged after v6 train | 8 CPU, 32 GB | ~40 min est. | ~$0.5 | ~$10.4 |
+
+| 2026-10-15 | v6x_top8: init v6_top6/best, 174 h (v6 + SLR-52 extra), top-8 unfrozen, 6000 steps, lr 1e-4 | H100 | ~60 min est. | ~$5 | ~$15.5 |
+| 2026-10-15 | build_lm (CPU) + lm_dump v6_top6 (GPU, short) | 8 CPU / H100 | ~40 / ~5 min | ~$1 | ~$16.5 |
+
+| 2026-10-15 | **`modal billing summary` after v6x_top8 + build_lm + lm_dump(v6_top6)** | | | | **$16.48 actual** (≈$8.5 left of $25) |
+| 2026-10-15 | evaluate v6x_top8/best on test + lm_dump v6x_top8/best | 2× H100 (short) | ~10 / ~5 min | ~$1 | ~$17.5 |
+| 2026-10-15 | lm_decode v6x_top8 (α/β grid on 1k dev, then test) | 32 CPU | ~30–60 min est. | ~$1–2 | ~$19 |
+| 2026-10-15 | lm_decode crashed on test (QUAN beam: all-<unk> frame); fixed, reran test only with α=0.35 β=1.0 | 32 CPU | | | |
+| 2026-10-15 | **`modal billing summary`** | | | | **$16.71 actual** |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -28,7 +46,21 @@ Check actual spend any time: `modal billing summary` (this month) / `modal billi
   | probe_top2 (top-k 2)   | 63.2 / 21.4 | 50.3 / 15.3 | 45.8 / 13.2 | **44.8 / 12.8** |
   Still improving when LR hit the floor. Many "word errors" are spacing/spelling variants (නොහැකි වීමය vs නොහැකිවීමය; ref typo උත්සහ).
   Checkpoints: volume `sinhala-asr-runs`, `<run>/best` (QUAN-loadable). Metrics copied to `runs/<run>/metrics.jsonl`.
-- [ ] decide units (Gemma pieces vs words) and data scale-up
+- [x] SinhaSpeech v6 (113 h train), 7500 steps × 1000 s, H100. dev2k CER: top2 7.67%, **top6 6.76%**.
+  v6 TEST (15,860): ours v6_top6 WER 19.48 / WER_seg 14.00 / CER 5.09 vs Whisper-small run12-best (same scoring)
+  WER 15.50 / WER_seg 10.70 / CER 4.43 (published 15.52 / 4.36). Per-source in runs/*eval*.json on the volume.
+- [x] SLR-52 gap: 110 v6 val/test speakers identified via unique sentences; 48,547 extra utts (~58 h, 368 speakers) usable.
+- [x] v6x_top8: init v6_top6/best → 174 h (v6 + SLR-52 extra), top-8, 6000 steps, lr 1e-4. dev2k best CER **6.53%** (step 5000; WER 22.15 / WER_seg 16.07), vs v6_top6 6.76%. Test eval not run yet.
+- [x] KenLM: built `/data/lm/si_4gram/lm.bin` (0.39 GB; 160 M words: wiki 7.4 M + FineWeb-2 150 M + train 0.8 M; 134k leaking sentences dropped). Logits dumped for v6_top6/best. 
+  **v6 TEST results (15,860 utts, same normalization/scoring):**
+  | system | WER | WER_seg | CER |
+  |---|---|---|---|
+  | v6x_top8 greedy (+mark cleanup) | 19.27 | 13.47 | 4.91 |
+  | **v6x_top8 + KenLM (α 0.35, β 1.0, beam 32)** | **14.72** | **8.95** | **3.68** |
+  | Whisper-small run12-best | 15.50 | 10.70 | 4.43 |
+  59% of test sentences occur verbatim in v6 train (OpenSLR prompts repeat across speakers; split is speaker-only).
+  Sentences NOT in train (6,508): ours+LM 20.57/5.59 vs Whisper 21.80/6.68 (WER/CER); seen (9,352): 10.01/2.13 vs 10.43/2.59.
+  Dev check (same 1,000 utts): greedy 23.59/7.92 → LM 17.88/6.53.
 
 ## Lessons
 - Modal volume: reading thousands of small files is slow (~30 files/s). Always pack audio (04_pack_audio.py) and

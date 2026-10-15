@@ -1,8 +1,14 @@
 """Train the CTC reader (single GPU / MPS). Writes metrics.jsonl like QUAN's, plus QUAN-loadable checkpoints.
 
-Probe (step 1b), encoder frozen:
-  uv run scripts/train.py --train data/manifests/openslr/train.jsonl --dev data/manifests/openslr/dev.jsonl \
-      --out runs/probe_frozen --unfreeze-top-k 0 --steps 3000
+Checkpoints (two per run, overwritten in place, so storage stays bounded):
+  <out>/last/   weights + optimizer/step/RNG state (state.pt) — written every --ckpt-every steps; --resume continues
+  <out>/best/   weights only, lowest dev CER so far
+Both are QUAN-loadable (config.json, units.json, model.safetensors).
+
+  python scripts/train.py --train M/train.jsonl --dev M/dev.jsonl --packed-dir P --out runs/x --unfreeze-top-k 2 \
+      --steps 8000 --resume
+  # continue from a finished run on new data with a fresh LR schedule:
+  python scripts/train.py ... --init-from runs/x/best --out runs/y
 """
 
 import argparse
@@ -10,10 +16,10 @@ import json
 import math
 import os
 import random
+import shutil
 import sys
 import time
 
-import jiwer
 import numpy as np
 import soundfile as sf
 import soxr
@@ -22,6 +28,9 @@ import torch.nn.functional as F
 from safetensors.torch import save_file
 from torch.utils.data import DataLoader, Dataset, Sampler
 
+from safetensors.torch import load_file
+
+from sinhala_asr.metrics import score
 from sinhala_asr.model import Config, CTCModel, greedy, load_full
 from sinhala_asr.units import Units
 
@@ -35,7 +44,7 @@ def read_jsonl(path):
 
 class AudioSet(Dataset):
     def __init__(self, rows, units: Units, packed: str | None = None):
-        """packed: prefix written by scripts/04_pack_audio.py; the whole split is read into RAM once."""
+        """packed: prefix from 04_pack_audio.py (.npy) or 05_pack_parquet.py (.pcm); read into RAM once."""
         self.rows = rows
         self.targets = [units.encode(r["text"]) for r in rows]
         self.pcm = self.offsets = None
@@ -44,9 +53,12 @@ class AudioSet(Dataset):
                 meta = json.load(f)
             assert meta["ids"] == [r["id"] for r in rows], f"{packed} does not match the manifest"
             t = time.time()
-            self.pcm = np.load(packed + ".npy")
+            if os.path.exists(packed + ".pcm"):
+                self.pcm = np.fromfile(packed + ".pcm", dtype=np.int16)
+            else:
+                self.pcm = np.load(packed + ".npy")
             self.offsets = np.asarray(meta["offsets"])
-            print(f"loaded {packed}.npy ({self.pcm.nbytes / 1e9:.2f} GB) in {time.time() - t:.0f}s")
+            print(f"loaded {packed} ({self.pcm.nbytes / 1e9:.2f} GB) in {time.time() - t:.0f}s")
 
     def __len__(self):
         return len(self.rows)
@@ -107,9 +119,9 @@ class DurationBatches(Sampler):
 
 
 @torch.no_grad()
-def evaluate(model, loader, units, device, amp, max_batches=None):
+def evaluate(model, loader, units, device, amp, max_batches=None, return_hyps=False):
     model.eval()
-    hyps, refs, n = [], [], 0
+    hyps, refs, idxs = [], [], []
     for k, (wav, wl, _, _, idx) in enumerate(loader):
         if max_batches and k >= max_batches:
             break
@@ -118,14 +130,15 @@ def evaluate(model, loader, units, device, amp, max_batches=None):
         for seq, i in zip(greedy(logp, ol), idx):
             hyps.append(units.decode(seq))
             refs.append(loader.dataset.rows[i]["text"])
-        n += len(idx)
+            idxs.append(i)
     model.train()
-    hyps = [h if h else "<empty>" for h in hyps]
-    return {"wer": jiwer.wer(refs, hyps), "cer": jiwer.cer(refs, hyps), "utts": n, "examples": list(zip(refs[:3], hyps[:3]))}
+    out = score(refs, hyps) | {"examples": list(zip(refs[:3], hyps[:3]))}
+    if return_hyps:
+        out["hyps"] = list(zip(idxs, refs, hyps))
+    return out
 
 
-def save(model, cfg, units, out, tag):
-    d = os.path.join(out, tag)
+def save_weights(model, cfg, units, d):
     os.makedirs(d, exist_ok=True)
     save_file(model.trainable_state_dict(), os.path.join(d, "model.safetensors"))
     with open(os.path.join(d, "config.json"), "w") as f:
@@ -133,7 +146,27 @@ def save(model, cfg, units, out, tag):
     units.save(os.path.join(d, "units.json"))
 
 
-def main():
+def save_ckpt(out, tag, model, cfg, units, state=None):
+    """Write to <out>/<tag>.tmp, then swap it in, so a kill mid-write never leaves a broken checkpoint."""
+    final, tmp = os.path.join(out, tag), os.path.join(out, tag + ".tmp")
+    if os.path.exists(tmp):
+        shutil.rmtree(tmp)
+    save_weights(model, cfg, units, tmp)
+    if state is not None:
+        torch.save(state, os.path.join(tmp, "state.pt"))
+    if os.path.exists(final):
+        shutil.rmtree(final)
+    os.replace(tmp, final)
+
+
+def load_weights(model, d):
+    missing, unexpected = model.load_state_dict(load_file(os.path.join(d, "model.safetensors")), strict=False)
+    missing = [k for k in missing if not k.startswith("encoder.")]
+    assert not missing and not unexpected, f"checkpoint mismatch: missing={missing} unexpected={unexpected}"
+
+
+def main(argv=None, on_checkpoint=None):
+    """on_checkpoint: called after every checkpoint/metrics flush (Modal passes volume.commit)."""
     ap = argparse.ArgumentParser()
     ap.add_argument("--train", required=True)
     ap.add_argument("--dev", required=True)
@@ -156,7 +189,13 @@ def main():
     ap.add_argument("--no-dynamic-chunk", action="store_true")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--packed-dir", default=None, help="dir with train.npy/json, dev.npy/json from 04_pack_audio.py")
-    args = ap.parse_args()
+    ap.add_argument("--resume", action="store_true", help="continue from <out>/last if it exists")
+    ap.add_argument("--init-from", default=None, help="start from these weights (and units), fresh optimizer")
+    ap.add_argument("--ckpt-every", type=int, default=1000)
+    ap.add_argument("--max-minutes", type=float, default=None, help="stop cleanly (and checkpoint) after this long")
+    args = ap.parse_args(argv)
+    t_start = time.time()
+    commit = on_checkpoint or (lambda: None)
 
     random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -164,16 +203,29 @@ def main():
     amp = device.type == "cuda"
     os.makedirs(args.out, exist_ok=True)
     with open(os.path.join(args.out, "args.json"), "w") as f:
-        json.dump(vars(args) | {"argv": sys.argv}, f, indent=1)
+        json.dump(vars(args) | {"argv": argv or sys.argv}, f, indent=1)
 
+    last_dir = os.path.join(args.out, "last")
+    resuming = args.resume and os.path.exists(os.path.join(last_dir, "state.pt"))
     train_rows, dev_rows = read_jsonl(args.train), read_jsonl(args.dev)
-    units = Units.load(args.units) if args.units else Units.build("google/embeddinggemma-2", [r["text"] for r in train_rows])
+    if resuming:
+        units = Units.load(os.path.join(last_dir, "units.json"))
+    elif args.init_from:
+        units = Units.load(os.path.join(args.init_from, "units.json"))
+    elif args.units:
+        units = Units.load(args.units)
+    else:
+        units = Units.build("google/embeddinggemma-2", [r["text"] for r in train_rows])
     print(f"train {len(train_rows):,} utts / {sum(r['dur'] for r in train_rows) / 3600:.1f} h; "
           f"dev {len(dev_rows):,}; units {len(units):,}")
 
     cfg = Config(vocab_size=len(units), unfreeze_top_k=args.unfreeze_top_k, head_init=args.head_init,
                  dynamic_chunk=not args.no_dynamic_chunk)
-    model = CTCModel(cfg, load_full(cfg.encoder_id), units.gemma_ids).to(device)
+    model = CTCModel(cfg, load_full(cfg.encoder_id), units.gemma_ids)
+    if resuming or args.init_from:
+        load_weights(model, last_dir if resuming else args.init_from)
+        print("loaded weights from", last_dir if resuming else args.init_from)
+    model = model.to(device)
     model.train()
     model.encoder.eval()  # frozen encoder layers: keep their dropout (if any) off
     for layer in model.encoder.layers[len(model.encoder.layers) - cfg.unfreeze_top_k :] if cfg.unfreeze_top_k else []:
@@ -213,14 +265,30 @@ def main():
     train_dl = DataLoader(train_set, batch_sampler=sampler, **kw)
     dev_dl = DataLoader(dev_set, batch_sampler=DurationBatches([r["dur"] for r in dev_rows], args.batch_seconds, shuffle=False), **kw)
 
+    step, best = 0, float("inf")
+    if resuming:
+        st = torch.load(os.path.join(last_dir, "state.pt"), map_location="cpu", weights_only=False)
+        opt.load_state_dict(st["opt"])
+        step, best, sampler.epoch = st["step"], st["best"], st["epoch"]  # restarts the interrupted epoch
+        random.setstate(st["py_rng"])
+        torch.set_rng_state(st["torch_rng"])
+        print(f"resumed at step {step} (epoch {sampler.epoch}, best dev CER {best:.2%})")
+
+    def checkpoint():
+        state = {"opt": opt.state_dict(), "step": step, "best": best, "epoch": sampler.epoch,
+                 "py_rng": random.getstate(), "torch_rng": torch.get_rng_state(), "args": vars(args)}
+        save_ckpt(args.out, "last", model, cfg, units, state)
+        commit()
+
     log = open(os.path.join(args.out, "metrics.jsonl"), "a")
-    step, t0, audio_s, best = 0, time.time(), 0.0, float("inf")
+    t0, audio_s = time.time(), 0.0
     run_loss, skipped, data_s = [], 0, 0.0
-    while step < args.steps:
+    stop = False
+    while step < args.steps and not stop:
         t_data = time.time()
         for wav, wl, tgt, tl, _ in train_dl:
             data_s += time.time() - t_data
-            if step >= args.steps:
+            if step >= args.steps or stop:
                 break
             for g in opt.param_groups:
                 g["lr"] = lr_at(step) * g["lr_mult"]
@@ -259,17 +327,27 @@ def main():
 
             if step % args.eval_every == 0 or step == args.steps:
                 ev = evaluate(model, dev_dl, units, device, amp, args.eval_batches)
-                print(f"[eval step {step}] WER {ev['wer']:.2%} CER {ev['cer']:.2%} ({ev['utts']} utts)")
+                print(f"[eval step {step}] WER {ev['wer']:.2%} WER_seg {ev['wer_seg']:.2%} CER {ev['cer']:.2%} "
+                      f"CER_nospace {ev['cer_nospace']:.2%} ({ev['utts']} utts)")
                 for r, h in ev["examples"]:
                     print(f"   ref: {r}\n   hyp: {h}")
-                log.write(json.dumps({"step": step, "eval": {"dev": {k: ev[k] for k in ("wer", "cer", "utts")}}}) + "\n")
+                log.write(json.dumps({"step": step, "eval": {"dev": {k: v for k, v in ev.items() if k != "examples"}}}) + "\n")
                 log.flush()
                 if ev["cer"] < best:
                     best = ev["cer"]
-                    save(model, cfg, units, args.out, "best")
+                    save_ckpt(args.out, "best", model, cfg, units)
+                    commit()
                 t0, t_data = time.time(), time.time()
-    save(model, cfg, units, args.out, "final")
-    print(f"done; best dev CER {best:.2%}")
+
+            if step % args.ckpt_every == 0:
+                checkpoint()
+            if args.max_minutes and (time.time() - t_start) / 60 > args.max_minutes:
+                print(f"--max-minutes {args.max_minutes} reached at step {step}; checkpointing and stopping")
+                stop = True
+    checkpoint()
+    log.close()
+    commit()
+    print(f"done at step {step}; best dev CER {best:.2%}")
 
 
 if __name__ == "__main__":
