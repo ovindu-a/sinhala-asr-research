@@ -3,3 +3,5 @@ data/
 runs/
 __pycache__/
 *.pyc
+app/build/
+app/SinhalaTranscribe/.build/
