@@ -33,6 +33,7 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-15 | lm_decode crashed on test (QUAN beam: all-<unk> frame); fixed, reran test only with α=0.35 β=1.0 | 32 CPU | | | |
 | 2026-10-15 | **`modal billing summary`** | | | | **$16.71 actual** |
 | 2026-10-15 | speed benchmark ours vs Whisper (200 test clips, H100) | H100 | ~10 min | ~$0.5 | ~$17.2 |
+| 2026-10-15 | bench_gpus: same speed benchmark on L4 + T4 (serving cost/latency for a web app) | L4 + T4, 4 CPU each | ~10 min each | ~$0.4 | ~$17.6 |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -81,3 +82,20 @@ HF generate is not the fastest Whisper runtime (faster-whisper/CTranslate2 would
 1. `modal app list` / `modal volume ls sinhala-asr-runs` to see what finished.
 2. Check the budget table above before launching anything.
 3. Continue from the first unchecked item.
+
+## Mac app (app/): Sinhala Transcribe
+SwiftUI app modelled on Embedding Gemma Transcribe (drop a file / hold Right ⌥ to dictate and paste) with a model
+switcher: Whisper-small (SinhaSpeech), v6x_top8 greedy, v6x_top8 + KenLM. Inference runs in a Python worker
+(app/backend/server.py, JSON lines over stdin/stdout) that the app starts and stops.
+- Models: `~/Library/Application Support/SinhalaTranscribe/models/{ctc,lm,whisper}` (pulled from the Modal volumes;
+  Whisper's HF-cache entry on the volume is a symlink, so it came from huggingface.co by plain curl).
+  `app/prepare_models.py` adds `hf/`: EmbeddingGemma 2 tokenizer/config + audio tower only (0.61 GB vs 1.5 GB;
+  every param + buffer as loaded, so outputs are bit-identical).
+- `app/build.sh` = dev build (repo .venv); `app/build.sh --standalone` copies uv's relocatable CPython, the exact
+  package closure (app/bundle_runtime.py) and the models into the app (3.5 GB, APFS clones). Runs on Apple silicon,
+  macOS 14+. Ad-hoc signed: on another Mac, right-click → Open the first time.
+- M2 Pro (MPS), 58 s clip: load ~15 s; ctc ~1–2 s, ctc_lm ~0.6–1.4 s, whisper ~5 s.
+- Whisper fine-tune emits one utterance per window and loops on near-silence → its input is cut at pauses
+  (speech_pieces); 30 s windows dropped most sentences.
+- Dictation (Right ⌥, paste via ⌘V) needs Microphone + Accessibility; ad-hoc re-signing on each rebuild resets the
+  Accessibility grant.
