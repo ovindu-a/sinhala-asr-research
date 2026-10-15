@@ -201,3 +201,14 @@ def lm_decode(ckpt: str, lm: str = "si_4gram", extra: str = ""):
         sh(f"python scripts/08_lm_decode.py decode --ckpt /runs/{ckpt} --lm /data/lm/{lm} --out /runs/{ckpt}/lm {extra}")
     finally:
         runs_vol.commit()
+
+
+@app.function(image=lm_image, volumes=VOLS, gpu=GPU, cpu=8, memory=32768, timeout=1800)
+def benchmark(ckpt: str = "v6x_top8/best", n: int = 200, n_latency: int = 20):
+    """Speed of ours (greedy + KenLM beam) vs Whisper-small on the same H100 and test clips."""
+    try:
+        sh(f"python scripts/benchmark_speed.py --ckpt /runs/{ckpt} --lm /data/lm/si_4gram "
+           f"--manifest /data/manifests/ss_v6/test.jsonl --packed /data/packed/ss_v6/test "
+           f"--n {n} --n-latency {n_latency} --out /runs/{ckpt}/speed.json")
+    finally:
+        runs_vol.commit()

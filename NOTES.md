@@ -32,6 +32,7 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-15 | lm_decode v6x_top8 (α/β grid on 1k dev, then test) | 32 CPU | ~30–60 min est. | ~$1–2 | ~$19 |
 | 2026-10-15 | lm_decode crashed on test (QUAN beam: all-<unk> frame); fixed, reran test only with α=0.35 β=1.0 | 32 CPU | | | |
 | 2026-10-15 | **`modal billing summary`** | | | | **$16.71 actual** |
+| 2026-10-15 | speed benchmark ours vs Whisper (200 test clips, H100) | H100 | ~10 min | ~$0.5 | ~$17.2 |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -61,6 +62,15 @@ Check actual spend any time: `modal billing summary` (this month) / `modal billi
   59% of test sentences occur verbatim in v6 train (OpenSLR prompts repeat across speakers; split is speaker-only).
   Sentences NOT in train (6,508): ours+LM 20.57/5.59 vs Whisper 21.80/6.68 (WER/CER); seen (9,352): 10.01/2.13 vs 10.43/2.59.
   Dev check (same 1,000 utts): greedy 23.59/7.92 → LM 17.88/6.53.
+
+## Speed (benchmark_speed.py; Modal gave an H200 for gpu="H100"; 200 random test clips, 666 s audio, mean 3.3 s)
+| | batched | one clip at a time |
+|---|---|---|
+| ours greedy (GPU) | 0.196 s → **RTFx 3,402** | 29.3 ms/clip (RTFx 118) |
+| + KenLM beam (CPU, 1 core) | +0.53 s (2.6 ms/clip) → ~RTFx 900 end to end | +2.6 ms/clip |
+| Whisper-small greedy, HF generate fp16 | 3.625 s → RTFx 184 | 325.1 ms/clip (RTFx 11) |
+Ours greedy is 18.5× faster batched and 11.1× faster one-at-a-time. Caveat: Whisper pads every clip to 30 s and
+HF generate is not the fastest Whisper runtime (faster-whisper/CTranslate2 would narrow the gap).
 
 ## Lessons
 - Modal volume: reading thousands of small files is slow (~30 files/s). Always pack audio (04_pack_audio.py) and
