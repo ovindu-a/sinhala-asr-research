@@ -34,8 +34,23 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-15 | **`modal billing summary`** | | | | **$16.71 actual** |
 | 2026-10-15 | speed benchmark ours vs Whisper (200 test clips, H100) | H100 | ~10 min | ~$0.5 | ~$17.2 |
 | 2026-10-15 | bench_gpus: same speed benchmark on L4 + T4 (serving cost/latency for a web app) | L4 + T4, 4 CPU each | ~10 min each | ~$0.4 | ~$17.6 |
+| 2026-10-15 | web app deployed (`app/web/serve.py`): L4 class, scale-to-zero after 3 min, max 1 GPU container; CPU web front | L4 ≈ $0.96/h while awake | per use | ~$0.05/session | |
+| 2026-10-15 | **`modal billing summary`** | | | | **$17.92 metered** ($7.08 left) |
+| 2026-10-15 | eval_whispers: off-the-shelf openai/whisper-small + large-v3-turbo on v6 test (timing check before large-v2/v3/medium) | 2× H100 | ~8 min each (6 min decode) | ~$1 | ~$18.9 |
+| 2026-10-15 | eval_whispers: openai/whisper-large-v3, large-v2, medium on v6 test | 3× H100, 45 min timeout | STOPPED by user at ~30/248 batches (~6 min), no results | ~$0.8 | ~$19.7 |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
+
+## Web app hosting (2026-10-15)
+Moved to Modal workspace **ovindu-22** (profile `ovindu-22`): https://ovindu-22--sinhala.modal.run (public, no key; rate limits per IP and per hour in serve.py, max 1 GPU).
+Volume `sinhala-asr-web` holds models/ctc (v6x_top8/best), models/lm (si_4gram) and the HF cache; SHA-256 checked against
+the old workspace. The old deployment in `ovindu-a` was left running (scales to zero, costs nothing idle); training
+data/checkpoints stay on the `ovindu-a` volumes. Results and manifests were copied locally to runs/ and data/manifests/.
+
+Also on Hugging Face Spaces (ZeroGPU, free): https://huggingface.co/spaces/ovindu-a/sinhala-transcribe, code in
+app/hf_space/ (deploy: `.venv/bin/python app/hf_space/deploy.py`), weights from ovindu-a/sinhala-gemma-asr. Same page;
+one ZeroGPU run per transcription (both models, results streamed). Visitor quotas only apply properly inside the
+huggingface.co page (the Gradio client passes the visitor's identity); direct *.hf.space visits count as anonymous.
 
 ## Plan / status
 - [x] 1a tokenizer check → `data/01_tokenizer_report.txt` (3.26 tok/word; units ≈ characters)
@@ -63,6 +78,11 @@ Check actual spend any time: `modal billing summary` (this month) / `modal billi
   59% of test sentences occur verbatim in v6 train (OpenSLR prompts repeat across speakers; split is speaker-only).
   Sentences NOT in train (6,508): ours+LM 20.57/5.59 vs Whisper 21.80/6.68 (WER/CER); seen (9,352): 10.01/2.13 vs 10.43/2.59.
   Dev check (same 1,000 utts): greedy 23.59/7.92 → LM 17.88/6.53.
+
+## What KenLM fixes (scripts/compare_errors.py greedy vs kenlm, v6x_top8, v6 test; runs/compare_greedy_vs_lm_test.txt)
+Word errors (excl. insertions) 13,057 → 9,289 (−29%); unseen-sentence subset 7,274 → 5,768 (−21%).
+Net change by category (all test): one_letter −2,003 · near_miss −721 · wrong_word −713 · spacing −423 ·
+orthographic 0 · missed_word +88 · digits/english ~0; insertions +341 (1,462 → 1,803); runaway utts 18 → 10.
 
 ## Speed (benchmark_speed.py; Modal gave an H200 for gpu="H100"; 200 random test clips, 666 s audio, mean 3.3 s)
 | | batched | one clip at a time |
