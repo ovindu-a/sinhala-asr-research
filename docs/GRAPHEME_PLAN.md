@@ -122,7 +122,8 @@ reference/runs/{v6_top6,v6x_top8}/           A's args.json, config.json, units.j
 ```
 
 ```bash
-git clone https://github.com/ovindu-a/sinhala-asr.git && cd sinhala-asr   # private repo (has reference/)
+git clone https://github.com/ovindu-a/sinhala-asr-research.git && cd sinhala-asr-research
+# (public copy without the Mac app; the private ovindu-a/sinhala-asr has the same branch plus app/)
 git checkout grapheme-units
 uv sync                          # local venv: rescore / compare_errors / unpack checks
 sh scripts/unpack_reference.sh   # -> data/manifests/..., data/openslr52/..., runs/*.hyps.jsonl; prints 4x OK
