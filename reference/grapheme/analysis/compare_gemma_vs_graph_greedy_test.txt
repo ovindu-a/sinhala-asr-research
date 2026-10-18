@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |                total gemma |                total graph |                 only gemma |                 only graph
+spacing        |   3,220  ( 4.27% of words) |   5,011  ( 6.65% of words) |     807  ( 1.07% of words) |   2,080  ( 2.76% of words)
+orthographic   |   1,043  ( 1.38% of words) |   1,333  ( 1.77% of words) |     237  ( 0.31% of words) |     273  ( 0.36% of words)
+one_letter     |   4,648  ( 6.17% of words) |   3,836  ( 5.09% of words) |   1,501  ( 1.99% of words) |     977  ( 1.30% of words)
+near_miss      |   1,446  ( 1.92% of words) |   1,176  ( 1.56% of words) |     426  ( 0.57% of words) |     241  ( 0.32% of words)
+wrong_word     |   2,234  ( 2.97% of words) |   1,716  ( 2.28% of words) |     463  ( 0.61% of words) |     311  ( 0.41% of words)
+missed_word    |     218  ( 0.29% of words) |     191  ( 0.25% of words) |      22  ( 0.03% of words) |      28  ( 0.04% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     188  ( 0.25% of words) |     243  ( 0.32% of words) |      42  ( 0.06% of words) |      97  ( 0.13% of words)
+ALL word errs  |  13,057  (17.33% of words) |  13,566  (18.01% of words) |   3,498  ( 4.64% of words) |   4,007  ( 5.32% of words)
+
+words both get wrong: 9,559 ({'different outputs': 3705, 'same output': 5854})
+extra (inserted) words: gemma 1,462, graph 1,184; runaway utterances (>=4 extra words): gemma 18, graph 8
+
+examples of errors only gemma makes (ref -> gemma):
+  spacing       කාට -> ∅; හරි -> ∅; නොයා -> ∅; ගත් -> ∅
+  orthographic  වන්නේ -> වන්නෙ; කළේ -> කලේ; කළ -> කල; මෙහෙ -> මෙහේ
+  one_letter    ස්තුතියි -> ස්තතියි; පැලේ -> පැල; ජීවත් -> ජීවත්ව; උන -> ුන
+  near_miss     වීමෙන් -> වෙන්; හදාගත්තු -> හදාගතු; කරමිනුයි -> කරමුයි; මනුෂ්‍යයන්ට -> මනුෂයන්ට
+  wrong_word    කරන්නේත් -> කරන්නන්නේත්; මචන් -> මචං; ජීවත් -> ජීව; සිදු -> සි
+  missed_word   ම -> ∅; ය -> ∅; ඒවා -> ∅; ඉන්නවා -> ∅
+  english       accept -> x; customers -> customer; cup -> ∅; cup -> ess
+
+examples of errors only graph makes (ref -> graph):
+  spacing       ය -> ∅; බැරියැ -> ∅; පණ -> ∅; නෑ -> ∅
+  orthographic  මේ -> මෙ; පිටසක්වලයන් -> පිටසක්වළයන්; ඔයගොල්ලො -> ඔයගොල්ලෝ; අලුතෙන් -> අළුතෙන්
+  one_letter    ඇමෙරිකාව -> ඇමරිකාව; තියන -> තියෙන; විත්තියෙන් -> බිත්තියෙන්; හැමෝම -> හැමම
+  near_miss     පෙරලලා -> පෙරළෙලා; නොහැක්කකි -> නොහැකෙකි; ටොරොන්ටෝ -> ටොරොන්ටුව; කොම්පැනියක් -> කම්පැණියක්
+  wrong_word    නිකන් -> නිකං; ඒවායේ -> ඒවායේන්; කැමති -> කැමතියි; නම් -> න
+  missed_word   අර -> ∅; මං -> ∅; ඒ -> ∅; මං -> ∅
+  english       restaurant -> retautat; technology -> technoloy; daily -> dail; world -> worl

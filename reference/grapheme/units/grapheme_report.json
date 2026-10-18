@@ -1,0 +1,51 @@
+{
+ "kind": "grapheme",
+ "vocab_arg": 3000,
+ "units": 1269,
+ "unit_len_hist": {
+  "0": 1,
+  "1": 1266
+ },
+ "stats": {
+  "v6_plus_slr52/train.jsonl": {
+   "rows": 171163,
+   "words": 813184,
+   "units": 3287293,
+   "units_per_word": 4.042495917283174,
+   "graphemes_per_unit_excl_space": 1.0,
+   "single_unit_words": 0.066140012592476,
+   "unk_rate": 8.243865088995718e-05,
+   "rows_with_unk": 264,
+   "roundtrip_failures": 0,
+   "targets_per_s": {
+    "mean": 5.229796355267965,
+    "p99": 10.0,
+    "max": 21.70212765957447
+   }
+  },
+  "ss_v6/test.jsonl": {
+   "rows": 15860,
+   "words": 75338,
+   "units": 298894,
+   "units_per_word": 3.9673737025140037,
+   "graphemes_per_unit_excl_space": 1.0,
+   "single_unit_words": 0.07561920942950437,
+   "unk_rate": 9.033302776235053e-05,
+   "rows_with_unk": 27,
+   "roundtrip_failures": 0,
+   "targets_per_s": {
+    "mean": 5.488841243817564,
+    "p99": 9.5,
+    "max": 17.30496453900709
+   }
+  },
+  "vocab": {
+   "units": 1269,
+   "unused_in_first_manifest": 455,
+   "rare_lt20_in_first_manifest": 741,
+   "rare_lt20_share": 0.584846093133386,
+   "merged_units": 0,
+   "merged_rare_lt20_share": 0.0
+  }
+ }
+}

@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |               total greedy |                total kenlm |                only greedy |                 only kenlm
+spacing        |   3,497  ( 4.64% of words) |   2,733  ( 3.63% of words) |   1,510  ( 2.00% of words) |     567  ( 0.75% of words)
+orthographic   |   1,127  ( 1.50% of words) |   1,057  ( 1.40% of words) |     235  ( 0.31% of words) |      91  ( 0.12% of words)
+one_letter     |   3,629  ( 4.82% of words) |   2,514  ( 3.34% of words) |   1,337  ( 1.77% of words) |     192  ( 0.25% of words)
+near_miss      |   1,625  ( 2.16% of words) |     769  ( 1.02% of words) |     713  ( 0.95% of words) |      95  ( 0.13% of words)
+wrong_word     |   2,658  ( 3.53% of words) |   1,543  ( 2.05% of words) |   1,024  ( 1.36% of words) |      97  ( 0.13% of words)
+missed_word    |     315  ( 0.42% of words) |     461  ( 0.61% of words) |      52  ( 0.07% of words) |      54  ( 0.07% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     173  ( 0.23% of words) |     106  ( 0.14% of words) |      67  ( 0.09% of words) |       1  ( 0.00% of words)
+ALL word errs  |  13,084  (17.37% of words) |   9,243  (12.27% of words) |   4,938  ( 6.55% of words) |   1,097  ( 1.46% of words)
+
+words both get wrong: 8,146 ({'same output': 5825, 'different outputs': 2321})
+extra (inserted) words: greedy 1,657, kenlm 1,857; runaway utterances (>=4 extra words): greedy 11, kenlm 10
+
+examples of errors only greedy makes (ref -> greedy):
+  spacing       දකින -> ∅; කොට -> ∅; ලංකාවෙනම් -> ∅; යුතු -> ∅
+  orthographic  වුණොත් -> වුනොත්; වුණත් -> වුනත්; විකිණෙනවා -> විකිනෙනවා; දෙයට -> දේයට
+  one_letter    මුද්දරේ -> මුද්දරේම; ඇමෙරිකාව -> ඇමරිකාව; උන -> ුන; වීමත් -> බීමත්
+  near_miss     අනුන්ගේ -> අනුන්න්ගේ; විපක්ෂයේ -> විපක්ෂ; තිබුණේ -> තිබු; එක්තැන් -> එක්තැ
+  wrong_word    ක්ෂේම -> ෂේම; වුණාට -> ණාට; කුජීත -> කුචිත; අඳින -> අදිනන
+  missed_word   ය -> ∅; ද -> ∅; වූ -> ∅; හරි -> ∅
+  english       restaurant -> restauant; stock -> stok; world -> word; world -> word
+
+examples of errors only kenlm makes (ref -> kenlm):
+  spacing       දැන -> ∅; හොඳටම -> ∅; වටපිටාවකදීය -> ∅; පුළුවන්කමයි -> ∅
+  orthographic  පැලේ -> පැළේ; කිරන -> කිරණ; ඕනේ -> ඕනෙ; සැදූ -> සෑදූ
+  one_letter    ඉස්සරහා -> ඉස්සරහ; විදියට -> විදිහට; පැරැණි -> පැරණි; ඉස්සා -> ඉස්සර
+  near_miss     එවලාවක් -> එවවෙලාවක්; ටෙම්පරන්ස් -> ටෙම්පර්; අන්තර්ජාලයවත් -> අන්තර්ජාලයව; සහෝටයි -> සහෝට
+  wrong_word    තිබෙන -> තිබෙනවා; ගුණා -> ගුණාත්මක; ඊයේ -> ඊ; ගෙටප් -> ගෙසෙටප්
+  missed_word   යි -> ∅; ව -> ∅; මුළු -> ∅; ලබලා -> ∅
+  english       buying -> buy

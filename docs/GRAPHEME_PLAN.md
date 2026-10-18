@@ -1,5 +1,8 @@
 # Grapheme-level CTC units: run plan
 
+**Status (2026-10-18): run for B and C.** Results and budget: NOTES.md ("Grapheme-level units"); result files:
+reference/grapheme/. Deviation: B's KenLM α/β was re-picked on all 2,000 dev2k utts (β 1.0 instead of 2.0, see NOTES).
+
 Goal: replace the CTC reader's output units (Gemma tokenizer ids) with units that never split a Sinhala grapheme
 cluster, and rerun the v6_top6 → v6x_top8 → KenLM recipe to see whether that helps. Everything else (EmbeddingGemma 2
 audio encoder, data, packing, hyperparameters, word 4-gram KenLM, scoring) stays the same.

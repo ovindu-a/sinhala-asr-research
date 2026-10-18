@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |               total greedy |                total kenlm |                only greedy |                 only kenlm
+spacing        |   5,011  ( 6.65% of words) |   2,989  ( 3.97% of words) |   3,137  ( 4.16% of words) |   1,020  ( 1.35% of words)
+orthographic   |   1,333  ( 1.77% of words) |   1,090  ( 1.45% of words) |     389  ( 0.52% of words) |     141  ( 0.19% of words)
+one_letter     |   3,836  ( 5.09% of words) |   2,458  ( 3.26% of words) |   1,543  ( 2.05% of words) |     231  ( 0.31% of words)
+near_miss      |   1,176  ( 1.56% of words) |     690  ( 0.92% of words) |     410  ( 0.54% of words) |      43  ( 0.06% of words)
+wrong_word     |   1,716  ( 2.28% of words) |   1,317  ( 1.75% of words) |     444  ( 0.59% of words) |      40  ( 0.05% of words)
+missed_word    |     191  ( 0.25% of words) |     256  ( 0.34% of words) |      22  ( 0.03% of words) |       7  ( 0.01% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     243  ( 0.32% of words) |     152  ( 0.20% of words) |      92  ( 0.12% of words) |       1  ( 0.00% of words)
+ALL word errs  |  13,566  (18.01% of words) |   9,012  (11.96% of words) |   6,037  ( 8.01% of words) |   1,483  ( 1.97% of words)
+
+words both get wrong: 7,529 ({'different outputs': 1682, 'same output': 5847})
+extra (inserted) words: greedy 1,184, kenlm 2,425; runaway utterances (>=4 extra words): greedy 8, kenlm 15
+
+examples of errors only greedy makes (ref -> greedy):
+  spacing       ය -> ∅; ඒ -> ∅; වගේම -> ∅; දැන -> ∅
+  orthographic  මේ -> මෙ; ජාතීහු -> ජාතිහු; වුනොත් -> වුණොත්; ලෝකේ -> ලෝකෙ
+  one_letter    වැරැදියි -> වැරදියි; ඇමෙරිකාව -> ඇමරිකාව; උදැල්ල -> උදැල්; විත්තියෙන් -> බිත්තියෙන්
+  near_miss     වුණොත් -> වුනත්; නොහැක්කකි -> නොහැකෙකි; වේටර්වරුන්ගේ -> වෙටර්‍රවරුන්ගේ; පොළොන්නරු -> පොන්නරු
+  wrong_word    තේරුම් -> තේරුම්ම්‍; විපක්ෂයේ -> විපක්සි; වෘතයේ -> වෘත්තයේ; ආවාට -> පාවාට
+  missed_word   වූ -> ∅; මං -> ∅; ඒ -> ∅; පොඩි -> ∅
+  english       highland -> hiයිලන්d; technology -> technoloy; daily -> dail; world -> worl
+
+examples of errors only kenlm makes (ref -> kenlm):
+  spacing       කරගෙන -> ∅; බැසගෙන -> ∅; නොයා -> ∅; සිත්ගන්නා -> ∅
+  orthographic  ආවේ -> ආවෙ; පැලේ -> පැළේ; ගැටළුවක් -> ගැටලුවක්; කල -> කළ
+  one_letter    ඉස්සරහා -> ඉස්සරහ; විදියට -> විදිහට; උඩියටිකුරු -> උඩුයටිකුරු; චිත්‍රපටිය -> චිත්‍රපටය
+  near_miss     සත්වයන් -> සත්ත්වයන්; පලදීම් -> පලදී; අඩේනවා -> ඇඩෙනවා; ළමයිගේ -> ළමයි
+  wrong_word    ජාතකය -> ජාතික; තිබෙයි -> තිබේ; විඳවා -> ිඳව; න් -> දෙ
+  missed_word   ලා -> ∅; ඕකි -> ∅; පොඩි -> ∅; ඔයා -> ∅
+  english       fail -> aiට

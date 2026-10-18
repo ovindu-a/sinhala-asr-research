@@ -1,0 +1,22 @@
+{
+ "stats": {
+  "train_sent": 171163,
+  "train_words": 813184,
+  "wiki_sent": 508189,
+  "wiki_words": 7434255,
+  "wiki_dropped_leak": 2939,
+  "web_sent": 10396916,
+  "web_words": 150025513,
+  "web_dropped_leak": 131254
+ },
+ "exclusion_patterns": 16407,
+ "distinct_words": 2411451,
+ "max_web_words": 150000000,
+ "train_manifests": [
+  "/data/manifests/v6_plus_slr52/train.jsonl"
+ ],
+ "exclude": [
+  "/data/manifests/ss_v6/test.jsonl",
+  "/data/manifests/ss_v6/dev2k.jsonl"
+ ]
+}

@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |             total gemma_lm |             total graph_lm |              only gemma_lm |              only graph_lm
+spacing        |   2,797  ( 3.71% of words) |   2,989  ( 3.97% of words) |     869  ( 1.15% of words) |     898  ( 1.19% of words)
+orthographic   |   1,043  ( 1.38% of words) |   1,090  ( 1.45% of words) |     196  ( 0.26% of words) |     192  ( 0.25% of words)
+one_letter     |   2,645  ( 3.51% of words) |   2,458  ( 3.26% of words) |     651  ( 0.86% of words) |     479  ( 0.64% of words)
+near_miss      |     725  ( 0.96% of words) |     690  ( 0.92% of words) |     167  ( 0.22% of words) |     140  ( 0.19% of words)
+wrong_word     |   1,521  ( 2.02% of words) |   1,317  ( 1.75% of words) |     339  ( 0.45% of words) |     277  ( 0.37% of words)
+missed_word    |     306  ( 0.41% of words) |     256  ( 0.34% of words) |      54  ( 0.07% of words) |      51  ( 0.07% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     192  ( 0.25% of words) |     152  ( 0.20% of words) |      86  ( 0.11% of words) |      48  ( 0.06% of words)
+ALL word errs  |   9,289  (12.33% of words) |   9,012  (11.96% of words) |   2,362  ( 3.14% of words) |   2,085  ( 2.77% of words)
+
+words both get wrong: 6,927 ({'same output': 5280, 'different outputs': 1647})
+extra (inserted) words: gemma_lm 1,803, graph_lm 2,425; runaway utterances (>=4 extra words): gemma_lm 10, graph_lm 15
+
+examples of errors only gemma_lm makes (ref -> gemma_lm):
+  spacing       උපන් -> ∅; දිනයක් -> ∅; දැන -> ∅; ගනිමු -> ∅
+  orthographic  වුනොත් -> වුණොත්; වෑංජන -> වැංජන; මරණ -> මරන; වේලාව -> වෙලාව
+  one_letter    අඳින -> අදින; ඕනේ -> ඕන; කිසිඳු -> කිසිදු; පරිත්‍යාග -> පරිත්‍යා
+  near_miss     ආලකමන්දාව -> ාලකමන්ද; අච්චාරුව -> ච්චරුව; හොරකම් -> හොරකං; සීමාවක් -> සීමාව
+  wrong_word    කුජීත -> කුචිද; වෘතයේ -> වෘත්තීය; ඉතින් -> ඉතිං; නැතුව -> නැ
+  missed_word   මහා -> ∅; ඒවා -> ∅; දුව -> ∅; මේ -> ∅
+  english       benefit -> බොහෝ; accept -> x; upset -> ප්සට්; exporters -> experts
+
+examples of errors only graph_lm makes (ref -> graph_lm):
+  spacing       බලනකොට -> ∅; එතනය -> ∅; සිදුවීම -> ∅; මුල්කොට -> ∅
+  orthographic  මිනිස්සුන්ගේ -> මිනිස්සුන්ගෙ; ගාමිණි -> ගාමිනි; නෑ -> නැ; කාගේත් -> කාගෙත්
+  one_letter    කමිටුව -> කමිටු; දෙන්ට -> දෙන්න; වදාළා -> වදාළ; එවුන් -> වුන්
+  near_miss     ඇවිල්ලා -> ඇවිලා; රත්තරන් -> රත්තරං; ආනන්තරිය -> ආනන්තරී; හොරකම් -> හොරකං
+  wrong_word    මලක් -> මල; අඬන -> අඬන්න; විඳවා -> ිඳ; අම්මා -> කියලඅම්ම
+  missed_word   වඩා -> ∅; ම -> ∅; එවුන් -> ∅; ඔය -> ∅
+  english       endorse -> sendorse; day -> d; business -> mode; model -> එක

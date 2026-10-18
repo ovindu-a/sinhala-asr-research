@@ -65,11 +65,16 @@ def dump(args):
 _G = {}
 
 
-def _init(lm, pieces, unigrams, alpha, beta, vocab):
+def _init(lm, pieces, unigrams, alpha, beta, vocab, space_offset=0.0):
     from quan_transcribe.lm import KenLMDecoder
 
     _G["dec"] = KenLMDecoder(lm, pieces, unigrams, alpha=alpha, beta=beta)
     _G["V"] = vocab
+    # grapheme units: added to the log-prob of the bare "▁" (space) unit, so the beam needs more acoustic evidence to
+    # start a new word (the word LM + beta otherwise split compounds: බලනකොට -> බලන කොට). gbpe also has a bare "▁"
+    # piece (used before pieces without one), so the offset there only touches some word starts; Gemma: none.
+    _G["space"] = np.array([k for k, p in enumerate(pieces) if p == "▁"])
+    _G["space_offset"] = space_offset
     # units with no text (<unk>, byte pieces) are skipped by QUAN's beam search; if one is the only candidate in a
     # frame, every beam dies (IndexError). They add nothing to the transcript, so mask them out.
     _G["empty"] = np.array([k for k, p in enumerate(pieces) if k != 0 and not p])
@@ -81,6 +86,8 @@ def _decode_one(item):
     np.put_along_axis(lp, i.long().numpy(), v.float().numpy(), axis=1)
     if len(_G["empty"]):
         lp[:, _G["empty"]] = -1e4
+    if _G["space_offset"] and len(_G["space"]):
+        lp[:, _G["space"]] += _G["space_offset"]
     try:
         return _G["dec"].decode(lp, beam_width=_G.get("beam", 32))
     except IndexError:  # fall back to greedy CTC for this utterance
@@ -89,9 +96,9 @@ def _decode_one(item):
         return [int(u) for u in best[keep] if u != 0]
 
 
-def run(data, units, lm, pieces, unigrams, alpha, beta, procs, limit=None):
+def run(data, units, lm, pieces, unigrams, alpha, beta, procs, limit=None, space_offset=0.0):
     items = data["topk"][:limit] if limit else data["topk"]
-    with Pool(procs, initializer=_init, initargs=(lm, pieces, unigrams, alpha, beta, data["vocab"])) as pool:
+    with Pool(procs, initializer=_init, initargs=(lm, pieces, unigrams, alpha, beta, data["vocab"], space_offset)) as pool:
         seqs = pool.map(_decode_one, items, chunksize=16)
     return [units.decode(s) for s in seqs]
 
@@ -107,26 +114,28 @@ def decode(args):
     refs = [r["text"] for r in tune["rows"]]
     lim = args.tune_limit
     grid = []
-    for a, b in itertools.product(args.alphas, args.betas):
-        hyps = run(tune, units, lm, pieces, unigrams, a, b, procs, lim)
+    for a, b, so in itertools.product(args.alphas, args.betas, args.space_offsets):
+        hyps = run(tune, units, lm, pieces, unigrams, a, b, procs, lim, so)
         m = score(refs[: len(hyps)], hyps)
-        grid.append({"alpha": a, "beta": b} | m)
-        print(f"alpha {a:.2f} beta {b:.1f}: WER {m['wer']:.2%} WER_seg {m['wer_seg']:.2%} CER {m['cer']:.2%} "
-              f"GER {m['ger']:.2%}", flush=True)
+        n_hyp, n_ref = sum(len(h.split()) for h in hyps), sum(len(r.split()) for r in refs[: len(hyps)])
+        grid.append({"alpha": a, "beta": b, "space_offset": so, "hyp_ref_words": n_hyp / n_ref} | m)
+        print(f"alpha {a:.2f} beta {b:.1f} space {so:+.1f}: WER {m['wer']:.2%} WER_seg {m['wer_seg']:.2%} "
+              f"CER {m['cer']:.2%} GER {m['ger']:.2%} hyp/ref words {n_hyp / n_ref:.3f}", flush=True)
     best = min(grid, key=lambda g: g["wer"])
     print("best on", args.tune_split, best)
 
     ev = torch.load(os.path.join(args.out, f"{args.eval_split}.logits.pt"), weights_only=False)
     rows = ev["rows"]
-    hyps = run(ev, units, lm, pieces, unigrams, best["alpha"], best["beta"], procs)
+    hyps = run(ev, units, lm, pieces, unigrams, best["alpha"], best["beta"], procs, space_offset=best["space_offset"])
     by_src = collections.defaultdict(lambda: ([], []))
     for r, h in zip(rows, hyps):
         by_src[r.get("src") or "all"][0].append(r["text"])
         by_src[r.get("src") or "all"][1].append(h)
-    res = {"lm": args.lm, "alpha": best["alpha"], "beta": best["beta"], "grid": grid,
+    res = {"lm": args.lm, "alpha": best["alpha"], "beta": best["beta"], "space_offset": best["space_offset"],
+           "tune_utts": best["utts"], "grid": grid,
            "overall": score([r["text"] for r in rows], hyps),
            "by_source": {s: score(a, b) for s, (a, b) in sorted(by_src.items())}}
-    tag = f"eval_lm_{args.eval_split}"
+    tag = f"eval_lm_{args.eval_split}{args.tag}"
     with open(os.path.join(args.out, tag + ".json"), "w") as f:
         json.dump(res, f, indent=1)
     with open(os.path.join(args.out, tag + ".hyps.jsonl"), "w", encoding="utf-8") as f:
@@ -151,6 +160,9 @@ def main(argv=None):
     ap.add_argument("--tune-limit", type=int, default=1000)
     ap.add_argument("--alphas", type=float, nargs="+", default=[0.2, 0.35, 0.5, 0.7])
     ap.add_argument("--betas", type=float, nargs="+", default=[0.0, 1.0, 2.0])
+    ap.add_argument("--space-offsets", type=float, nargs="+", default=[0.0],
+                    help="added to the bare '▁' unit's log-prob (grapheme units); grid like alphas/betas")
+    ap.add_argument("--tag", default="", help="suffix for the output files, e.g. _space (keeps earlier results)")
     args = ap.parse_args(argv)
     dump(args) if args.phase == "dump" else decode(args)
 

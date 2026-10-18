@@ -61,6 +61,8 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-18 | Phase 5 done for C (+KenLM test WER 14.73 / WER_seg 8.99 / CER 3.74 / GER 4.58, α 0.35 β 1.0) and B (best β=2.0 on grid edge); **`modal billing summary`** (meter lags) | | | | **$19.25 metered** |
 | 2026-10-18 | lm_decode B extended grid: α {0.2, 0.35, 0.5} × β {2, 3, 4} (best β on edge; α stays low, so not the plan's 0.5–1.1 α range) | 32 CPU | ~30–60 min est. | ~$1.5 | ~$29.5 |
 | 2026-10-18 | B extended grid confirmed α 0.35 β 2.0 (β 3/4 worse on WER). **`modal billing summary`** at end (meter lags, GPU jobs not all counted yet; check the dashboard) | | | | **$19.37 metered** |
+| 2026-10-18 | B decoder fix: lm_decode gr_v6x_top8 with --space-offsets (penalty on the bare ▁ unit), α {0.35, 0.5} × β {1, 2} × space {0, −1, −2} on all 2,000 dev2k, tag _space | 32 CPU | ~1–1.5 h est. | ~$2 | |
+| 2026-10-18 | B decoder fix done: dev picks α 0.35 β 1.0 space 0 (no penalty); test WER 15.18 → 14.78; **`modal billing summary`** (meter lags) | | ~1 h | | **$19.44 metered** |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -194,7 +196,7 @@ Unit stats on the real corpus (v6_plus_slr52 train | v6 test), from /data/units/
 Alphabet 1,266 graphemes (corpus 7,925 distinct, speech 875; min count 50), corpus coverage 99.96%. gbpe3000 piece
 lengths (graphemes): 1: 1,490, 2: 920, 3: 412, 4: 136, 5: 34, 6+: 6. Top invalid clusters are typo conjuncts like කි්‍ර.
 
-### Results (v6 test 15,860 utts; runs/rescore_grapheme_test.json, runs/compare_gemma_vs_{gbpe,graph}_{lm,greedy}_test.txt)
+### Results (v6 test 15,860 utts; committed copies of all result files: reference/grapheme/, see its README)
 
 Data on the new account rebuilt by Phase 0; all 4 manifests byte-identical to the original runs (gate 0), corpus stats
 identical to si_4gram (gate 1), so A / B / C saw the same audio, transcripts and LM.
@@ -220,3 +222,46 @@ Findings:
   with a separate space unit, word boundaries are B's weak point; WER_seg (ignores boundaries) shows the real gain.
 - Next if continuing: tune B's decoder against insertions (choose α/β on WER with an insertion penalty, or a
   space-aware LM / char-level LM for B), then rerun only lm_decode (CPU, ~$1.5). No retraining needed.
+
+### Error categories (compare_errors.py; reference/grapheme/analysis/; 75,338 test words)
+
+| category | greedy A / C / B | + KenLM A / C / B (β 2) | KenLM change A / C / B |
+|---|---|---|---|
+| one letter wrong | 4,648 / 3,629 / 3,836 | 2,645 / 2,514 / 2,458 | −2,003 / −1,115 / −1,378 |
+| a few letters wrong | 1,446 / 1,625 / 1,176 | 725 / 769 / 690 | −721 / −856 / −486 |
+| different / garbled word | 2,234 / 2,658 / 1,716 | 1,521 / 1,543 / 1,317 | −713 / −1,115 / −399 |
+| spacing only | 3,220 / 3,497 / 5,011 | 2,797 / 2,733 / 2,989 | −423 / −764 / −2,022 |
+| same-sounding spelling | 1,043 / 1,127 / 1,333 | 1,043 / 1,057 / 1,090 | 0 / −70 / −243 |
+| English | 188 / 173 / 243 | 192 / 106 / 152 | +4 / −67 / −91 |
+| missed word | 218 / 315 / 191 | 306 / 461 / 256 | +88 / +146 / +65 |
+| **all word errors** | 13,057 / 13,084 / 13,566 | 9,289 / 9,243 / 9,012 | −3,768 / −3,841 / −4,554 |
+| extra (inserted) words | 1,462 / 1,657 / 1,184 | 1,803 / 1,857 / 2,425 | +341 / +200 / +1,241 |
+
+- Grapheme units cut greedy one-letter errors by ~1,000 (Gemma tokens split a letter from its vowel sign: උන -> ුන), but
+  KenLM already repairs most of these for A.
+- KenLM's gain: A mostly one-letter fixes (53%); C spread evenly; B mostly spacing (44%) at the cost of +1,241 extra words.
+- C errs a whole piece (1.65 graphemes) at a time: dropped endings (විපක්ෂයේ -> විපක්ෂ), dropped first pieces
+  (වුණාට -> ණාට), missed short words (461 vs A 306). Its pieces were fitted to web text (1.99 units/word on speech vs 1.75
+  when fitted to speech transcripts), 27% seen < 20× in the speech data, and it was still improving at step 6000.
+- Training curves: B and C dev CER still falling at the end (LR at its 1e-5 floor), A had plateaued; a longer fresh
+  schedule could help C most (untested).
+
+### B decoder retune (scripts/08_lm_decode.py --space-offsets, --tag; runs/gr_v6x_top8/eval_lm_test_space.json)
+
+B + KenLM's extra words were split compounds (බලනකොට -> බලන කොට, යුතුය -> යුතු ය; 1,094 test clips differ from the ref
+only by extra spaces). Tried a penalty on the bare ▁ unit's log-prob, grid α {0.35, 0.5} × β {1, 2} × space {0, −1, −2}
+on all 2,000 dev2k (the first grid used 1,000). The penalty controls the word count (hyp/ref words 1.017 -> 0.98) but
+never lowers dev WER: it removes right splits with the wrong ones. Dev picks **α 0.35, β 1.0, no penalty** (the
+1,000-utt grid had picked β 2.0 by 0.15 WER; on 2,000 utts β 1 and 2 are within 0.02).
+
+| v6 test + KenLM | WER | WER_seg | CER | GER | seen WER / CER | unseen WER / WER_seg / CER / GER | word errs + extra words |
+|---|---|---|---|---|---|---|---|
+| A Gemma (0.35, 1.0) | **14.72** | 8.95 | 3.68 | 4.61 | 10.01 / 2.13 | 20.57 / 13.10 / 5.59 / 6.94 | 9,289 + 1,803 |
+| C gbpe3000 (0.35, 1.0) | 14.73 | 8.99 | 3.74 | 4.58 | **9.85** / 2.09 | 20.79 / 13.31 / 5.77 / 6.93 | 9,243 + 1,857 |
+| B grapheme (0.35, 2.0), old | 15.18 | **8.31** | 3.43 | 4.33 | 10.66 / 2.01 | 20.79 / **12.20** / **5.17** / 6.42 | 9,012 + 2,425 |
+| **B grapheme (0.35, 1.0)** | 14.78 | 8.33 | **3.41** | **4.29** | 10.37 / **1.97** | **20.26** / 12.29 / 5.19 / **6.40** | 9,346 + 1,789 |
+
+With β 1, B's extra words fall to A's level (1,789 vs 1,803) but merges replace splits (spacing errors 2,989 -> 3,295 vs
+A's 2,797). Net: B ties A on WER (+0.06), keeps CER −0.27 / WER_seg −0.62 / GER −0.32, and has the best unseen-sentence
+WER (20.26 vs 20.57). Spacing is what remains between B and a clear WER win; a global decoder knob does not fix it
+(word-specific boundary conventions: ref transcripts vs web-text LM).

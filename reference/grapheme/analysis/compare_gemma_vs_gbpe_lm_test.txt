@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |             total gemma_lm |              total gbpe_lm |              only gemma_lm |               only gbpe_lm
+spacing        |   2,797  ( 3.71% of words) |   2,733  ( 3.63% of words) |     740  ( 0.98% of words) |     649  ( 0.86% of words)
+orthographic   |   1,043  ( 1.38% of words) |   1,057  ( 1.40% of words) |     206  ( 0.27% of words) |     198  ( 0.26% of words)
+one_letter     |   2,645  ( 3.51% of words) |   2,514  ( 3.34% of words) |     632  ( 0.84% of words) |     607  ( 0.81% of words)
+near_miss      |     725  ( 0.96% of words) |     769  ( 1.02% of words) |     153  ( 0.20% of words) |     171  ( 0.23% of words)
+wrong_word     |   1,521  ( 2.02% of words) |   1,543  ( 2.05% of words) |     343  ( 0.46% of words) |     401  ( 0.53% of words)
+missed_word    |     306  ( 0.41% of words) |     461  ( 0.61% of words) |      53  ( 0.07% of words) |     137  ( 0.18% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     192  ( 0.25% of words) |     106  ( 0.14% of words) |      96  ( 0.13% of words) |      14  ( 0.02% of words)
+ALL word errs  |   9,289  (12.33% of words) |   9,243  (12.27% of words) |   2,223  ( 2.95% of words) |   2,177  ( 2.89% of words)
+
+words both get wrong: 7,066 ({'same output': 5342, 'different outputs': 1724})
+extra (inserted) words: gemma_lm 1,803, gbpe_lm 1,857; runaway utterances (>=4 extra words): gemma_lm 10, gbpe_lm 10
+
+examples of errors only gemma_lm makes (ref -> gemma_lm):
+  spacing       යුතුය -> ∅; උපන් -> ∅; දිනයක් -> ∅; කර -> ∅
+  orthographic  වෑංජන -> වැංජන; දේව -> දෙව; වේලාව -> වෙලාව; ගාමිණී -> ගාමිණි
+  one_letter    අඳින -> අදින; අපේ -> අපත; භාගයකින් -> බාගයකින්; හිතා -> හිත
+  near_miss     වෙන්නැතුව -> වනැතුව; ගාමිණී -> ගාමිනේ; හොරකම් -> හොරකං; සීමාවක් -> සීමාව
+  wrong_word    කුජීත -> කුචිද; තේ -> ්ඒ; ඉතින් -> ඉතිං; පව් -> ප
+  missed_word   තියෙනවා -> ∅; ඕකි -> ∅; පොඩි -> ∅; කියලා -> ∅
+  english       benefit -> බොහෝ; accept -> x; exporters -> experts; icc -> age
+
+examples of errors only gbpe_lm makes (ref -> gbpe_lm):
+  spacing       බලනකොට -> ∅; දෙන්නෙක්ද -> ∅; හිත -> ∅; ජනරජ -> ∅
+  orthographic  අණ -> අන; මැරුණොත් -> මැරුනොත්; අපායේ -> අපායෙ; මාළු -> මාලු
+  one_letter    ඉෂ්ට -> ඉෂ්ඨ; දෙන්ට -> දෙන්නට; කෙනා -> ගෙනා; එවුන් -> වුන්
+  near_miss     වැඩියි -> වැඩි; හිටියත් -> හිටිය; සම්බුද්ධයි -> සම්බුද්ධඒ; ගේට්ටුවක් -> ගේට්ටුඑකක්
+  wrong_word    ඉන්නේ -> න; පිරිනිවන් -> පිරිනම; ගතියෙන් -> ගති; ඔය -> නිගණ්ඨයාගේඉ
+  missed_word   ය -> ∅; ඉන්න -> ∅; අපි -> ∅; ඔය -> ∅
+  english       game -> රවෙල; financial -> node; knowledge -> ∅; business -> busin

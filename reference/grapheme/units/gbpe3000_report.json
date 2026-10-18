@@ -1,0 +1,100 @@
+{
+ "kind": "gbpe",
+ "vocab_arg": 3000,
+ "units": 3001,
+ "unit_len_hist": {
+  "0": 1,
+  "1": 1490,
+  "2": 920,
+  "3": 412,
+  "4": 136,
+  "5": 34,
+  "6": 3,
+  "7": 2,
+  "8": 1
+ },
+ "stats": {
+  "v6_plus_slr52/train.jsonl": {
+   "rows": 171163,
+   "words": 813184,
+   "units": 1621913,
+   "units_per_word": 1.9945215351015269,
+   "graphemes_per_unit_excl_space": 1.6465144476901061,
+   "single_unit_words": 0.4362751849519912,
+   "unk_rate": 0.00016893631162707246,
+   "rows_with_unk": 269,
+   "roundtrip_failures": 0,
+   "targets_per_s": {
+    "mean": 2.576351294329236,
+    "p99": 5.2542372881355925,
+    "max": 11.781609195402298
+   }
+  },
+  "ss_v6/test.jsonl": {
+   "rows": 15860,
+   "words": 75338,
+   "units": 145224,
+   "units_per_word": 1.9276328015078712,
+   "graphemes_per_unit_excl_space": 1.6639977759243814,
+   "single_unit_words": 0.45723273779500384,
+   "unk_rate": 0.0001928055968710406,
+   "rows_with_unk": 28,
+   "roundtrip_failures": 0,
+   "targets_per_s": {
+    "mean": 2.66529190338074,
+    "p99": 5.0,
+    "max": 9.645390070921986
+   }
+  },
+  "vocab": {
+   "units": 3001,
+   "unused_in_first_manifest": 485,
+   "rare_lt20_in_first_manifest": 809,
+   "rare_lt20_share": 0.2697565855285095,
+   "merged_units": 1508,
+   "merged_rare_lt20_share": 0.02586206896551724
+  }
+ },
+ "gemma": {
+  "v6_plus_slr52/train.jsonl": {
+   "rows": 171163,
+   "words": 813184,
+   "units": 2273868,
+   "units_per_word": 2.796252754604124,
+   "graphemes_per_unit_excl_space": 1.1677368717051797,
+   "single_unit_words": 0.20375954273571542,
+   "unk_rate": 0.0,
+   "rows_with_unk": 0,
+   "roundtrip_failures": 251,
+   "targets_per_s": {
+    "mean": 3.6493973672363524,
+    "p99": 6.857142857142857,
+    "max": 11.851851851851851
+   }
+  },
+  "ss_v6/test.jsonl": {
+   "rows": 15860,
+   "words": 75338,
+   "units": 210538,
+   "units_per_word": 2.7945790968701054,
+   "graphemes_per_unit_excl_space": 1.1418215462683434,
+   "single_unit_words": 0.20319095277283708,
+   "unk_rate": 0.0008549525501334676,
+   "rows_with_unk": 72,
+   "roundtrip_failures": 27,
+   "targets_per_s": {
+    "mean": 3.890428523863597,
+    "p99": 6.857142857142857,
+    "max": 10.108303249097473
+   }
+  },
+  "vocab": {
+   "units": 5051,
+   "unused_in_first_manifest": 0,
+   "rare_lt20_in_first_manifest": 4336,
+   "rare_lt20_share": 0.858783917607447,
+   "merged_units": 4738,
+   "merged_rare_lt20_share": 0.9060785141409877
+  }
+ }
+}

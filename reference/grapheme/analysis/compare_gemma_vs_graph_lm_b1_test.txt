@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |             total gemma_lm |          total graph_lm_b1 |              only gemma_lm |           only graph_lm_b1
+spacing        |   2,797  ( 3.71% of words) |   3,295  ( 4.37% of words) |     662  ( 0.88% of words) |   1,012  ( 1.34% of words)
+orthographic   |   1,043  ( 1.38% of words) |   1,088  ( 1.44% of words) |     202  ( 0.27% of words) |     189  ( 0.25% of words)
+one_letter     |   2,645  ( 3.51% of words) |   2,451  ( 3.25% of words) |     657  ( 0.87% of words) |     478  ( 0.63% of words)
+near_miss      |     725  ( 0.96% of words) |     674  ( 0.89% of words) |     175  ( 0.23% of words) |     131  ( 0.17% of words)
+wrong_word     |   1,521  ( 2.02% of words) |   1,313  ( 1.74% of words) |     335  ( 0.44% of words) |     283  ( 0.38% of words)
+missed_word    |     306  ( 0.41% of words) |     310  ( 0.41% of words) |      43  ( 0.06% of words) |      71  ( 0.09% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     192  ( 0.25% of words) |     155  ( 0.21% of words) |      79  ( 0.10% of words) |      46  ( 0.06% of words)
+ALL word errs  |   9,289  (12.33% of words) |   9,346  (12.41% of words) |   2,153  ( 2.86% of words) |   2,210  ( 2.93% of words)
+
+words both get wrong: 7,136 ({'same output': 5498, 'different outputs': 1638})
+extra (inserted) words: gemma_lm 1,803, graph_lm_b1 1,789; runaway utterances (>=4 extra words): gemma_lm 10, graph_lm_b1 8
+
+examples of errors only gemma_lm makes (ref -> gemma_lm):
+  spacing       කිය -> ∅; දුරු -> ∅; ද -> ∅; නෙවෙයි -> ∅
+  orthographic  වුනොත් -> වුණොත්; වෑංජන -> වැංජන; මරණ -> මරන; වේලාව -> වෙලාව
+  one_letter    අඳින -> අදින; ඕනේ -> ඕන; කිසිඳු -> කිසිදු; පරිත්‍යාග -> පරිත්‍යා
+  near_miss     ආලකමන්දාව -> ාලකමන්ද; අච්චාරුව -> ච්චරුව; වෙන්නැතුව -> වනැතුව; හොරකම් -> හොරකං
+  wrong_word    කුජීත -> කුචිද; වෘතයේ -> වෘත්තීය; ඉතින් -> ඉතිං; නැතුව -> නැ
+  missed_word   මහා -> ∅; ඒවා -> ∅; දුව -> ∅; මේ -> ∅
+  english       benefit -> බොහෝ; accept -> x; upset -> ප්සට්; exporters -> experts
+
+examples of errors only graph_lm_b1 makes (ref -> graph_lm_b1):
+  spacing       දෙන්නෙක්ද -> ∅; පවත් -> ∅; වනු -> ∅; චිත්‍රපටවලට -> ∅
+  orthographic  මිනිස්සුන්ගේ -> මිනිස්සුන්ගෙ; ගාමිණි -> ගාමිනි; නෑ -> නැ; කාගේත් -> කාගෙත්
+  one_letter    කමිටුව -> කමිටු; ඉඳලා -> ඉඳල; දෙන්ට -> දෙන්න; වදාළා -> වදාළ
+  near_miss     ඇවිල්ලා -> ඇවිලා; රත්තරන් -> රත්තරං; ආනන්තරිය -> ආනන්තරී; හොරකම් -> හොරක
+  wrong_word    මලක් -> මල; අඬන -> අඬන්න; විඳවා -> ිඳ; අම්මා -> කියලඅම්ම
+  missed_word   මේ -> ∅; වඩා -> ∅; ඒ -> ∅; ඒක -> ∅
+  english       i -> ∅; endorse -> sendorse; day -> d; business -> ∅
