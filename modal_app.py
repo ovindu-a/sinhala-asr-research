@@ -204,11 +204,78 @@ def lm_decode(ckpt: str, lm: str = "si_4gram", extra: str = ""):
 
 
 @app.function(image=lm_image, volumes=VOLS, gpu=GPU, cpu=8, memory=32768, timeout=1800)
-def benchmark(ckpt: str = "v6x_top8/best", n: int = 200, n_latency: int = 20):
-    """Speed of ours (greedy + KenLM beam) vs Whisper-small on the same H100 and test clips."""
+def benchmark(ckpt: str = "v6x_top8/best", n: int = 200, n_latency: int = 20, tag: str = ""):
+    """Speed of ours (greedy + KenLM beam) vs Whisper-small on the same GPU and test clips."""
     try:
         sh(f"python scripts/benchmark_speed.py --ckpt /runs/{ckpt} --lm /data/lm/si_4gram "
            f"--manifest /data/manifests/ss_v6/test.jsonl --packed /data/packed/ss_v6/test "
-           f"--n {n} --n-latency {n_latency} --out /runs/{ckpt}/speed.json")
+           f"--n {n} --n-latency {n_latency} --out /runs/{ckpt}/speed{tag}.json")
+    finally:
+        runs_vol.commit()
+
+
+@app.local_entrypoint()
+def bench_gpus(gpus: str = "L4,T4", n: int = 200, n_latency: int = 20):
+    """The same benchmark on serving-class GPUs, in parallel: modal run modal_app.py::bench_gpus"""
+    calls = [benchmark.with_options(gpu=g, cpu=4, memory=16384).spawn(n=n, n_latency=n_latency, tag=f"_{g.lower()}")
+             for g in gpus.split(",")]
+    for c in calls:
+        c.get()
+
+
+@app.local_entrypoint()
+def eval_whispers(models: str = "openai/whisper-small,openai/whisper-large-v3-turbo", split: str = "test",
+                  timeout_min: int = 45):
+    """Off-the-shelf Whisper baselines in parallel (one GPU each), same scoring as eval_whisper:
+    modal run modal_app.py::eval_whispers --models openai/whisper-large-v3,openai/whisper-large-v2"""
+    calls = [eval_whisper.with_options(timeout=timeout_min * 60).spawn(model=m, split=split) for m in models.split(",")]
+    for c in calls:
+        c.get()
+
+
+# --- punctuation restoration (scripts/09-11, sinhala_asr/punct*.py) ---------------------------------------------------
+PUNCT_GPU = "L40S"
+punct_image = (
+    base_image.uv_pip_install("pyahocorasick", "sentencepiece")
+    .add_local_file("runs/v6x_top8_lm_test.hyps.jsonl", "/root/app/runs/v6x_top8_lm_test.hyps.jsonl")
+    .add_local_file("runs/whisper_test.hyps.jsonl", "/root/app/runs/whisper_test.hyps.jsonl")
+    .add_local_python_source("sinhala_asr")
+    .add_local_dir("scripts", "/root/app/scripts")
+)
+
+
+@app.function(image=punct_image, volumes=VOLS, cpu=8, memory=32768, timeout=5400)
+def punct_data(train_words: int = 30_000_000):
+    """modal run modal_app.py::punct_data -> /data/punct/{train,dev,test_*}.jsonl"""
+    try:
+        sh(f"python scripts/09_punct_data.py --out /data/punct --v6 /data/manifests/ss_v6 --train-words {train_words}")
+    finally:
+        data_vol.commit()
+        hf_vol.commit()
+
+
+@app.function(image=punct_image, volumes=VOLS, gpu=PUNCT_GPU, cpu=8, memory=32768, timeout=4500)
+def punct_train(name: str = "xlmr_base", base: str = "FacebookAI/xlm-roberta-base", steps: int = 8000,
+                batch: int = 32, lr: float = 5e-5):
+    """modal run --detach modal_app.py::punct_train  (timeout 75 min caps the cost at ~$2.5 on an L40S)"""
+    try:
+        sh(f"python scripts/10_punct_train.py --data /data/punct --out /runs/punct/{name} --base {base} "
+           f"--steps {steps} --batch {batch} --lr {lr}")
+        sh(f"python scripts/11_punct_eval.py --data /data/punct --v6 /data/manifests/ss_v6 "
+           f"--hyps ctc_lm=runs/v6x_top8_lm_test.hyps.jsonl whisper=runs/whisper_test.hyps.jsonl "
+           f"--model /runs/punct/{name}/best --out /runs/punct/{name}/eval.json")
+    finally:
+        runs_vol.commit()
+        hf_vol.commit()
+
+
+@app.function(image=punct_image, volumes=VOLS, cpu=8, memory=32768, timeout=1800)
+def punct_eval(name: str = "", out: str = "baselines"):
+    """Baselines only (name=""), or re-score /runs/punct/<name>/best on CPU."""
+    model = f"--model /runs/punct/{name}/best" if name else ""
+    try:
+        sh(f"mkdir -p /runs/punct && python scripts/11_punct_eval.py --data /data/punct --v6 /data/manifests/ss_v6 "
+           f"--hyps ctc_lm=runs/v6x_top8_lm_test.hyps.jsonl whisper=runs/whisper_test.hyps.jsonl {model} "
+           f"--out /runs/punct/{name or out}_eval.json")
     finally:
         runs_vol.commit()

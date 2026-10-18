@@ -28,6 +28,11 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-15 | build_lm (CPU) + lm_dump v6_top6 (GPU, short) | 8 CPU / H100 | ~40 / ~5 min | ~$1 | ~$16.5 |
 
 | 2026-10-15 | **`modal billing summary` after v6x_top8 + build_lm + lm_dump(v6_top6)** | | | | **$16.48 actual** (≈$8.5 left of $25) |
+
+| 2026-10-18 | **`modal billing summary` (profile ovindu-a)**: metered $20.90 (ephemeral $18.34, volumes $1.79 free tier, deployed $0.77) | | | | **≈$4 left of $25** |
+| 2026-10-18 | punct_data: wiki + FineWeb-2 → /data/punct (30 M train words) | 8 CPU, 32 GB | ~20–40 min | ~$0.3 | |
+| 2026-10-18 | punct baselines eval (CPU) + punct_train xlmr_base 8000 steps × 32 windows + eval | 8 CPU / L40S | ~5 / ≤75 min (timeout) | ~$0.1 + ≤$2.5 | |
+| 2026-10-18 | **`modal billing summary` after punct_data + baselines + punct_train** (0.11 s/step, ~15 min train) | | | | **$21.74 actual** (≈$3.3 left of $25) |
 | 2026-10-15 | evaluate v6x_top8/best on test + lm_dump v6x_top8/best | 2× H100 (short) | ~10 / ~5 min | ~$1 | ~$17.5 |
 | 2026-10-15 | lm_decode v6x_top8 (α/β grid on 1k dev, then test) | 32 CPU | ~30–60 min est. | ~$1–2 | ~$19 |
 | 2026-10-15 | lm_decode crashed on test (QUAN beam: all-<unk> frame); fixed, reran test only with α=0.35 β=1.0 | 32 CPU | | | |
@@ -119,3 +124,32 @@ switcher: Whisper-small (SinhaSpeech), v6x_top8 greedy, v6x_top8 + KenLM. Infere
   (speech_pieces); 30 s windows dropped most sentences.
 - Dictation (Right ⌥, paste via ⌘V) needs Microphone + Accessibility; ad-hoc re-signing on each rebuild resets the
   Accessibility grant.
+
+## Punctuation restoration (2026-10-18; sinhala_asr/punct*.py, scripts/09-11, `modal_app.py::punct_*`)
+ASR text stays punctuation-free; a separate word tagger adds , . ? afterwards (labels: mark after each word; ; : → ,
+and ! ෴ → .). Training text: Wikipedia si 7.1 M + FineWeb-2 sin_Sinh 30.3 M + v6 train raw transcripts 0.6 M words
+(/data/punct; windows containing a ≥5-word v6 dev/test sentence dropped). Model: XLM-R base, 8000 steps × 32 windows,
+lr 5e-5, L40S → `/runs/punct/xlmr_base/best` (dev micro-F1 0.751). Results: runs/punct/{baselines_eval.json,
+xlmr_base/eval.json} (with 25 samples per set). B0 = . or ? (ද rule) at the end only; B1 = most frequent label per word.
+ASR sets: reference marks moved onto the v6-test hypotheses by word alignment.
+
+| set (words) | system | , F1 | . F1 | ? F1 | micro F1 | sentence-end F1 |
+|---|---|---|---|---|---|---|
+| wiki held-out (118k) | B1 | 0.01 | 0.86 | 0.47 | 0.69 | 0.86 |
+| | **XLM-R** | **0.51** | **0.90** | **0.83** | **0.79** | **0.90** |
+| web held-out (98k) | B1 | 0.00 | 0.78 | 0.39 | 0.61 | 0.78 |
+| | **XLM-R** | **0.57** | **0.90** | **0.79** | **0.80** | **0.89** |
+| v6 test OpenSLR fragments (14k) | B0 | 0.00 | 0.43 | 0.33 | 0.42 | 0.44 |
+| | **XLM-R** | **0.39** | **0.66** | **0.68** | **0.65** | **0.67** |
+| v6 test conversational, refs (4.9k) | B1 | 0.02 | 0.27 | 0.33 | 0.24 | 0.29 |
+| | **XLM-R** | **0.22** | **0.51** | **0.48** | **0.46** | **0.53** |
+| ASR: Gemma CTC + KenLM, all v6 test (76k) | B0 | 0.00 | 0.41 | 0.33 | 0.40 | 0.43 |
+| | **XLM-R** | **0.23** | **0.62** | **0.65** | **0.61** | **0.63** |
+| ASR: Gemma CTC + KenLM, conversational (4.8k) | B1 | 0.02 | 0.24 | 0.28 | 0.22 | 0.26 |
+| | **XLM-R** | **0.19** | **0.43** | **0.41** | **0.39** | **0.45** |
+| ASR: Whisper-small, all v6 test (75k) | **XLM-R** | 0.22 | 0.63 | 0.65 | 0.61 | 0.64 |
+Caveats: v6 test clips are ~3 s fragments, so "is this the end of the sentence" is often unknowable from the text;
+the conversational set is small (360 utts) and its reference punctuation is inconsistent (many complete utterances
+have no final mark). The model often leaves the last word of a short utterance unmarked; in the app, where the end of
+a recording is a sentence end, force . or ? on the last word. Model is 1.1 GB fp32 (~0.55 GB fp16); not in the app yet.
+
