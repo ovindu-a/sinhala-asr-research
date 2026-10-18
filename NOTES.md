@@ -43,6 +43,24 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-15 | **`modal billing summary`** | | | | **$17.92 metered** ($7.08 left) |
 | 2026-10-15 | eval_whispers: off-the-shelf openai/whisper-small + large-v3-turbo on v6 test (timing check before large-v2/v3/medium) | 2× H100 | ~8 min each (6 min decode) | ~$1 | ~$18.9 |
 | 2026-10-15 | eval_whispers: openai/whisper-large-v3, large-v2, medium on v6 test | 3× H100, 45 min timeout | STOPPED by user at ~30/248 batches (~6 min), no results | ~$0.8 | ~$19.7 |
+| 2026-10-18 | **New Modal account `chatgptgroup321`** (grapheme runs): `modal billing summary` = $0.00 | | | | **$0.00** (new account) |
+| 2026-10-18 | Phase 0: pack_v6 + slr52_extra + fetch_reference + verify_data | 8 CPU (+2 CPU) | ~25 min actual | ~$1.5 | ~$1.5 |
+| 2026-10-18 | **Gate 0 passed**: all 4 manifests match reference/SHA256SUMS (v6_plus_slr52 171,163 utts, 174.3 h); **`modal billing summary`** | | | | **$0.16 metered** |
+| 2026-10-18 | Decided: run C (gbpe3000) **and B** (graphemes). Phase 1: lm_corpus (rebuild KenLM text) | 8 CPU, 32 GB | ~30–40 min est. | ~$0.4 | ~$0.6 |
+| 2026-10-18 | **Gate 1 passed**: si_corpus stats == si_4gram lm_config stats (160.3 M words; corpus.txt 2.60 GB) | | | | |
+| 2026-10-18 | Phase 2: grapheme_units --vocabs 3000 (grapheme + gbpe3000) | 16 CPU, 64 GB | ~20–30 min est. | ~$0.4 | ~$1.0 |
+| 2026-10-18 | **Gate 2 passed** (Phase 2 took ~6 min): alphabet 1,266 (+▁, unk = 1,269 grapheme units), coverage 99.96%, round-trip failures 0/0, unk 0.017% (gbpe, train) / 0.008% (grapheme), gbpe merged pieces seen <20×: 2.6%; **`modal billing summary`** | | | | **$0.41 metered** |
+| 2026-10-18 | Phase 3: gb3k_v6_top6 (C) + gr_v6_top6 (B), 7,500 steps each | 2× H100 | ~55 min each est. | ~$5.5 | ~$6 |
+| 2026-10-18 | gb3k_v6_top6 done (best dev2k CER 7.33 @ 7000; 7500: WER 23.17 / WER_seg 17.32 / CER 7.35 / GER 8.51); gr_v6_top6 still running; **`modal billing summary`** — Phase 3 costs ~2× the plan's estimate | | ~65 min | | **$10.23 metered** |
+| 2026-10-18 | gr_v6_top6 done (best dev2k CER 6.02 @ 7500: WER 23.34 / WER_seg 15.35 / GER 7.28); **`modal billing summary`** (meter revised down) | | ~65 min | | **$10.18 metered** |
+| 2026-10-18 | User approved Phases 4 + 5 for B and C (revised total est. ~$32–37). Phase 4: gb3k_v6x_top8 + gr_v6x_top8, 6,000 steps each | 2× H100 | ~60–70 min each est. | ~$9–10 | ~$20 |
+| 2026-10-18 | gb3k_v6x_top8 done (best dev2k CER 6.94 @ 6000: WER 22.73 / WER_seg 16.26 / GER 8.05); gr_v6x_top8 finishing; **`modal billing summary`** | | | | **$19.32 metered** |
+| 2026-10-18 | Phase 5 C: evaluate test + lm_dump (parallel), then lm_decode | 2× H100 short + 32 CPU | ~15 min + ~30–60 min est. | ~$4 | ~$24 |
+| 2026-10-18 | gr_v6x_top8 done (best dev2k CER 5.78 @ 6000: WER 22.73 / WER_seg 14.53 / GER 6.96) | | | | |
+| 2026-10-18 | Phase 5 B: evaluate test + lm_dump (parallel), then lm_decode | 2× H100 short + 32 CPU | ~15 min + ~30–60 min est. | ~$4 | ~$28 |
+| 2026-10-18 | Phase 5 done for C (+KenLM test WER 14.73 / WER_seg 8.99 / CER 3.74 / GER 4.58, α 0.35 β 1.0) and B (best β=2.0 on grid edge); **`modal billing summary`** (meter lags) | | | | **$19.25 metered** |
+| 2026-10-18 | lm_decode B extended grid: α {0.2, 0.35, 0.5} × β {2, 3, 4} (best β on edge; α stays low, so not the plan's 0.5–1.1 α range) | 32 CPU | ~30–60 min est. | ~$1.5 | ~$29.5 |
+| 2026-10-18 | B extended grid confirmed α 0.35 β 2.0 (β 3/4 worse on WER). **`modal billing summary`** at end (meter lags, GPU jobs not all counted yet; check the dashboard) | | | | **$19.37 metered** |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -153,7 +171,7 @@ the conversational set is small (360 utts) and its reference punctuation is inco
 have no final mark). The model often leaves the last word of a short utterance unmarked; in the app, where the end of
 a recording is a sentence end, force . or ? on the last word. Model is 1.1 GB fp32 (~0.55 GB fp16); not in the app yet.
 
-## Grapheme-level units (2026-10-18; planned, not run yet) → docs/GRAPHEME_PLAN.md
+## Grapheme-level units (2026-10-18; run on Modal account chatgptgroup321) → docs/GRAPHEME_PLAN.md
 Replace Gemma-token CTC units with units that never split a grapheme (grapheme-kit 0.1.1 splitter + a repaya ZWJ
 repair): **C** = grapheme-BPE, SentencePiece BPE vocab 3000 trained on the full KenLM text (main run), **B** = single
 graphemes (optional). Same recipe as A without probes: v6_top6 → v6x_top8 → KenLM (unchanged word 4-gram).
@@ -165,3 +183,40 @@ encoder = 25 frames/s vs ≤ 10.6 gbpe targets/s (p99 5.0). Est. cost: ~$11 for 
 New Modal account for the grapheme runs: Phase 0 in docs/GRAPHEME_PLAN.md rebuilds the data there (pack_v6,
 slr52_extra), downloads the exact KenLM + v6x_top8 from HF (`fetch_reference`) and checks the manifests against
 reference/SHA256SUMS (`verify_data`). reference/ = manifests, OpenSLR speaker table, baseline hyps, A's metrics.
+Unit stats on the real corpus (v6_plus_slr52 train | v6 test), from /data/units/*/report.json:
+
+| units | size | units/word | graphemes/unit | single-unit words | unk | round-trip fails | targets/s mean / p99 / max | units seen <20× in speech text |
+|---|---|---|---|---|---|---|---|---|
+| A Gemma (same text) | 5,051 used | 2.80 \| 2.79 | 1.17 \| 1.14 | 20.4% \| 20.3% | 0.000% \| 0.085% | 251 \| 27 | 3.6 / 6.9 / 11.9 | 85.9% (merged: 90.6%) |
+| B grapheme | 1,269 | 4.04 \| 3.97 | 1.00 | 6.6% \| 7.6% | 0.008% \| 0.009% | 0 \| 0 | 5.2 / 10.0 / 21.7 | 58.5% (455 unused) |
+| C gbpe3000 | 3,001 | 1.99 \| 1.93 | 1.65 \| 1.66 | 43.6% \| 45.7% | 0.017% \| 0.019% | 0 \| 0 | 2.6 / 5.3 / 11.8 | 27.0% (merged: 2.6% of 1,508) |
+
+Alphabet 1,266 graphemes (corpus 7,925 distinct, speech 875; min count 50), corpus coverage 99.96%. gbpe3000 piece
+lengths (graphemes): 1: 1,490, 2: 920, 3: 412, 4: 136, 5: 34, 6+: 6. Top invalid clusters are typo conjuncts like කි්‍ර.
+
+### Results (v6 test 15,860 utts; runs/rescore_grapheme_test.json, runs/compare_gemma_vs_{gbpe,graph}_{lm,greedy}_test.txt)
+
+Data on the new account rebuilt by Phase 0; all 4 manifests byte-identical to the original runs (gate 0), corpus stats
+identical to si_4gram (gate 1), so A / B / C saw the same audio, transcripts and LM.
+
+| units | dev2k CER v6_top6 (best) | dev2k v6x_top8 best @6000: WER / WER_seg / CER / GER | test greedy WER / WER_seg / CER / GER | test + KenLM (α, β) WER / WER_seg / CER / GER | unseen + KenLM WER / WER_seg / CER / GER |
+|---|---|---|---|---|---|
+| A Gemma | 6.76 | – / – / 6.53 (@5000) / – | 19.27 / 13.47 / 4.91 / 6.22 | **14.72** / 8.95 / 3.68 / 4.61 (0.35, 1.0) | **20.57** / 13.10 / 5.59 / 6.94 |
+| C gbpe3000 | 7.33 (@7000) | 22.73 / 16.26 / 6.94 / 8.05 | 19.57 / 13.28 / 5.23 / 6.21 | 14.73 / 8.99 / 3.74 / 4.58 (0.35, 1.0) | 20.79 / 13.31 / 5.77 / 6.93 |
+| B graphemes | **6.02** | 22.73 / **14.53** / **5.78** / **6.96** | 19.58 / **11.71** / **4.32** / **5.40** | 15.18 / **8.31** / **3.43** / **4.33** (0.35, 2.0) | 20.79 / **12.20** / **5.17** / **6.42** |
+
+Seen-sentence subset + KenLM (9,352): A 10.01 / 5.61 / 2.13 / 2.70, C 9.85 / 5.51 / 2.09 / 2.65, B 10.66 / 5.18 / 2.01 / 2.61.
+B's KenLM grid best was β = 2.0 (edge); extended once (α 0.2/0.35/0.5 × β 2/3/4): β 3 and 4 raise dev WER, so 2.0 stays.
+
+Findings:
+- **C (grapheme-BPE) = A.** Every test metric within 0.06 with KenLM; same α/β. Merging graphemes into 3k pieces
+  neither helps nor hurts. Fewer English errors (106 vs 192 words), more missed words (461 vs 306).
+- **B (single graphemes) wins on everything except WER.** Best CER / WER_seg / GER greedy and with KenLM, on seen
+  and unseen sentences; dev CER below A from step 1000 on. Fewer one_letter (2,458 vs 2,645), near_miss, wrong_word
+  and missed_word errors than A with KenLM: 9,012 vs 9,289 word errors in total.
+- **B's WER loss is all insertions.** WER = (word errors + inserted words) / 75,338 ref words: A (9,289 + 1,803) =
+  14.72%, B (9,012 + 2,425) = 15.18%, C (9,243 + 1,857) = 14.73%. With β = 2 (word bonus) the decoder adds ~620
+  more extra words than A. Greedy B has the fewest insertions (1,184) but the most spacing errors (5,011 vs 3,220):
+  with a separate space unit, word boundaries are B's weak point; WER_seg (ignores boundaries) shows the real gain.
+- Next if continuing: tune B's decoder against insertions (choose α/β on WER with an insertion penalty, or a
+  space-aware LM / char-level LM for B), then rerun only lm_decode (CPU, ~$1.5). No retraining needed.
