@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from train import load_weights  # noqa: E402
 
 from sinhala_asr.model import Config, CTCModel, greedy, load_full  # noqa: E402
-from sinhala_asr.units import Units  # noqa: E402
+from sinhala_asr.units import load_units  # noqa: E402
 
 SR = 16_000
 
@@ -78,8 +78,8 @@ def main():
     # ---------------- ours
     cfg = Config(**{k: v for k, v in json.load(open(os.path.join(args.ckpt, "config.json"))).items()
                     if k in Config.__dataclass_fields__})
-    units = Units.load(os.path.join(args.ckpt, "units.json"))
-    model = CTCModel(cfg, load_full(cfg.encoder_id), units.gemma_ids)
+    units = load_units(os.path.join(args.ckpt, "units.json"))
+    model = CTCModel(cfg, load_full(cfg.encoder_id), units.init_ids)
     load_weights(model, args.ckpt)
     model = model.cuda().eval()
     n_ours = sum(p.numel() for p in model.parameters())
@@ -112,8 +112,7 @@ def main():
 
         logits = {}
         ours_run(batches(wavs, 600), keep_logits=logits)
-        toks = units.tok.convert_ids_to_tokens(units.gemma_ids)
-        pieces = ["", ""] + [x if not (x.startswith("<0x") and x.endswith(">")) else "" for x in toks]
+        pieces = units.pieces
         uni = [w.strip() for w in open(os.path.join(args.lm, "unigrams.txt"), encoding="utf-8") if w.strip()]
         dec = KenLMDecoder(os.path.join(args.lm, "lm.bin"), pieces, uni, alpha=0.35, beta=1.0)
         empty = [k for k, p in enumerate(pieces) if k != 0 and not p]

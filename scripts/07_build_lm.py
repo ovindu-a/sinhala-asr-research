@@ -6,6 +6,8 @@ sentence that contains a dev/test reference (>= 3 words) is dropped (Aho-Corasic
 Training transcripts are kept as-is (the acoustic model and the Whisper baseline saw them too).
 
 writes <out>/lm.bin, <out>/unigrams.txt, <out>/lm_config.json
+--corpus-only writes just <out>/corpus.txt + <out>/corpus_stats.json (the same text, for the grapheme tokenizer);
+--keep-corpus keeps corpus.txt next to the LM.
 usage: python scripts/07_build_lm.py --out /data/lm/si_4gram --train-manifests /data/manifests/v6_plus_slr52/train.jsonl \
           --exclude /data/manifests/ss_v6/test.jsonl /data/manifests/ss_v6/dev2k.jsonl --max-web-words 150000000
 """
@@ -42,6 +44,8 @@ def main():
     ap.add_argument("--max-web-words", type=int, default=150_000_000)
     ap.add_argument("--order", type=int, default=4)
     ap.add_argument("--unigrams", type=int, default=500_000)
+    ap.add_argument("--corpus-only", action="store_true", help="stop after writing corpus.txt (no KenLM)")
+    ap.add_argument("--keep-corpus", action="store_true")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
 
@@ -94,6 +98,13 @@ def main():
             if n_web >= args.max_web_words:
                 break
     print("corpus:", dict(stats))
+    if args.corpus_only:
+        with open(os.path.join(args.out, "corpus_stats.json"), "w") as f:
+            json.dump({"stats": dict(stats), "exclusion_patterns": n_ex, "distinct_words": len(words),
+                       "max_web_words": args.max_web_words, "train_manifests": args.train_manifests,
+                       "exclude": args.exclude}, f, indent=1)
+        print("corpus:", corpus, f"{os.path.getsize(corpus) / 1e9:.2f} GB")
+        return
 
     arpa, binary = os.path.join(args.out, "lm.arpa"), os.path.join(args.out, "lm.bin")
     prune = " ".join(["0"] + ["1"] * (args.order - 1))  # drop singleton 2+-grams to keep the model small
@@ -106,8 +117,9 @@ def main():
         json.dump({"order": args.order, "prune": prune, "stats": dict(stats), "exclusion_patterns": n_ex,
                    "text": "wikimedia/wikipedia 20231101.si + FineWeb-2 sin_Sinh (capped) + training transcripts; "
                            "external sentences containing any dev/test reference (>=3 words) removed"}, f, indent=1)
-    for p in (arpa, corpus):
-        os.remove(p)
+    os.remove(arpa)
+    if not args.keep_corpus:
+        os.remove(corpus)
     print("lm:", binary, f"{os.path.getsize(binary) / 1e9:.2f} GB")
 
 

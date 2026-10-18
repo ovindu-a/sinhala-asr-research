@@ -72,7 +72,9 @@ def spec_augment(feats: torch.Tensor, lens: torch.Tensor, cfg: dict) -> torch.Te
 
 
 class CTCModel(nn.Module):
-    def __init__(self, cfg: Config, full_model=None, gemma_ids: list[int] | None = None):
+    def __init__(self, cfg: Config, full_model=None, gemma_ids: list[int] | list[list[int]] | None = None):
+        """gemma_ids: `units.init_ids` — one Gemma id per unit, or a list of ids per unit (grapheme/gbpe units),
+        whose text embeddings are averaged to start that unit's head row."""
         super().__init__()
         self.cfg = cfg
         full = full_model if full_model is not None else load_full(cfg.encoder_id)
@@ -113,7 +115,10 @@ class CTCModel(nn.Module):
         with torch.no_grad():
             if cfg.head_init == "text":
                 assert gemma_ids is not None and len(gemma_ids) == cfg.vocab_size - 2
-                rows = emb[torch.tensor(gemma_ids)].float()
+                if gemma_ids and isinstance(gemma_ids[0], list):
+                    rows = torch.stack([emb[torch.tensor(ids)].float().mean(0) for ids in gemma_ids])
+                else:
+                    rows = emb[torch.tensor(gemma_ids)].float()
                 self.unit_rows.copy_(rows / rows.norm(dim=-1).mean())
             else:
                 self.unit_rows.normal_(0, 0.02)

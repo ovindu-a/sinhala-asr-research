@@ -33,6 +33,9 @@ base_image = (
         "tqdm",
         "pyarrow",
         "quan-transcribe @ git+https://github.com/qnguyen3/QUAN-Transcribe",
+        "grapheme-kit==0.1.1",  # pinned: its segmentation rules define the grapheme / gbpe units
+        "sentencepiece",
+        "rapidfuzz",
     )
     .env({"HF_HOME": "/hf", "PYTHONPATH": "/root/app", "PYTHONUNBUFFERED": "1"})
 )
@@ -113,8 +116,10 @@ def _scripts():
 @app.function(volumes=VOLS, gpu=GPU, cpu=8, memory=49152, timeout=3 * 3600,
               retries=modal.Retries(max_retries=1, initial_delay=10.0))
 def train(name: str, manifests: str = "ss_v6", dev: str = "dev2k", unfreeze_top_k: int = 2, steps: int = 8000,
-          max_minutes: float = 165, extra: str = ""):
-    """Always --resume: a preempted/retried container continues from /runs/<name>/last."""
+          max_minutes: float = 165, units: str = "", extra: str = ""):
+    """Always --resume: a preempted/retried container continues from /runs/<name>/last.
+    units: a dir under /data/units (e.g. gbpe3000, grapheme) for a new run; with --init-from in extra the units come
+    from that checkpoint instead."""
     train_mod, _ = _scripts()
     m, p = f"/data/manifests/{manifests}", f"/data/packed/{manifests}"
     # train.py reads <packed>/train and <packed>/dev; point "dev" at the chosen dev split
@@ -127,7 +132,7 @@ def train(name: str, manifests: str = "ss_v6", dev: str = "dev2k", unfreeze_top_
     sh("nvidia-smi --query-gpu=name,memory.total --format=csv")
     argv = (f"--train {m}/train.jsonl --dev {m}/{dev}.jsonl --packed-dir /tmp/packed --out /runs/{name} "
             f"--unfreeze-top-k {unfreeze_top_k} --steps {steps} --workers 7 --resume "
-            f"--max-minutes {max_minutes} {extra}").split()
+            f"--max-minutes {max_minutes} {f'--units /data/units/{units}/units.json' if units else ''} {extra}").split()
     try:
         train_mod.main(argv, on_checkpoint=runs_vol.commit)
     finally:
@@ -186,6 +191,44 @@ def build_lm(out: str = "si_4gram", train_manifests: str = "v6_plus_slr52", max_
         data_vol.commit()
 
 
+@app.function(image=lm_image, volumes=VOLS, cpu=8, memory=32768, timeout=2 * 3600)
+def lm_corpus(out: str = "si_corpus", train_manifests: str = "v6_plus_slr52", max_web_words: int = 150_000_000):
+    """The KenLM text again (same sources, filter and cap as build_lm), kept as /data/lm/<out>/corpus.txt for the
+    grapheme tokenizer. Compare corpus_stats.json with /data/lm/si_4gram/lm_config.json: the counts must match."""
+    try:
+        sh(f"python scripts/07_build_lm.py --corpus-only --out /data/lm/{out} "
+           f"--train-manifests /data/manifests/{train_manifests}/train.jsonl "
+           f"--exclude /data/manifests/ss_v6/test.jsonl /data/manifests/ss_v6/dev2k.jsonl "
+           f"--max-web-words {max_web_words}")
+    finally:
+        data_vol.commit()
+        hf_vol.commit()
+
+
+@app.function(volumes=VOLS, cpu=16, memory=65536, timeout=2 * 3600)
+def grapheme_units(corpus: str = "si_corpus", vocabs: str = "3000", grapheme: bool = True, inventory: bool = True,
+                   min_count: int = 50):
+    """/data/units/{graphemes.json, words.tsv} from the corpus, then /data/units/grapheme and /data/units/gbpe<V>
+    (units.json + report.json). modal run modal_app.py::grapheme_units --vocabs 3000,2000"""
+    man = "/data/manifests/v6_plus_slr52/train.jsonl /data/manifests/ss_v6/test.jsonl"
+    try:
+        if inventory:
+            sh(f"python scripts/12_grapheme_inventory.py --corpus /data/lm/{corpus}/corpus.txt "
+               f"--train-manifests /data/manifests/v6_plus_slr52/train.jsonl --out /data/units --min-count {min_count}")
+            data_vol.commit()
+        if grapheme:
+            sh(f"python scripts/13_build_units.py --kind grapheme --inventory /data/units --out /data/units/grapheme "
+               f"--manifests {man}")
+            data_vol.commit()
+        for k, v in enumerate(vocabs.split(",") if vocabs else []):
+            sh(f"python scripts/13_build_units.py --kind gbpe --vocab {v} --inventory /data/units "
+               f"--out /data/units/gbpe{v} --manifests {man} {'--compare-gemma' if k == 0 else ''}")
+            data_vol.commit()
+    finally:
+        data_vol.commit()
+        hf_vol.commit()
+
+
 @app.function(image=lm_image, volumes=VOLS, gpu=GPU, cpu=8, memory=32768, timeout=3600)
 def lm_dump(ckpt: str, manifests: str = "ss_v6"):
     try:
@@ -235,13 +278,11 @@ def eval_whispers(models: str = "openai/whisper-small,openai/whisper-large-v3-tu
 
 # --- punctuation restoration (scripts/09-11, sinhala_asr/punct*.py) ---------------------------------------------------
 PUNCT_GPU = "L40S"
-punct_image = (
-    base_image.uv_pip_install("pyahocorasick", "sentencepiece")
-    .add_local_file("runs/v6x_top8_lm_test.hyps.jsonl", "/root/app/runs/v6x_top8_lm_test.hyps.jsonl")
-    .add_local_file("runs/whisper_test.hyps.jsonl", "/root/app/runs/whisper_test.hyps.jsonl")
-    .add_local_python_source("sinhala_asr")
-    .add_local_dir("scripts", "/root/app/scripts")
-)
+punct_image = base_image.uv_pip_install("pyahocorasick", "sentencepiece")
+for _f in ("runs/v6x_top8_lm_test.hyps.jsonl", "runs/whisper_test.hyps.jsonl"):  # git-ignored; absent on a fresh clone
+    if os.path.exists(_f):
+        punct_image = punct_image.add_local_file(_f, f"/root/app/{_f}")
+punct_image = punct_image.add_local_python_source("sinhala_asr").add_local_dir("scripts", "/root/app/scripts")
 
 
 @app.function(image=punct_image, volumes=VOLS, cpu=8, memory=32768, timeout=5400)

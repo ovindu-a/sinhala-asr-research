@@ -19,7 +19,7 @@ from train import AudioSet, DurationBatches, collate, evaluate, load_weights, re
 
 from sinhala_asr.metrics import score  # noqa: E402
 from sinhala_asr.model import Config, CTCModel, load_full  # noqa: E402
-from sinhala_asr.units import Units  # noqa: E402
+from sinhala_asr.units import load_units  # noqa: E402
 
 
 def main(argv=None):
@@ -36,8 +36,8 @@ def main(argv=None):
     amp = device.type == "cuda"
     with open(os.path.join(args.ckpt, "config.json")) as f:
         cfg = Config(**{k: v for k, v in json.load(f).items() if k in Config.__dataclass_fields__})
-    units = Units.load(os.path.join(args.ckpt, "units.json"))
-    model = CTCModel(cfg, load_full(cfg.encoder_id), units.gemma_ids)
+    units = load_units(os.path.join(args.ckpt, "units.json"))
+    model = CTCModel(cfg, load_full(cfg.encoder_id), units.init_ids)
     load_weights(model, args.ckpt)
     model = model.to(device).eval()
 
@@ -59,7 +59,7 @@ def main(argv=None):
            "by_source": {s: score(r, h) for s, (r, h) in sorted(by_src.items())}}
     with open(args.out + ".json", "w") as f:
         json.dump(res, f, indent=1)
-    fmt = lambda m: (f"WER {m['wer']:.2%}  WER_seg {m['wer_seg']:.2%}  CER {m['cer']:.2%}  "  # noqa: E731
+    fmt = lambda m: (f"WER {m['wer']:.2%}  WER_seg {m['wer_seg']:.2%}  CER {m['cer']:.2%}  GER {m['ger']:.2%}  "  # noqa: E731
                      f"CER_nospace {m['cer_nospace']:.2%}  ({m['utts']} utts)")
     print("overall   ", fmt(res["overall"]))
     for s, m in res["by_source"].items():

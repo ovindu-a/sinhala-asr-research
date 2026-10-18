@@ -21,7 +21,7 @@ import torch
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sinhala_asr.metrics import score  # noqa: E402
-from sinhala_asr.units import Units  # noqa: E402
+from sinhala_asr.units import load_units  # noqa: E402
 
 TOPK = 16
 
@@ -39,8 +39,8 @@ def dump(args):
 
     with open(os.path.join(args.ckpt, "config.json")) as f:
         cfg = Config(**{k: v for k, v in json.load(f).items() if k in Config.__dataclass_fields__})
-    units = Units.load(os.path.join(args.ckpt, "units.json"))
-    model = CTCModel(cfg, load_full(cfg.encoder_id), units.gemma_ids)
+    units = load_units(os.path.join(args.ckpt, "units.json"))
+    model = CTCModel(cfg, load_full(cfg.encoder_id), units.init_ids)
     load_weights(model, args.ckpt)
     model = model.cuda().eval()
     os.makedirs(args.out, exist_ok=True)
@@ -97,9 +97,8 @@ def run(data, units, lm, pieces, unigrams, alpha, beta, procs, limit=None):
 
 
 def decode(args):
-    units = Units.load(os.path.join(args.ckpt, "units.json"))
-    toks = units.tok.convert_ids_to_tokens(units.gemma_ids)
-    pieces = ["", ""] + [t if not (t.startswith("<0x") and t.endswith(">")) else "" for t in toks]
+    units = load_units(os.path.join(args.ckpt, "units.json"))
+    pieces = units.pieces  # "" for blank/unk/byte pieces; "▁" starts a word (grapheme units: the space unit)
     with open(os.path.join(args.lm, "unigrams.txt"), encoding="utf-8") as f:
         unigrams = [w.strip() for w in f if w.strip()]
     lm = os.path.join(args.lm, "lm.bin")
@@ -112,7 +111,8 @@ def decode(args):
         hyps = run(tune, units, lm, pieces, unigrams, a, b, procs, lim)
         m = score(refs[: len(hyps)], hyps)
         grid.append({"alpha": a, "beta": b} | m)
-        print(f"alpha {a:.2f} beta {b:.1f}: WER {m['wer']:.2%} WER_seg {m['wer_seg']:.2%} CER {m['cer']:.2%}", flush=True)
+        print(f"alpha {a:.2f} beta {b:.1f}: WER {m['wer']:.2%} WER_seg {m['wer_seg']:.2%} CER {m['cer']:.2%} "
+              f"GER {m['ger']:.2%}", flush=True)
     best = min(grid, key=lambda g: g["wer"])
     print("best on", args.tune_split, best)
 
@@ -134,7 +134,7 @@ def decode(args):
             f.write(json.dumps({"id": r["id"], "src": r.get("src"), "ref": r["text"], "hyp": h}, ensure_ascii=False) + "\n")
     for s, m in [("overall", res["overall"])] + list(res["by_source"].items()):
         print(f"{s:10s} WER {m['wer']:.2%}  WER_seg {m['wer_seg']:.2%}  CER {m['cer']:.2%}  "
-              f"CER_nospace {m['cer_nospace']:.2%}  ({m['utts']} utts)")
+              f"CER_nospace {m['cer_nospace']:.2%}  GER {m['ger']:.2%}  ({m['utts']} utts)")
 
 
 def main(argv=None):

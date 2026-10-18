@@ -9,10 +9,24 @@ for speech that was recognised correctly. Reported metrics:
   wer_seg      spacing-agnostic WER: the hypothesis characters are aligned to the reference characters (spaces
                removed from both), the hypothesis is re-split at the reference's word boundaries, then WER is
                computed. A word counts as wrong only if its letters are wrong.
+  ger          grapheme error rate: CER over grapheme clusters (sinhala_asr.graphemes; spaces count, like cer)
 """
 
 import jiwer
 from rapidfuzz.distance import Levenshtein
+
+from .graphemes import WordCache
+
+_words = WordCache()
+
+
+def ger(refs: list[str], hyps: list[str]) -> float:
+    errs = n = 0
+    for r, h in zip(refs, hyps):
+        rg, hg = _words.sentence(r), _words.sentence(h) if h != "<empty>" else []
+        errs += Levenshtein.distance(rg, hg)
+        n += len(rg)
+    return errs / max(1, n)
 
 
 def resegment(ref: str, hyp: str) -> str:
@@ -52,5 +66,6 @@ def score(refs: list[str], hyps: list[str]) -> dict:
         "cer": jiwer.cer(refs, hyps),
         "cer_nospace": jiwer.cer(ns(refs), ns(hyps)),
         "wer_seg": jiwer.wer(refs, seg),
+        "ger": ger(refs, hyps),
         "utts": len(refs),
     }

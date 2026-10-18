@@ -153,3 +153,12 @@ the conversational set is small (360 utts) and its reference punctuation is inco
 have no final mark). The model often leaves the last word of a short utterance unmarked; in the app, where the end of
 a recording is a sentence end, force . or ? on the last word. Model is 1.1 GB fp32 (~0.55 GB fp16); not in the app yet.
 
+## Grapheme-level units (2026-10-18; planned, not run yet) → docs/GRAPHEME_PLAN.md
+Replace Gemma-token CTC units with units that never split a grapheme (grapheme-kit 0.1.1 splitter + a repaya ZWJ
+repair): **C** = grapheme-BPE, SentencePiece BPE vocab 3000 trained on the full KenLM text (main run), **B** = single
+graphemes (optional). Same recipe as A without probes: v6_top6 → v6x_top8 → KenLM (unchanged word 4-gram).
+Code: sinhala_asr/{graphemes,units}.py, scripts/12_grapheme_inventory.py, 13_build_units.py, rescore.py,
+`modal_app.py::{lm_corpus,grapheme_units}`, `train --units`. New metric GER (grapheme error rate) in every score().
+GER of existing systems on v6 test: v6x_top8 greedy 6.22, + KenLM 4.61 (unseen sentences 6.94), Whisper-small 5.52.
+Stand-in check (v6 transcripts as corpus): gbpe3000 1.75 units/word vs Gemma 2.77, 0 round-trip failures;
+encoder = 25 frames/s vs ≤ 10.6 gbpe targets/s (p99 5.0). Est. cost: ~$11 for C, ~$21–23 for B + C.

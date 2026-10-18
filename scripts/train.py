@@ -32,7 +32,7 @@ from safetensors.torch import load_file
 
 from sinhala_asr.metrics import score
 from sinhala_asr.model import Config, CTCModel, greedy, load_full
-from sinhala_asr.units import Units
+from sinhala_asr.units import Units, load_units
 
 SR = 16_000
 
@@ -171,7 +171,8 @@ def main(argv=None, on_checkpoint=None):
     ap.add_argument("--train", required=True)
     ap.add_argument("--dev", required=True)
     ap.add_argument("--out", required=True)
-    ap.add_argument("--units", default=None, help="existing units.json; default: build from --train")
+    ap.add_argument("--units", default=None, help="existing units.json, any kind (gemma / grapheme / gbpe, see "
+                    "sinhala_asr/units.py); default: Gemma units built from --train")
     ap.add_argument("--unfreeze-top-k", type=int, default=0)
     ap.add_argument("--head-init", default="text", choices=["text", "random"])
     ap.add_argument("--steps", type=int, default=3000)
@@ -209,19 +210,19 @@ def main(argv=None, on_checkpoint=None):
     resuming = args.resume and os.path.exists(os.path.join(last_dir, "state.pt"))
     train_rows, dev_rows = read_jsonl(args.train), read_jsonl(args.dev)
     if resuming:
-        units = Units.load(os.path.join(last_dir, "units.json"))
+        units = load_units(os.path.join(last_dir, "units.json"))
     elif args.init_from:
-        units = Units.load(os.path.join(args.init_from, "units.json"))
+        units = load_units(os.path.join(args.init_from, "units.json"))
     elif args.units:
-        units = Units.load(args.units)
+        units = load_units(args.units)
     else:
         units = Units.build("google/embeddinggemma-2", [r["text"] for r in train_rows])
     print(f"train {len(train_rows):,} utts / {sum(r['dur'] for r in train_rows) / 3600:.1f} h; "
-          f"dev {len(dev_rows):,}; units {len(units):,}")
+          f"dev {len(dev_rows):,}; units {len(units):,} ({units.kind})")
 
     cfg = Config(vocab_size=len(units), unfreeze_top_k=args.unfreeze_top_k, head_init=args.head_init,
                  dynamic_chunk=not args.no_dynamic_chunk)
-    model = CTCModel(cfg, load_full(cfg.encoder_id), units.gemma_ids)
+    model = CTCModel(cfg, load_full(cfg.encoder_id), units.init_ids)
     if resuming or args.init_from:
         load_weights(model, last_dir if resuming else args.init_from)
         print("loaded weights from", last_dir if resuming else args.init_from)
@@ -328,7 +329,7 @@ def main(argv=None, on_checkpoint=None):
             if step % args.eval_every == 0 or step == args.steps:
                 ev = evaluate(model, dev_dl, units, device, amp, args.eval_batches)
                 print(f"[eval step {step}] WER {ev['wer']:.2%} WER_seg {ev['wer_seg']:.2%} CER {ev['cer']:.2%} "
-                      f"CER_nospace {ev['cer_nospace']:.2%} ({ev['utts']} utts)")
+                      f"CER_nospace {ev['cer_nospace']:.2%} GER {ev['ger']:.2%} ({ev['utts']} utts)")
                 for r, h in ev["examples"]:
                     print(f"   ref: {r}\n   hyp: {h}")
                 log.write(json.dumps({"step": step, "eval": {"dev": {k: v for k, v in ev.items() if k != "examples"}}}) + "\n")
