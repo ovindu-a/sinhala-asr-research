@@ -103,6 +103,63 @@ def slr52_extra(out: str = "v6_plus_slr52", dry_run: bool = False):
         data_vol.commit()
 
 
+@app.function(volumes=VOLS, cpu=2, memory=8192, timeout=1800)
+def fetch_reference(repo: str = "ovindu-a/sinhala-gemma-asr"):
+    """Fresh Modal account: the exact word 4-gram KenLM (-> /data/lm/si_4gram) and the Gemma-unit v6x_top8 checkpoint
+    (-> /runs/v6x_top8/best) from the public Hugging Face repo, instead of rebuilding / retraining them."""
+    import shutil
+
+    from huggingface_hub import hf_hub_download
+
+    for sub, dst, files in (("lm", "/data/lm/si_4gram", ("lm.bin", "unigrams.txt", "lm_config.json")),
+                            ("ctc", "/runs/v6x_top8/best", ("config.json", "units.json", "model.safetensors"))):
+        os.makedirs(dst, exist_ok=True)
+        for fn in files:
+            path = hf_hub_download(repo, f"{sub}/{fn}", local_dir="/tmp/ref")
+            shutil.copy(path, f"{dst}/{fn}")
+            print(f"{repo}/{sub}/{fn} -> {dst}/{fn} ({os.path.getsize(path) / 1e6:.1f} MB)", flush=True)
+    data_vol.commit()
+    runs_vol.commit()
+
+
+@app.function(volumes=VOLS, cpu=2, memory=4096, timeout=900)
+def _sha256(paths: list[str]) -> dict:
+    import hashlib
+
+    out = {}
+    for p in paths:
+        full = f"/data/manifests/{p}"
+        if not os.path.exists(full):
+            out[p] = "missing"
+            continue
+        h = hashlib.sha256()
+        with open(full, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 24), b""):
+                h.update(chunk)
+        out[p] = h.hexdigest()
+    for p in ("/data/lm/si_4gram/lm.bin", "/data/openslr52/utt_spk_text.tsv", "/data/packed/ss_v6/train.pcm",
+              "/data/packed/v6_plus_slr52/train.pcm", "/runs/v6x_top8/best/model.safetensors"):
+        out[p] = f"{os.path.getsize(p) / 1e9:.2f} GB" if os.path.exists(p) else "missing"
+    return out
+
+
+@app.local_entrypoint()
+def verify_data(sums: str = "reference/SHA256SUMS"):
+    """modal run modal_app.py::verify_data -> every manifest on the volume must match reference/SHA256SUMS
+    (same speakers, same dev2k subset, same SLR-52 extra data as the original runs)."""
+    want = dict(reversed(line.split()) for line in open(sums) if line.strip())
+    got = _sha256.remote(list(want))
+    ok = True
+    for p, h in got.items():
+        if p in want:
+            same = h == want[p]
+            ok &= same
+            print(f"{'OK  ' if same else 'DIFF'} {p}" + ("" if same else f"  got {h}"))
+        else:
+            print(f"     {p}: {h}")
+    print("all manifests match" if ok else "MISMATCH: see docs/GRAPHEME_PLAN.md §3a")
+
+
 def _scripts():
     import sys
 

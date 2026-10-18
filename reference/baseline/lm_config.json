@@ -1,0 +1,16 @@
+{
+ "order": 4,
+ "prune": "0 1 1 1",
+ "stats": {
+  "train_sent": 171163,
+  "train_words": 813184,
+  "wiki_sent": 508189,
+  "wiki_words": 7434255,
+  "wiki_dropped_leak": 2939,
+  "web_sent": 10396916,
+  "web_words": 150025513,
+  "web_dropped_leak": 131254
+ },
+ "exclusion_patterns": 16407,
+ "text": "wikimedia/wikipedia 20231101.si + FineWeb-2 sin_Sinh (capped) + training transcripts; external sentences containing any dev/test reference (>=3 words) removed"
+}

@@ -162,3 +162,6 @@ Code: sinhala_asr/{graphemes,units}.py, scripts/12_grapheme_inventory.py, 13_bui
 GER of existing systems on v6 test: v6x_top8 greedy 6.22, + KenLM 4.61 (unseen sentences 6.94), Whisper-small 5.52.
 Stand-in check (v6 transcripts as corpus): gbpe3000 1.75 units/word vs Gemma 2.77, 0 round-trip failures;
 encoder = 25 frames/s vs ≤ 10.6 gbpe targets/s (p99 5.0). Est. cost: ~$11 for C, ~$21–23 for B + C.
+New Modal account for the grapheme runs: Phase 0 in docs/GRAPHEME_PLAN.md rebuilds the data there (pack_v6,
+slr52_extra), downloads the exact KenLM + v6x_top8 from HF (`fetch_reference`) and checks the manifests against
+reference/SHA256SUMS (`verify_data`). reference/ = manifests, OpenSLR speaker table, baseline hyps, A's metrics.

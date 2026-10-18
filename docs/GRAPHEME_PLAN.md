@@ -51,6 +51,8 @@ Run names on the `sinhala-asr-runs` volume:
 | `scripts/12_grapheme_inventory.py` | corpus → `/data/units/graphemes.json` (alphabet + counts + stats) and `/data/units/words.tsv` (word, count). |
 | `scripts/13_build_units.py` | builds `grapheme` or `gbpe<V>` units + `report.json` (the go/no-go numbers). SentencePiece is trained on `word<TAB>count` lines = the whole corpus, exactly, at a fraction of the memory. |
 | `scripts/train.py`, `evaluate.py`, `08_lm_decode.py`, `benchmark_speed.py` | use `load_units` / `units.init_ids` / `units.pieces`; work for every kind. |
+| `reference/`, `scripts/unpack_reference.sh` | small reference files for a fresh Modal account (§3) |
+| `modal_app.py::fetch_reference`, `verify_data` | KenLM + A's checkpoint from Hugging Face; manifest checksums vs `reference/SHA256SUMS` |
 | `scripts/rescore.py` | re-scores any `*.hyps.jsonl` (all metrics + GER), overall / per source / seen-vs-unseen sentences. CPU, local. |
 | `modal_app.py` | new `lm_corpus` and `grapheme_units` functions; `train` takes `--units <dir under /data/units>`. The base image adds `grapheme-kit==0.1.1`, `sentencepiece`, `rapidfuzz`. |
 
@@ -84,7 +86,8 @@ Run names on the `sinhala-asr-runs` volume:
 | Whisper-small run12-best | all | 15.50 | 10.70 | 4.43 | 5.52 |
 | | unseen | 21.80 | 15.06 | 6.68 | 8.23 |
 
-Reference dev2k curves (dev CER by step) to compare against during training:
+Reference dev2k curves (dev CER by step; full logs in `reference/runs/*/metrics.jsonl`) to compare against during
+training:
 
 | step | 1000 | 2000 | 3000 | 4000 | 5000 | 6000 | 7000 | 7500 |
 |---|---|---|---|---|---|---|---|---|
@@ -93,35 +96,90 @@ Reference dev2k curves (dev CER by step) to compare against during training:
 
 ---
 
-## 3. Setup on the other machine
+## 3. Setup on the other machine (new Modal account)
 
-```bash
-git clone https://github.com/ovindu-a/sinhala-asr-research.git && cd sinhala-asr-research
-git checkout grapheme-units
-uv sync                      # local venv: needed for rescore / compare_errors only
-export MODAL_PROFILE=ovindu-a  # training data, checkpoints and the KenLM live in this workspace
-modal profile current        # must print ovindu-a; if the profile is missing: modal token new --profile ovindu-a
-modal volume ls sinhala-asr-data lm         # expect si_4gram/
-modal volume ls sinhala-asr-runs            # expect v6_top6/, v6x_top8/, ...
+This plan runs on a **different Modal account** from the original runs, whose volumes held the packed audio,
+manifests, KenLM and checkpoints. Nothing from the old account is needed. What the new account needs comes from
+three places:
+
+| what | from | how |
+|---|---|---|
+| v6 audio + manifests (113 h train, dev2k, test) | Hugging Face `SinhaSpeech/sinhala-asr-data` (public) | `pack_v6` (§3a) |
+| SLR-52 extra audio (+58 h) | Hugging Face `SPEAK-ASR/openslr-sinhala-asr` + `reference/openslr52/utt_spk_text.tsv.gz` (OpenSLR-52 speaker table, CC BY-SA 4.0) | `modal volume put` + `slr52_extra` (§3a) |
+| word 4-gram KenLM `si_4gram` (exact file) + system A's `v6x_top8/best` | Hugging Face `ovindu-a/sinhala-gemma-asr` (public) | `fetch_reference` (§3a) |
+| baseline hypotheses, reference manifests + checksums, A's metrics | **this repo**, `reference/` (compressed, 20 MB) | `scripts/unpack_reference.sh` |
+
+`reference/` contents:
+
+```
+reference/SHA256SUMS                         sha256 of the 4 manifests below (as on the original volume)
+reference/manifests/ss_v6/{dev2k,test}.jsonl  + train.jsonl.gz       SinhaSpeech v6 manifests (normalized text)
+reference/manifests/v6_plus_slr52/train.jsonl.gz                   v6 train + SLR-52 extra (A's v6x_top8 data)
+reference/openslr52/utt_spk_text.tsv.gz      OpenSLR-52 utt/speaker/text table (needed by slr52_extra)
+reference/baseline/                          A greedy / A + KenLM / Whisper-small test hyps (.gz), their eval json,
+                                             rescore_test.json (GER baselines), si_4gram lm_config.json
+reference/runs/{v6_top6,v6x_top8}/           A's args.json, config.json, units.json, metrics.jsonl (dev curves)
 ```
 
-The local `data/` and `runs/` directories are git-ignored. Pull the baseline hypotheses (Phase 6 compares against
-them, and `modal_app.py`'s punctuation image mounts two of them) and the v6 train manifest (seen/unseen split):
-
 ```bash
-mkdir -p runs data/manifests/ss_v6
-modal volume get sinhala-asr-runs v6x_top8/best/eval_ss_v6_test.hyps.jsonl runs/v6x_top8_test.hyps.jsonl
-modal volume get sinhala-asr-runs v6x_top8/best/lm/eval_lm_test.hyps.jsonl runs/v6x_top8_lm_test.hyps.jsonl
-modal volume get sinhala-asr-runs baselines/whisper-small-sinhala-run12-best_test.hyps.jsonl runs/whisper_test.hyps.jsonl
-modal volume get sinhala-asr-data manifests/ss_v6/train.jsonl data/manifests/ss_v6/train.jsonl
+git clone https://github.com/ovindu-a/sinhala-asr.git && cd sinhala-asr   # private repo (has reference/)
+git checkout grapheme-units
+uv sync                          # local venv: rescore / compare_errors / unpack checks
+sh scripts/unpack_reference.sh   # -> data/manifests/..., data/openslr52/..., runs/*.hyps.jsonl; prints 4x OK
 uv run scripts/rescore.py runs/v6x_top8_lm_test.hyps.jsonl --train data/manifests/ss_v6/train.jsonl
 # must print WER 14.72% / CER 3.68% / GER 4.61% on "all"
+
+pip install modal                # or: uv tool install modal
+modal setup                      # log in to the NEW account (creates a token)
+modal profile current            # make sure this is the new account before launching anything
 ```
 
-Rules (same as the rest of the project):
+The volumes (`sinhala-asr-data`, `sinhala-asr-runs`, `sinhala-asr-hf-cache`) are created automatically on first
+use. Run every `modal` command from the repo root (the app mounts `scripts/`, `sinhala_asr/` and, for the
+punctuation functions, `runs/*.hyps.jsonl`).
 
-- **Budget.** The $25 Modal cap was nearly spent (≈ $3.3 left on 2026-10-18). Add credit first. Before every job,
-  run `modal billing summary`, add a row to the budget table in `NOTES.md`, and only then launch.
+### 3a. Phase 0: rebuild the data on the new account (CPU, ~$1.5, ~2 h)
+
+```bash
+# 1. OpenSLR-52 speaker table (slr52_extra uses it to keep v6 dev/test speakers out of training)
+modal volume put sinhala-asr-data data/openslr52/utt_spk_text.tsv openslr52/utt_spk_text.tsv
+
+# 2. SinhaSpeech v6 -> packed PCM + manifests: /data/{packed,manifests}/ss_v6/{train,dev2k,test}   (~10 min)
+modal run modal_app.py::pack_v6
+
+# 3. SLR-52 utterances missing from v6 (minus v6 val/test speakers), appended after v6 train:
+#    /data/{packed,manifests}/v6_plus_slr52/{train,dev2k,test}   (~45 min analysis + ~40 min packing)
+modal run --detach modal_app.py::slr52_extra
+
+# 4. exact KenLM + A's checkpoint from Hugging Face (~5 min)
+modal run modal_app.py::fetch_reference
+
+# 5. gate 0: every manifest byte-identical to the original runs
+modal run modal_app.py::verify_data
+```
+
+**Gate 0.** `verify_data` must print `OK` for all 4 manifests, plus sizes for `lm.bin` (~0.39 GB), the packed
+`train.pcm` files and `model.safetensors`.
+
+- `ss_v6/*` DIFF: the SinhaSpeech dataset changed on Hugging Face since 2026-10-15 (the dataset was at revision
+  `371180dcf62b1beb58c99e125d613d5f1960e077` on 2026-10-18). Pin it: add `revision="371180dc…"` to the
+  `hf_hub_download` call in `scripts/05_pack_parquet.py`, rerun step 2.
+- `v6_plus_slr52/train.jsonl` DIFF while `ss_v6/*` is OK: the SLR-52 mirror changed. Compare row counts with
+  `reference/manifests/v6_plus_slr52/train.jsonl.gz` (171,163 rows); if within ~1%, continue and note it in
+  NOTES.md (A and the new runs then saw slightly different extra data, so compare B/C's v6x_top8 with A's with that
+  caveat; v6_top6 is unaffected).
+
+Optional sanity check of the new account end to end (~$1, H100 ~15 min): score A's downloaded checkpoint on the
+rebuilt test set; it must reproduce `reference/baseline/v6x_top8_eval_ss_v6_test.json` (greedy WER 19.27 / CER 4.91):
+
+```bash
+modal run modal_app.py::evaluate --ckpt v6x_top8/best --split test
+```
+
+Rules:
+
+- **Budget.** The new account has its own credit. Before every job, run `modal billing summary`, add a row to the
+  budget table in `NOTES.md`, and only then launch.
 - Keep only `last/` and `best/` per run (the training script already does this).
 - zsh: pass Modal arguments explicitly (no `$var` word-splitting tricks).
 - Never push models to Hugging Face from this plan.
@@ -134,14 +192,16 @@ From the actual Modal bills of the original runs (not list prices):
 
 | step | resources | time | est. cost |
 |---|---|---|---|
+| Phase 0: `pack_v6` + `slr52_extra` + `fetch_reference` | 8 CPU | ~2 h | ~$1.5 |
+| optional: `evaluate` A's checkpoint on the new account | H100 | ~15 min | ~$1 |
 | `lm_corpus` (rebuild KenLM text) | 8 CPU | ~30–40 min | ~$0.3–0.5 |
 | `grapheme_units` (inventory + units + reports) | 16 CPU | ~20–30 min | ~$0.3–0.5 |
 | `*_v6_top6` | H100 | ~55 min | ~$2.75 |
 | `*_v6x_top8` | H100 | ~60 min | ~$5 |
 | `evaluate` + `lm_dump` | H100, short | ~15 min | ~$1 |
 | `lm_decode` (grid + test) | 32 CPU | ~30–60 min | ~$1.5 |
-| **C only** | | | **~$11** |
-| **C + B** | | | **~$21–23** |
+| **C only** (incl. Phase 0) | | | **~$12.5** |
+| **C + B** (incl. Phase 0) | | | **~$23–25** |
 | optional speed benchmark (per system) | H100 | ~10 min | ~$0.5 |
 
 ---
@@ -162,9 +222,9 @@ Writes `/data/lm/si_corpus/corpus.txt` (~2–3 GB) and `/data/lm/si_corpus/corpu
 **Check** (gate 1): the counts must match the KenLM's.
 
 ```bash
+mkdir -p runs/grapheme
 modal volume get sinhala-asr-data lm/si_corpus/corpus_stats.json runs/grapheme/
-modal volume get sinhala-asr-data lm/si_4gram/lm_config.json runs/grapheme/
-python -c "import json;a=json.load(open('runs/grapheme/corpus_stats.json'))['stats'];b=json.load(open('runs/grapheme/lm_config.json'))['stats'];print(a==b);print(a);print(b)"
+python -c "import json;a=json.load(open('runs/grapheme/corpus_stats.json'))['stats'];b=json.load(open('reference/baseline/lm_config.json'))['stats'];print(a==b);print(a);print(b)"
 ```
 
 `True` → same text as the KenLM (≈ 160 M words). If they differ slightly (e.g. a Hugging Face parquet revision
