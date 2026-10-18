@@ -96,7 +96,7 @@ Reference dev2k curves (dev CER by step) to compare against during training:
 ## 3. Setup on the other machine
 
 ```bash
-git clone https://github.com/ovindu-a/sinhala-asr.git && cd sinhala-asr
+git clone https://github.com/ovindu-a/sinhala-asr-research.git && cd sinhala-asr-research
 git checkout grapheme-units
 uv sync                      # local venv: needed for rescore / compare_errors only
 export MODAL_PROFILE=ovindu-a  # training data, checkpoints and the KenLM live in this workspace
