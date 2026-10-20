@@ -129,7 +129,7 @@ def _(
     urllib,
     zipfile,
 ):
-    mo.stop(not setup_btn.value, mo.md("Press **1. Set up**."))
+    mo.stop(not setup_btn.value, mo.vstack([mo.md("**Step 1:** click to start"), setup_btn]))
     if hf_token.value:
         os.environ["HF_TOKEN"] = hf_token.value
     assert os.environ.get("HF_TOKEN"), "set HF_TOKEN (field above or the environment)"
@@ -178,7 +178,7 @@ def _(mo):
 
 @app.cell
 def _(CODE, PRESETS, WORK, bucket_sync, data_btn, mo, os, preset, run_name):
-    mo.stop(not data_btn.value, mo.md("Press **2. Download**."))
+    mo.stop(not data_btn.value, mo.vstack([mo.md("**Step 2** (after step 1 has finished):"), data_btn]))
     _p = PRESETS[preset.value]
     _m = _p["manifests"]
     D = os.path.join(WORK, "data")
@@ -225,7 +225,7 @@ def _(
     train_btn,
     workers,
 ):
-    mo.stop(not train_btn.value, mo.md("Press **3. Train**."))
+    mo.stop(not train_btn.value, mo.vstack([mo.md("**Step 3** (after step 2 has finished):"), train_btn]))
     import train as _train_mod
 
     _p = PRESETS[preset.value]
@@ -271,7 +271,7 @@ def _(mo):
 
 @app.cell
 def _(D, RUNS, bucket_sync, eval_btn, mo, run_name):
-    mo.stop(not eval_btn.value, mo.md("Press **4. Evaluate** after training."))
+    mo.stop(not eval_btn.value, mo.vstack([mo.md("**Step 4** (after training):"), eval_btn]))
     import importlib as _importlib
 
     import evaluate as _eval_mod

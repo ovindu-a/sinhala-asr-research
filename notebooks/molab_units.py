@@ -57,7 +57,7 @@ def _(mo):
 
 @app.cell
 def _(BUCKET, REPO_ZIP, WORK, compare, go, hf_token, mo, os, shutil, subprocess, sys, urllib, vocab, weight, zipfile):
-    mo.stop(not go.value, mo.md("Set the options and press **Build units**."))
+    mo.stop(not go.value, mo.vstack([mo.md("Set the options above, then click:"), go]))
     if hf_token.value:
         os.environ["HF_TOKEN"] = hf_token.value
     os.makedirs(WORK, exist_ok=True)
@@ -119,7 +119,7 @@ def _(mo):
 
 @app.cell
 def _(BUCKET, OUT, mo, subprocess, up, vocab):
-    mo.stop(not up.value)
+    mo.stop(not up.value, up)
     for _src, _dst in ((f"{OUT}/gbpe{vocab.value}", f"units_speech/gbpe{vocab.value}"), (OUT, "units_speech")):
         _flags = [] if _src != OUT else ["--include", "graphemes.json"]
         subprocess.run(["hf", "buckets", "sync", _src, f"hf://buckets/{BUCKET}/{_dst}", *_flags], check=True)
