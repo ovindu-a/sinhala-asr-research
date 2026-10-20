@@ -441,3 +441,41 @@ Commit the `runs/` summary files that are small (`*.json`, reports, compare txt)
 | training log `units N (gemma)` | `--units` was not passed / misspelled: stop, delete `/runs/<name>` (`modal volume rm -r sinhala-asr-runs <name>`), relaunch |
 | `lm_decode` IndexError | handled: utterances whose frames only have empty pieces fall back to greedy (as for A) |
 | Whisper-style runaway repetitions in hyps | count them in `compare_errors.py` output ("runaway"); not expected from CTC |
+
+---
+
+## 13. Next: grapheme n-gram LM for B (decoder only, CPU)
+
+Why: B (single graphemes) beats A on CER / WER_seg / GER but only ties on WER (14.78 vs 14.72), and the gap is word
+spacing. The word 4-gram scores a word only once it is complete and gives unseen words a flat penalty, so it cannot
+judge බලනකොට vs බලන කොට. A grapheme n-gram over the same text, with "|" as the word break, scores every grapheme
+including the spaces.
+
+Code (tested locally with a toy bigram LM and B's real units: 40/40 clean test sentences recovered; on an
+acoustically ambiguous space the LM decides it):
+- `scripts/14_grapheme_lm.py`: si_corpus → grapheme tokens (`අ ම් මා | ගෙ ද ර`) → `lmplz` → `lm.bin` + `vocab.txt`.
+- `scripts/08_lm_decode.py --lm-kind grapheme`: every unit becomes its own "word" for QUAN's decoder (piece
+  `"▁"+grapheme`, space unit `"▁|"`), so no new beam search. β becomes a per-grapheme bonus. New `--beam`, `--procs`.
+- `modal_app.py::grapheme_lm`: 16 CPU / 128 GB / 400 GB disk. `lm_image` now builds KenLM (lmplz + Python module)
+  with max order 10; the word 4-gram still loads.
+
+Steps (Modal account `chatgptgroup321`; log each job in the NOTES.md budget table first):
+
+```bash
+# 1. grapheme 8-gram over the full si_corpus (~700 M grapheme tokens; est. 1–2 h, ~$2–4)
+modal run --detach modal_app.py::grapheme_lm --order 8
+#    quicker first version if wanted: --max-words 50000000 --out si_graph8_50m
+
+# 2. decode B: grid on ALL 2,000 dev2k utts (the 1,000-utt grid misled β last time), then test
+modal run --detach modal_app.py::lm_decode --ckpt gr_v6x_top8/best --lm si_graph8 \
+    --extra "--lm-kind grapheme --tag _glm8 --tune-limit 2000 --alphas 0.3 0.5 0.7 1.0 --betas 0 0.5 1.0 2.0"
+#    if the best α or β is on the grid edge, extend once in that direction (same --tag with a suffix)
+```
+
+Outputs: `/runs/gr_v6x_top8/best/lm/eval_lm_test_glm8.{json,hyps.jsonl}` (grid inside the json). Compare with
+B + word LM (14.78 / 8.33 / 3.41 / 4.29, unseen WER 20.26) and A + word LM (14.72 / 8.95 / 3.68 / 4.61) using
+`scripts/rescore.py` and `scripts/compare_errors.py` (watch "spacing" and inserted words). Then sync `lm.bin`,
+`vocab.txt`, `lm_config.json` and the new eval files to the HF bucket (`hf://buckets/ovindu-a/sinhala-grapheme-asr/
+lm/si_graph8/`, `runs/gr_v6x_top8/best/lm/`) so molab can use them.
+
+If it helps but WER still trails: combine both LMs (needs a decoder change: word LM at "▁|", grapheme LM per unit).

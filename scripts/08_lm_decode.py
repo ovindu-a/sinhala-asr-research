@@ -6,6 +6,10 @@ Two phases so the GPU is used only briefly:
 
   python scripts/08_lm_decode.py dump   --ckpt C --split dev2k --split test --manifests M --packed P --out O
   python scripts/08_lm_decode.py decode --ckpt C --lm L --out O --tune-split dev2k --eval-split test --manifests M
+
+--lm-kind grapheme (grapheme units only; LM from 14_grapheme_lm.py): every unit becomes its own "word" for QUAN's
+decoder (piece "▁"+grapheme, the space unit "▁|"), so the grapheme n-gram scores each grapheme, spaces included.
+beta is then a per-grapheme bonus, not a per-word one.
 """
 
 import argparse
@@ -65,15 +69,16 @@ def dump(args):
 _G = {}
 
 
-def _init(lm, pieces, unigrams, alpha, beta, vocab, space_offset=0.0):
+def _init(lm, pieces, unigrams, alpha, beta, vocab, space_offset=0.0, beam=32):
     from quan_transcribe.lm import KenLMDecoder
 
     _G["dec"] = KenLMDecoder(lm, pieces, unigrams, alpha=alpha, beta=beta)
     _G["V"] = vocab
+    _G["beam"] = beam
     # grapheme units: added to the log-prob of the bare "▁" (space) unit, so the beam needs more acoustic evidence to
     # start a new word (the word LM + beta otherwise split compounds: බලනකොට -> බලන කොට). gbpe also has a bare "▁"
     # piece (used before pieces without one), so the offset there only touches some word starts; Gemma: none.
-    _G["space"] = np.array([k for k, p in enumerate(pieces) if p == "▁"])
+    _G["space"] = np.array([k for k, p in enumerate(pieces) if p in ("▁", "▁|")])
     _G["space_offset"] = space_offset
     # units with no text (<unk>, byte pieces) are skipped by QUAN's beam search; if one is the only candidate in a
     # frame, every beam dies (IndexError). They add nothing to the transcript, so mask them out.
@@ -96,9 +101,10 @@ def _decode_one(item):
         return [int(u) for u in best[keep] if u != 0]
 
 
-def run(data, units, lm, pieces, unigrams, alpha, beta, procs, limit=None, space_offset=0.0):
+def run(data, units, lm, pieces, unigrams, alpha, beta, procs, limit=None, space_offset=0.0, beam=32):
     items = data["topk"][:limit] if limit else data["topk"]
-    with Pool(procs, initializer=_init, initargs=(lm, pieces, unigrams, alpha, beta, data["vocab"], space_offset)) as pool:
+    init = (lm, pieces, unigrams, alpha, beta, data["vocab"], space_offset, beam)
+    with Pool(procs, initializer=_init, initargs=init) as pool:
         seqs = pool.map(_decode_one, items, chunksize=16)
     return [units.decode(s) for s in seqs]
 
@@ -106,16 +112,23 @@ def run(data, units, lm, pieces, unigrams, alpha, beta, procs, limit=None, space
 def decode(args):
     units = load_units(os.path.join(args.ckpt, "units.json"))
     pieces = units.pieces  # "" for blank/unk/byte pieces; "▁" starts a word (grapheme units: the space unit)
-    with open(os.path.join(args.lm, "unigrams.txt"), encoding="utf-8") as f:
+    if args.lm_kind == "grapheme":
+        assert units.kind == "grapheme", "--lm-kind grapheme needs grapheme units"
+        pieces = [p if not p else "▁|" if p == "▁" else "▁" + p for p in pieces]
+        vocab_file = "vocab.txt"
+    else:
+        vocab_file = "unigrams.txt"
+    with open(os.path.join(args.lm, vocab_file), encoding="utf-8") as f:
         unigrams = [w.strip() for w in f if w.strip()]
     lm = os.path.join(args.lm, "lm.bin")
-    procs = os.cpu_count()
+    procs = args.procs or os.cpu_count()
+    kw = {"beam": args.beam}
     tune = torch.load(os.path.join(args.out, f"{args.tune_split}.logits.pt"), weights_only=False)
     refs = [r["text"] for r in tune["rows"]]
     lim = args.tune_limit
     grid = []
     for a, b, so in itertools.product(args.alphas, args.betas, args.space_offsets):
-        hyps = run(tune, units, lm, pieces, unigrams, a, b, procs, lim, so)
+        hyps = run(tune, units, lm, pieces, unigrams, a, b, procs, lim, so, **kw)
         m = score(refs[: len(hyps)], hyps)
         n_hyp, n_ref = sum(len(h.split()) for h in hyps), sum(len(r.split()) for r in refs[: len(hyps)])
         grid.append({"alpha": a, "beta": b, "space_offset": so, "hyp_ref_words": n_hyp / n_ref} | m)
@@ -126,12 +139,13 @@ def decode(args):
 
     ev = torch.load(os.path.join(args.out, f"{args.eval_split}.logits.pt"), weights_only=False)
     rows = ev["rows"]
-    hyps = run(ev, units, lm, pieces, unigrams, best["alpha"], best["beta"], procs, space_offset=best["space_offset"])
+    hyps = run(ev, units, lm, pieces, unigrams, best["alpha"], best["beta"], procs, space_offset=best["space_offset"],
+               **kw)
     by_src = collections.defaultdict(lambda: ([], []))
     for r, h in zip(rows, hyps):
         by_src[r.get("src") or "all"][0].append(r["text"])
         by_src[r.get("src") or "all"][1].append(h)
-    res = {"lm": args.lm, "alpha": best["alpha"], "beta": best["beta"], "space_offset": best["space_offset"],
+    res = {"lm": args.lm, "lm_kind": args.lm_kind, "beam": args.beam, "alpha": best["alpha"], "beta": best["beta"], "space_offset": best["space_offset"],
            "tune_utts": best["utts"], "grid": grid,
            "overall": score([r["text"] for r in rows], hyps),
            "by_source": {s: score(a, b) for s, (a, b) in sorted(by_src.items())}}
@@ -163,6 +177,9 @@ def main(argv=None):
     ap.add_argument("--space-offsets", type=float, nargs="+", default=[0.0],
                     help="added to the bare '▁' unit's log-prob (grapheme units); grid like alphas/betas")
     ap.add_argument("--tag", default="", help="suffix for the output files, e.g. _space (keeps earlier results)")
+    ap.add_argument("--lm-kind", default="word", choices=["word", "grapheme"])
+    ap.add_argument("--beam", type=int, default=32)
+    ap.add_argument("--procs", type=int, default=0, help="decoder processes (default: all CPUs)")
     args = ap.parse_args(argv)
     dump(args) if args.phase == "dump" else decode(args)
 

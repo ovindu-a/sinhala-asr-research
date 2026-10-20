@@ -229,9 +229,10 @@ lm_image = (
                       "libboost-thread-dev", "libboost-test-dev", "zlib1g-dev", "libbz2-dev", "liblzma-dev")
     .run_commands(
         "git clone --depth 1 https://github.com/kpu/kenlm /opt/kenlm && cd /opt/kenlm && mkdir build && cd build "
-        "&& cmake .. -DKENLM_MAX_ORDER=6 && make -j8 lmplz build_binary && cp bin/lmplz bin/build_binary /usr/local/bin/",
+        "&& cmake .. -DKENLM_MAX_ORDER=10 && make -j8 lmplz build_binary && cp bin/lmplz bin/build_binary /usr/local/bin/",
     )
-    .uv_pip_install("https://github.com/kpu/kenlm/archive/master.zip", "pyahocorasick")
+    # order up to 10 for the grapheme n-gram (14_grapheme_lm.py); the Python module reads MAX_ORDER at build time
+    .run_commands("MAX_ORDER=10 pip install https://github.com/kpu/kenlm/archive/master.zip pyahocorasick")
     .add_local_python_source("sinhala_asr")
     .add_local_dir("scripts", "/root/app/scripts")
 )
@@ -284,6 +285,18 @@ def grapheme_units(corpus: str = "si_corpus", vocabs: str = "3000", grapheme: bo
     finally:
         data_vol.commit()
         hf_vol.commit()
+
+
+@app.function(image=lm_image, volumes=VOLS, cpu=16, memory=131072, ephemeral_disk=400 * 1024, timeout=6 * 3600)
+def grapheme_lm(order: int = 8, corpus: str = "si_corpus", out: str = "", prune: str = "0 0 1", max_words: int = 0):
+    """Grapheme n-gram KenLM over the si_4gram text -> /data/lm/<out or si_graph<order>> (lm.bin, vocab.txt).
+    modal run --detach modal_app.py::grapheme_lm --order 8"""
+    out = out or f"si_graph{order}"
+    try:
+        sh(f"python scripts/14_grapheme_lm.py --corpus /data/lm/{corpus}/corpus.txt --out /data/lm/{out} "
+           f"--order {order} --prune '{prune}' --max-words {max_words} --tmp /tmp")
+    finally:
+        data_vol.commit()
 
 
 @app.function(image=lm_image, volumes=VOLS, gpu=GPU, cpu=8, memory=32768, timeout=3600)
