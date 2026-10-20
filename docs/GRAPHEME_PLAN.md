@@ -456,7 +456,7 @@ acoustically ambiguous space the LM decides it):
 - `scripts/14_grapheme_lm.py`: si_corpus → grapheme tokens (`අ ම් මා | ගෙ ද ර`) → `lmplz` → `lm.bin` + `vocab.txt`.
 - `scripts/08_lm_decode.py --lm-kind grapheme`: every unit becomes its own "word" for QUAN's decoder (piece
   `"▁"+grapheme`, space unit `"▁|"`), so no new beam search. β becomes a per-grapheme bonus. New `--beam`, `--procs`.
-- `modal_app.py::grapheme_lm`: 16 CPU / 128 GB / 400 GB disk. `lm_image` now builds KenLM (lmplz + Python module)
+- `modal_app.py::grapheme_lm`: 16 CPU / 128 GB / 512 GiB disk (Modal minimum). `lm_image` now builds KenLM (lmplz + Python module)
   with max order 10; the word 4-gram still loads.
 
 Steps (Modal account `chatgptgroup321`; log each job in the NOTES.md budget table first):

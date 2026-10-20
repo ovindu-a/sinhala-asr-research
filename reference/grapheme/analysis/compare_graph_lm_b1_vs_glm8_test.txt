@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |             total b_wordlm |               total b_glm8 |              only b_wordlm |                only b_glm8
+spacing        |   3,295  ( 4.37% of words) |   3,441  ( 4.57% of words) |     663  ( 0.88% of words) |     779  ( 1.03% of words)
+orthographic   |   1,088  ( 1.44% of words) |   1,111  ( 1.47% of words) |     137  ( 0.18% of words) |     133  ( 0.18% of words)
+one_letter     |   2,451  ( 3.25% of words) |   2,403  ( 3.19% of words) |     373  ( 0.50% of words) |     291  ( 0.39% of words)
+near_miss      |     674  ( 0.89% of words) |     620  ( 0.82% of words) |     108  ( 0.14% of words) |      58  ( 0.08% of words)
+wrong_word     |   1,313  ( 1.74% of words) |   1,258  ( 1.67% of words) |     138  ( 0.18% of words) |     119  ( 0.16% of words)
+missed_word    |     310  ( 0.41% of words) |     233  ( 0.31% of words) |      35  ( 0.05% of words) |       5  ( 0.01% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     155  ( 0.21% of words) |     142  ( 0.19% of words) |      18  ( 0.02% of words) |       9  ( 0.01% of words)
+ALL word errs  |   9,346  (12.41% of words) |   9,268  (12.30% of words) |   1,472  ( 1.95% of words) |   1,394  ( 1.85% of words)
+
+words both get wrong: 7,874 ({'same output': 7004, 'different outputs': 870})
+extra (inserted) words: b_wordlm 1,789, b_glm8 1,474; runaway utterances (>=4 extra words): b_wordlm 8, b_glm8 11
+
+examples of errors only b_wordlm makes (ref -> b_wordlm):
+  spacing       තේරෙයිද -> ∅; හොඳටම -> ∅; වටපිටාවකදීය -> ∅; දැන -> ∅
+  orthographic  මිනිස්සුන්ගේ -> මිනිස්සුන්ගෙ; බොන්නේ -> බොන්නෙ; වෙන්නේත් -> වෙන්නෙත්; ගාණක් -> ගානක්
+  one_letter    කමිටුව -> කමිටු; ඉන්නේ -> න්නේ; ඉඳලා -> ඉඳල; වදාළා -> වදාළ
+  near_miss     හොරකම් -> හොරක; තාත්තලා -> තාවතලා; සම්බුද්ධයි -> සම්බුද්ධ; දෙයින් -> දෙන්
+  wrong_word    ගමන්ම -> ගමම; අඬන -> අඬන්න; අම්මා -> කියලඅම්ම; අරන් -> රම්
+  missed_word   මේ -> ∅; ඒක -> ∅; ඒ -> ∅; ලා -> ∅
+  english       wall -> al; continues -> onits; capital -> ptl; basic -> asi
+
+examples of errors only b_glm8 makes (ref -> b_glm8):
+  spacing       ආලකමන්දාව -> ∅; වගකිවයුත්තන්ට -> ∅; උපලක්ෂිත -> ∅; ය -> ∅
+  orthographic  වේලාව -> වෙලාව; ගැහුනේ -> ගැහුණේ; මදුරුවෝ -> මදුරුවො; ගෘහණියක් -> ගෘහනියක්
+  one_letter    කිසිඳු -> කිසිදු; ඉන්න -> න්න; ද -> ට; මං -> මම
+  near_miss     කැඩුනට -> කැඩුණාට; තියාගෙන -> තියාගන්න; සම්බන්ධයෙනුත් -> සම්බන්ධයෙන්නුත්; අයදුම්පත් -> අයුදුපත්
+  wrong_word    කැමති -> කැමතියි; නොකළ -> නොකලා; බුදුන්ගේ -> බුදුන්ගෙන්; එයා -> එයාත්
+  missed_word   පන්නලා -> ∅; අයියට -> ∅; හොද -> ∅; ව -> ∅
+  english       upset -> සෙට්; try -> රයි; business -> iss; exception -> exceptions

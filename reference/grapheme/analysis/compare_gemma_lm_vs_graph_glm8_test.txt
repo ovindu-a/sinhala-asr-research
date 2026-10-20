@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |                 total a_lm |               total b_glm8 |                  only a_lm |                only b_glm8
+spacing        |   2,797  ( 3.71% of words) |   3,441  ( 4.57% of words) |     829  ( 1.10% of words) |   1,318  ( 1.75% of words)
+orthographic   |   1,043  ( 1.38% of words) |   1,111  ( 1.47% of words) |     245  ( 0.33% of words) |     237  ( 0.31% of words)
+one_letter     |   2,645  ( 3.51% of words) |   2,403  ( 3.19% of words) |     803  ( 1.07% of words) |     559  ( 0.74% of words)
+near_miss      |     725  ( 0.96% of words) |     620  ( 0.82% of words) |     236  ( 0.31% of words) |     120  ( 0.16% of words)
+wrong_word     |   1,521  ( 2.02% of words) |   1,258  ( 1.67% of words) |     380  ( 0.50% of words) |     296  ( 0.39% of words)
+missed_word    |     306  ( 0.41% of words) |     233  ( 0.31% of words) |      52  ( 0.07% of words) |      40  ( 0.05% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     192  ( 0.25% of words) |     142  ( 0.19% of words) |      89  ( 0.12% of words) |      43  ( 0.06% of words)
+ALL word errs  |   9,289  (12.33% of words) |   9,268  (12.30% of words) |   2,634  ( 3.50% of words) |   2,613  ( 3.47% of words)
+
+words both get wrong: 6,655 ({'same output': 5092, 'different outputs': 1563})
+extra (inserted) words: a_lm 1,803, b_glm8 1,474; runaway utterances (>=4 extra words): a_lm 10, b_glm8 11
+
+examples of errors only a_lm makes (ref -> a_lm):
+  spacing       තේරෙයිද -> ∅; හොඳටම -> ∅; වටපිටාවකදීය -> ∅; දැන -> ∅
+  orthographic  වුනොත් -> වුණොත්; වෑංජන -> වැංජන; මරණ -> මරන; වේලාව -> වෙලාව
+  one_letter    අඳින -> අදින; ඕනේ -> ඕන; පරිත්‍යාග -> පරිත්‍යා; භාගයකින් -> බාගයකින්
+  near_miss     අච්චාරුව -> ච්චරුව; හොරකම් -> හොරකං; කරන්නෑ -> කරන්නේනෑ; සීමාවක් -> සීමාව
+  wrong_word    කුජීත -> කුචිද; වෘතයේ -> වෘත්තීය; ඉතින් -> ඉතිං; ඉන්නේ -> ේ
+  missed_word   ඔතන -> ∅; මහා -> ∅; කියලා -> ∅; ඒවා -> ∅
+  english       benefit -> බොහෝ; accept -> x; exporters -> experts; icc -> age
+
+examples of errors only b_glm8 makes (ref -> b_glm8):
+  spacing       දෙන්නෙක්ද -> ∅; පවත් -> ∅; වනු -> ∅; චිත්‍රපටවලට -> ∅
+  orthographic  වේලාව -> වෙලාව; ගැහුනේ -> ගැහුණේ; මදුරුවෝ -> මදුරුවො; වුණත් -> වුනත්
+  one_letter    ඉන්න -> න්න; දෙන්ට -> දෙන්න; ආනන්තරිය -> ආනන්තරි; එවුන් -> වුන්
+  near_miss     ඇවිල්ලා -> ඇවිලා; රත්තරන් -> රත්තරං; ඥානයෙන් -> ඤාණයෙන්; පුත්‍ර -> පුත්ත
+  wrong_word    කැමති -> කැමතියි; නොකළ -> නොකලා; මලක් -> මල; පැත්තම -> පැත්තෙන්ම
+  missed_word   වඩා -> ∅; ඒ -> ∅; ම -> ∅; එවුන් -> ∅
+  english       endorse -> sendorse; business -> iss; day -> d; business -> ∅

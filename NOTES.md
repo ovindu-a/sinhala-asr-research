@@ -64,6 +64,10 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-18 | B decoder fix: lm_decode gr_v6x_top8 with --space-offsets (penalty on the bare ▁ unit), α {0.35, 0.5} × β {1, 2} × space {0, −1, −2} on all 2,000 dev2k, tag _space | 32 CPU | ~1–1.5 h est. | ~$2 | |
 | 2026-10-18 | B decoder fix done: dev picks α 0.35 β 1.0 space 0 (no penalty); test WER 15.18 → 14.78; **`modal billing summary`** (meter lags) | | ~1 h | | **$19.44 metered** |
 | 2026-10-20 | upload_hf_bucket.py: best/ of gr_v6_top6, gr_v6x_top8, gb3k_v6_top6, gb3k_v6x_top8 (weights, config, units, eval files, lm/ logits) + /data/units (minus words.tsv) → private HF bucket `ovindu-a/sinhala-grapheme-asr`, 33 files, 3.78 GB (dry run + upload + listing) | 4 CPU, 8 GB | ~1 min upload | < $0.05 | |
+| 2026-10-20 | Grapheme LM (GRAPHEME_PLAN §13) step 1: `grapheme_lm --order 8` over full si_corpus → /data/lm/si_graph8 (lm_image rebuild, KenLM max order 10); `modal billing summary` before = $19.53 metered | 16 CPU, 128 GB, 512 GiB disk (Modal min; 400 GB rejected at launch) | 16 min actual (11.1 M sents, 158.3 M words, 677 M grapheme tokens, 7,929 types; lmplz peak RSS 94 GB; lm.bin 0.75 GB) | ~$0.5 | ~$20 |
+| 2026-10-20 | Grapheme LM step 2: lm_decode gr_v6x_top8/best --lm si_graph8 --lm-kind grapheme, α {0.3, 0.5, 0.7, 1.0} × β {0, 0.5, 1, 2} (β per grapheme) on all 2,000 dev2k, then test; tag _glm8 | 32 CPU, 64 GB | ~25 min actual | ~$0.7 | ~$21 |
+| 2026-10-20 | `modal run upload_hf_bucket.py --what glm8` (dry run, then --no-dry-run): /data/lm/si_graph8, *_glm8* eval files, si_corpus/corpus.txt (2.6 GB, one-off) → private bucket; 6 files 3.36 GB, re-dry-run = all skipped | 4 CPU, 8 GB | ~2 min | < $0.05 | |
+| 2026-10-20 | **`modal billing summary`** after grapheme LM build + decode + bucket upload | | | | **$20.20 metered** |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -211,6 +215,7 @@ identical to si_4gram (gate 1), so A / B / C saw the same audio, transcripts and
 | A Gemma | 6.76 | – / – / 6.53 (@5000) / – | 19.27 / 13.47 / 4.91 / 6.22 | **14.72** / 8.95 / 3.68 / 4.61 (0.35, 1.0) | **20.57** / 13.10 / 5.59 / 6.94 |
 | C gbpe3000 | 7.33 (@7000) | 22.73 / 16.26 / 6.94 / 8.05 | 19.57 / 13.28 / 5.23 / 6.21 | 14.73 / 8.99 / 3.74 / 4.58 (0.35, 1.0) | 20.79 / 13.31 / 5.77 / 6.93 |
 | B graphemes | **6.02** | 22.73 / **14.53** / **5.78** / **6.96** | 19.58 / **11.71** / **4.32** / **5.40** | 15.18 / **8.31** / **3.43** / **4.33** (0.35, 2.0) | 20.79 / **12.20** / **5.17** / **6.42** |
+| B + grapheme 8-gram (2026-10-20) | | | | **14.26** / **8.05** / **3.20** / **4.06** (0.5, 1.0) | **19.23** / **11.70** / **4.81** / **5.98** |
 
 Seen-sentence subset + KenLM (9,352): A 10.01 / 5.61 / 2.13 / 2.70, C 9.85 / 5.51 / 2.09 / 2.65, B 10.66 / 5.18 / 2.01 / 2.61.
 B's KenLM grid best was β = 2.0 (edge); extended once (α 0.2/0.35/0.5 × β 2/3/4): β 3 and 4 raise dev WER, so 2.0 stays.
@@ -264,9 +269,40 @@ never lowers dev WER: it removes right splits with the wrong ones. Dev picks **�
 | A Gemma (0.35, 1.0) | **14.72** | 8.95 | 3.68 | 4.61 | 10.01 / 2.13 | 20.57 / 13.10 / 5.59 / 6.94 | 9,289 + 1,803 |
 | C gbpe3000 (0.35, 1.0) | 14.73 | 8.99 | 3.74 | 4.58 | **9.85** / 2.09 | 20.79 / 13.31 / 5.77 / 6.93 | 9,243 + 1,857 |
 | B grapheme (0.35, 2.0), old | 15.18 | **8.31** | 3.43 | 4.33 | 10.66 / 2.01 | 20.79 / **12.20** / **5.17** / 6.42 | 9,012 + 2,425 |
-| **B grapheme (0.35, 1.0)** | 14.78 | 8.33 | **3.41** | **4.29** | 10.37 / **1.97** | **20.26** / 12.29 / 5.19 / **6.40** | 9,346 + 1,789 |
+| B grapheme (0.35, 1.0) | 14.78 | 8.33 | 3.41 | 4.29 | 10.37 / 1.97 | 20.26 / 12.29 / 5.19 / 6.40 | 9,346 + 1,789 |
+| **B + grapheme 8-gram (0.5, 1.0)** | **14.26** | **8.05** | **3.20** | **4.06** | 10.25 / **1.90** | **19.23** / **11.70** / **4.81** / **5.98** | 9,268 + 1,474 |
 
 With β 1, B's extra words fall to A's level (1,789 vs 1,803) but merges replace splits (spacing errors 2,989 -> 3,295 vs
 A's 2,797). Net: B ties A on WER (+0.06), keeps CER −0.27 / WER_seg −0.62 / GER −0.32, and has the best unseen-sentence
 WER (20.26 vs 20.57). Spacing is what remains between B and a clear WER win; a global decoder knob does not fix it
 (word-specific boundary conventions: ref transcripts vs web-text LM).
+
+### B + grapheme 8-gram LM (2026-10-20; GRAPHEME_PLAN §13; reference/grapheme/training/gr_v6x_top8/eval_lm_test_glm8.json)
+
+`grapheme_lm --order 8` over the same si_corpus text (11.1 M sentences, 158.3 M words → 677 M grapheme tokens, 7,929
+types, word break "|" as a token; prune 0 0 1): lm.bin 0.75 GB, 16 min on 16 CPU (lmplz peak 94 GB RAM). The function
+had asked for 400 GiB ephemeral disk, which Modal rejects (minimum 512 GiB); now 512 GiB. Decoded B
+(`--lm-kind grapheme`, β = per-grapheme bonus) with the grid on all 2,000 dev2k:
+
+| dev2k WER (hyp/ref words) | β 0 | β 0.5 | β 1.0 | β 2.0 |
+|---|---|---|---|---|
+| α 0.3 | 17.76 (0.985) | 17.40 | 17.14 | 17.80 (1.028) |
+| α 0.5 | 17.57 | 17.10 | **16.71** (0.997) | 16.75 (1.018) |
+| α 0.7 | 17.50 | 17.29 | 16.78 | 16.84 |
+| α 1.0 | 18.44 (0.967) | 17.94 | 17.48 | 17.04 |
+
+Best **α 0.5, β 1.0** (inside the grid on both axes, so no extension): dev2k 16.71 / 10.31 / 4.45 / 5.42 vs B + word LM
+17.16 / 10.70 / 4.68 / 5.64 (WER / WER_seg / CER / GER). Test: **14.26 / 8.05 / 3.20 / 4.06** (A 14.72 / 8.95 / 3.68 /
+4.61, B + word LM 14.78 / 8.33 / 3.41 / 4.29); unseen sentences 19.23 / 11.70 / 4.81 / 5.98 (A 20.57, B + word LM 20.26
+WER); seen 10.25 WER (A 10.01, B + word LM 10.37). Better than both on every source (openslr 13.09 vs 13.51 / 13.53).
+
+Findings (compare_errors.py; reference/grapheme/analysis/compare_{graph_lm_b1_vs_glm8,gemma_lm_vs_graph_glm8}_test.txt):
+- **First system to beat A on WER** (−0.46 test, −1.34 on unseen sentences); the gain is largest on unseen text, where the
+  word 4-gram only had a flat unk penalty.
+- WER = (word errors + inserted words) / 75,338: A 9,289 + 1,803, B + word LM 9,346 + 1,789, **B + glm8 9,268 + 1,474**.
+  Most of the gain is fewer inserted words (−315 vs B + word LM, −329 vs A); fewer one_letter / near_miss / wrong_word /
+  missed_word / English errors too.
+- **Spacing is still not fixed**: spacing-only errors 3,441 (B + word LM 3,295, A 2,797). The grapheme LM stops the split
+  compounds (fewer extra words) but merges/splits differently rather than less; still the main gap to close for B.
+- Next if continuing: combine both LMs (word LM at "|", grapheme LM per unit; decoder change), or a higher order/less
+  pruning. Files: bucket `lm/si_graph8/`, `lm/si_corpus/corpus.txt`, `runs/gr_v6x_top8/best/lm/*_glm8*`.

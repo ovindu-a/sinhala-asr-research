@@ -1,0 +1,78 @@
+✓ Initialized. View run at 
+https://modal.com/apps/chatgptgroup321/main/ap-Ain2sVTyajCO8xJYhsk7AE
+✓ Created objects.
+├── ✓ Uploaded /workspace/sinhala-asr-research/modal_app.py
+├── ✓ Uploaded /workspace/sinhala-asr-research/scripts
+├── ✓ Uploaded PythonPackage:sinhala_asr
+├── ✓ Created Function prep.
+├── ✓ Created Function pack.
+├── ✓ Created Function pack_v6.
+├── ✓ Created Function slr52_extra.
+├── ✓ Created Function evaluate.
+├── ✓ Created Function fetch_reference.
+├── ✓ Created Function _sha256.
+├── ✓ Created Function eval_whisper.
+├── ✓ Created Function grapheme_lm.
+├── ✓ Created Function lm_corpus.
+├── ✓ Created Function build_lm.
+├── ✓ Created Function lm_decode.
+├── ✓ Created Function train.
+├── ✓ Created Function lm_dump.
+├── ✓ Created Function punct_data.
+├── ✓ Created Function punct_train.
+├── ✓ Created Function punct_eval.
+├── ✓ Created Function benchmark.
+└── ✓ Created Function grapheme_units.
++ python scripts/14_grapheme_lm.py --corpus /data/lm/si_corpus/corpus.txt --out /data/lm/si_graph8 --order 8 --prune '0 0 1' --max-words 0 --tmp /tmp
+  2,000,000 sentences, 27,002,482 words (71s)
+  4,000,000 sentences, 55,748,729 words (133s)
+  6,000,000 sentences, 84,584,471 words (190s)
+  8,000,000 sentences, 113,504,982 words (247s)
+  10,000,000 sentences, 142,635,462 words (305s)
+grapheme text: 11,076,268 sentences, 158,272,952 words, 677,340,525 tokens, 7,926 types (334s)
+=== 1/5 Counting and sorting n-grams ===
+Reading /tmp/graphemes.txt
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Unigram tokens 677340525 types 7929
+=== 2/5 Calculating and sorting adjusted counts ===
+Chain sizes: 1:95148 2:19964915712 3:37434216448 4:59894747136 5:87346511872 6:119789494272 7:157223714816 8:199649165312
+Statistics:
+1 7929 D1=0.613083 D2=1.05391 D3+=1.55947
+2 200698 D1=0.605133 D2=1.17132 D3+=1.5025
+3 1006510/1645014 D1=0.647408 D2=1.22853 D3+=1.5295
+4 4592280/7968451 D1=0.671239 D2=1.18375 D3+=1.46437
+5 13704935/27049275 D1=0.717639 D2=1.22545 D3+=1.48586
+6 27059856/61921847 D1=0.767783 D2=1.24836 D3+=1.44865
+7 41991494/112040362 D1=0.807026 D2=1.25558 D3+=1.41347
+8 54917870/172552858 D1=0.70543 D2=1.18325 D3+=1.50017
+Memory estimate for binary LM:
+type      MB
+probing 2969 assuming -p 1.5
+probing 3476 assuming -r models -p 1.5
+trie    1361 without quantization
+trie     715 assuming -q 8 -b 8 quantization 
+trie    1170 assuming -a 22 array pointer compression
+trie     523 assuming -a 22 -q 8 -b 8 array pointer compression and quantization
+=== 3/5 Calculating and sorting initial probabilities ===
+Chain sizes: 1:95148 2:3211168 3:20130200 4:110214720 5:383738180 6:865915392 7:1511693784 8:2196714800
+=== 4/5 Calculating and writing order-interpolated probabilities ===
+Chain sizes: 1:95148 2:3211168 3:20130200 4:110214720 5:383738180 6:865915392 7:1511693784 8:2196714800
+=== 5/5 Writing ARPA model ===
+Name:lmplz      VmRSS:53808 kB  RSSMax:93723724 kB      user:420.65     sys:64  CPU:484.65      real:389.737
+Reading /tmp/lm.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Identifying n-grams omitted by SRI
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Quantizing
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Writing trie
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+SUCCESS
+lm: /data/lm/si_graph8/lm.bin 0.75 GB (980s)
+✓ App completed. View run at 
+https://modal.com/apps/chatgptgroup321/main/ap-Ain2sVTyajCO8xJYhsk7AE

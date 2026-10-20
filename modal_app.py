@@ -287,7 +287,7 @@ def grapheme_units(corpus: str = "si_corpus", vocabs: str = "3000", grapheme: bo
         hf_vol.commit()
 
 
-@app.function(image=lm_image, volumes=VOLS, cpu=16, memory=131072, ephemeral_disk=400 * 1024, timeout=6 * 3600)
+@app.function(image=lm_image, volumes=VOLS, cpu=16, memory=131072, ephemeral_disk=512 * 1024, timeout=6 * 3600)  # Modal minimum is 512 GiB
 def grapheme_lm(order: int = 8, corpus: str = "si_corpus", out: str = "", prune: str = "0 0 1", max_words: int = 0):
     """Grapheme n-gram KenLM over the si_4gram text -> /data/lm/<out or si_graph<order>> (lm.bin, vocab.txt).
     modal run --detach modal_app.py::grapheme_lm --order 8"""
