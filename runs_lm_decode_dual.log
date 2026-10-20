@@ -1,0 +1,59 @@
+✓ Initialized. View run at 
+https://modal.com/apps/chatgptgroup321/main/ap-pDV6Wl8WaNSIkC0obEmqp5
+✓ Created objects.
+├── ✓ Uploaded /workspace/sinhala-asr-research/modal_app.py
+├── ✓ Uploaded runs/v6x_top8_lm_test.hyps.jsonl
+├── ✓ Uploaded /workspace/sinhala-asr-research/scripts
+├── ✓ Uploaded PythonPackage:sinhala_asr
+├── ✓ Created Function prep.
+├── ✓ Created Function pack.
+├── ✓ Created Function slr52_extra.
+├── ✓ Created Function pack_v6.
+├── ✓ Created Function _sha256.
+├── ✓ Created Function train.
+├── ✓ Created Function evaluate.
+├── ✓ Created Function eval_whisper.
+├── ✓ Created Function grapheme_units.
+├── ✓ Created Function build_lm.
+├── ✓ Created Function fetch_reference.
+├── ✓ Created Function lm_dump.
+├── ✓ Created Function grapheme_lm.
+├── ✓ Created Function lm_corpus.
+├── ✓ Created Function punct_data.
+├── ✓ Created Function benchmark.
+├── ✓ Created Function punct_train.
+├── ✓ Created Function lm_decode.
+└── ✓ Created Function punct_eval.
++ python scripts/08_lm_decode.py decode --ckpt /runs/gr_v6x_top8/best --lm /data/lm/si_4gram --out /runs/gr_v6x_top8/best/lm --lm-kind dual --glm /data/lm/si_graph8 --tag _dual --tune-limit 2000 --alphas 0.1 0.2 0.35 --betas 0 1.0 --g-alphas 0.3 0.5 --g-betas 0.5 1.0
+alpha 0.10 beta 0.0 space +0.0 g_alpha 0.30 g_beta 0.5: WER 16.77% WER_seg 10.32% CER 4.50% GER 5.43% hyp/ref words 0.997
+alpha 0.10 beta 0.0 space +0.0 g_alpha 0.30 g_beta 1.0: WER 16.40% WER_seg 10.05% CER 4.40% GER 5.35% hyp/ref words 1.005
+alpha 0.10 beta 0.0 space +0.0 g_alpha 0.50 g_beta 0.5: WER 16.54% WER_seg 10.22% CER 4.54% GER 5.47% hyp/ref words 0.991
+alpha 0.10 beta 0.0 space +0.0 g_alpha 0.50 g_beta 1.0: WER 16.28% WER_seg 9.95% CER 4.39% GER 5.33% hyp/ref words 0.999
+alpha 0.10 beta 1.0 space +0.0 g_alpha 0.30 g_beta 0.5: WER 16.59% WER_seg 10.17% CER 4.47% GER 5.40% hyp/ref words 1.014
+alpha 0.10 beta 1.0 space +0.0 g_alpha 0.30 g_beta 1.0: WER 16.42% WER_seg 9.99% CER 4.38% GER 5.32% hyp/ref words 1.023
+alpha 0.10 beta 1.0 space +0.0 g_alpha 0.50 g_beta 0.5: WER 16.51% WER_seg 10.11% CER 4.48% GER 5.41% hyp/ref words 1.006
+alpha 0.10 beta 1.0 space +0.0 g_alpha 0.50 g_beta 1.0: WER 16.56% WER_seg 9.94% CER 4.42% GER 5.36% hyp/ref words 1.014
+alpha 0.20 beta 0.0 space +0.0 g_alpha 0.30 g_beta 0.5: WER 16.46% WER_seg 10.21% CER 4.48% GER 5.41% hyp/ref words 0.993
+alpha 0.20 beta 0.0 space +0.0 g_alpha 0.30 g_beta 1.0: WER 16.45% WER_seg 9.98% CER 4.41% GER 5.35% hyp/ref words 1.002
+alpha 0.20 beta 0.0 space +0.0 g_alpha 0.50 g_beta 0.5: WER 16.59% WER_seg 10.28% CER 4.55% GER 5.48% hyp/ref words 0.988
+alpha 0.20 beta 0.0 space +0.0 g_alpha 0.50 g_beta 1.0: WER 16.48% WER_seg 10.02% CER 4.45% GER 5.40% hyp/ref words 0.997
+alpha 0.20 beta 1.0 space +0.0 g_alpha 0.30 g_beta 0.5: WER 16.49% WER_seg 10.11% CER 4.49% GER 5.42% hyp/ref words 1.008
+alpha 0.20 beta 1.0 space +0.0 g_alpha 0.30 g_beta 1.0: WER 16.19% WER_seg 9.92% CER 4.36% GER 5.28% hyp/ref words 1.017
+alpha 0.20 beta 1.0 space +0.0 g_alpha 0.50 g_beta 0.5: WER 16.58% WER_seg 10.22% CER 4.56% GER 5.49% hyp/ref words 1.002
+alpha 0.20 beta 1.0 space +0.0 g_alpha 0.50 g_beta 1.0: WER 16.32% WER_seg 9.95% CER 4.41% GER 5.36% hyp/ref words 1.010
+alpha 0.35 beta 0.0 space +0.0 g_alpha 0.30 g_beta 0.5: WER 16.71% WER_seg 10.38% CER 4.58% GER 5.53% hyp/ref words 0.989
+alpha 0.35 beta 0.0 space +0.0 g_alpha 0.30 g_beta 1.0: WER 16.56% WER_seg 10.12% CER 4.46% GER 5.40% hyp/ref words 0.996
+alpha 0.35 beta 0.0 space +0.0 g_alpha 0.50 g_beta 0.5: WER 17.00% WER_seg 10.62% CER 4.69% GER 5.65% hyp/ref words 0.985
+alpha 0.35 beta 0.0 space +0.0 g_alpha 0.50 g_beta 1.0: WER 16.84% WER_seg 10.31% CER 4.55% GER 5.52% hyp/ref words 0.994
+alpha 0.35 beta 1.0 space +0.0 g_alpha 0.30 g_beta 0.5: WER 16.64% WER_seg 10.25% CER 4.54% GER 5.46% hyp/ref words 1.003
+alpha 0.35 beta 1.0 space +0.0 g_alpha 0.30 g_beta 1.0: WER 16.41% WER_seg 9.99% CER 4.39% GER 5.33% hyp/ref words 1.010
+alpha 0.35 beta 1.0 space +0.0 g_alpha 0.50 g_beta 0.5: WER 16.88% WER_seg 10.53% CER 4.66% GER 5.60% hyp/ref words 0.998
+alpha 0.35 beta 1.0 space +0.0 g_alpha 0.50 g_beta 1.0: WER 16.64% WER_seg 10.21% CER 4.48% GER 5.43% hyp/ref words 1.005
+best on dev2k {'alpha': 0.2, 'beta': 1.0, 'space_offset': 0.0, 'g_alpha': 0.3, 'g_beta': 1.0, 'dual': {'glm': '/data/lm/si_graph8/lm.bin', 'g_alpha': 0.3, 'g_beta': 1.0}, 'hyp_ref_words': 1.0171782882699736, 'wer': 0.16192315511282782, 'cer': 0.04363720253411652, 'cer_nospace': 0.04099931976995857, 'wer_seg': 0.09920715592600123, 'ger': 0.0528104241185488, 'utts': 2000}
+overall    WER 14.59%  WER_seg 7.90%  CER 3.23%  CER_nospace 2.82%  GER 4.10%  (15860 utts)
+bizbrains  WER 34.12%  WER_seg 29.11%  CER 17.44%  CER_nospace 18.24%  GER 18.07%  (98 utts)
+linga      WER 20.42%  WER_seg 6.28%  CER 3.29%  CER_nospace 2.08%  GER 4.23%  (86 utts)
+openslr    WER 13.48%  WER_seg 6.78%  CER 2.56%  CER_nospace 2.13%  GER 3.35%  (15500 utts)
+youtube    WER 28.76%  WER_seg 21.67%  CER 9.54%  CER_nospace 9.64%  GER 10.90%  (176 utts)
+✓ App completed. View run at 
+https://modal.com/apps/chatgptgroup321/main/ap-pDV6Wl8WaNSIkC0obEmqp5

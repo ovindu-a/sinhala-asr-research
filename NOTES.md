@@ -68,6 +68,10 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-20 | Grapheme LM step 2: lm_decode gr_v6x_top8/best --lm si_graph8 --lm-kind grapheme, α {0.3, 0.5, 0.7, 1.0} × β {0, 0.5, 1, 2} (β per grapheme) on all 2,000 dev2k, then test; tag _glm8 | 32 CPU, 64 GB | ~25 min actual | ~$0.7 | ~$21 |
 | 2026-10-20 | `modal run upload_hf_bucket.py --what glm8` (dry run, then --no-dry-run): /data/lm/si_graph8, *_glm8* eval files, si_corpus/corpus.txt (2.6 GB, one-off) → private bucket; 6 files 3.36 GB, re-dry-run = all skipped | 4 CPU, 8 GB | ~2 min | < $0.05 | |
 | 2026-10-20 | **`modal billing summary`** after grapheme LM build + decode + bucket upload | | | | **$20.20 metered** |
+| 2026-10-20 | GRAPHEME_PLAN §14: lm_decode gr_v6x_top8/best --lm-kind dual (word si_4gram + grapheme si_graph8), α {0.1, 0.2, 0.35} × β {0, 1} × gα {0.3, 0.5} × gβ {0.5, 1} on all 2,000 dev2k, then test; tag _dual | 32 CPU, 64 GB | ~35 min actual | ~$0.15 metered | |
+| 2026-10-20 | §14 extension (_dual best β 1, gα 0.3, gβ 1 all on grid edges): lm_decode dual α 0.2 × β {1, 2} × gα {0.2, 0.3} × gβ {1.0, 1.5} on all 2,000 dev2k, then test; tag _dual2 | 32 CPU, 64 GB | ~20 min actual | (in total below) | |
+| 2026-10-20 | `modal run upload_hf_bucket.py --what dual` (dry run, upload, re-dry-run = 4 skipped): eval_lm_test_dual{,2}.{json,hyps.jsonl} | 4 CPU | ~1 min | < $0.01 | |
+| 2026-10-20 | **`modal billing summary`** after the dual-LM runs | | | | **$20.43 metered** |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -216,6 +220,7 @@ identical to si_4gram (gate 1), so A / B / C saw the same audio, transcripts and
 | C gbpe3000 | 7.33 (@7000) | 22.73 / 16.26 / 6.94 / 8.05 | 19.57 / 13.28 / 5.23 / 6.21 | 14.73 / 8.99 / 3.74 / 4.58 (0.35, 1.0) | 20.79 / 13.31 / 5.77 / 6.93 |
 | B graphemes | **6.02** | 22.73 / **14.53** / **5.78** / **6.96** | 19.58 / **11.71** / **4.32** / **5.40** | 15.18 / **8.31** / **3.43** / **4.33** (0.35, 2.0) | 20.79 / **12.20** / **5.17** / **6.42** |
 | B + grapheme 8-gram (2026-10-20) | | | | **14.26** / **8.05** / **3.20** / **4.06** (0.5, 1.0) | **19.23** / **11.70** / **4.81** / **5.98** |
+| B + word 4-gram + grapheme 8-gram (2026-10-20) | | | | 14.59 / **7.90** / 3.23 / 4.10 (0.2, 1.0; g 0.3, 1.0) | 19.88 / **11.59** / 4.87 / 6.06 |
 
 Seen-sentence subset + KenLM (9,352): A 10.01 / 5.61 / 2.13 / 2.70, C 9.85 / 5.51 / 2.09 / 2.65, B 10.66 / 5.18 / 2.01 / 2.61.
 B's KenLM grid best was β = 2.0 (edge); extended once (α 0.2/0.35/0.5 × β 2/3/4): β 3 and 4 raise dev WER, so 2.0 stays.
@@ -271,6 +276,7 @@ never lowers dev WER: it removes right splits with the wrong ones. Dev picks **�
 | B grapheme (0.35, 2.0), old | 15.18 | **8.31** | 3.43 | 4.33 | 10.66 / 2.01 | 20.79 / **12.20** / **5.17** / 6.42 | 9,012 + 2,425 |
 | B grapheme (0.35, 1.0) | 14.78 | 8.33 | 3.41 | 4.29 | 10.37 / 1.97 | 20.26 / 12.29 / 5.19 / 6.40 | 9,346 + 1,789 |
 | **B + grapheme 8-gram (0.5, 1.0)** | **14.26** | **8.05** | **3.20** | **4.06** | 10.25 / **1.90** | **19.23** / **11.70** / **4.81** / **5.98** | 9,268 + 1,474 |
+| B + word + grapheme LM (0.2, 1.0; g 0.3, 1.0) | 14.59 | **7.90** | 3.23 | 4.10 | 10.33 / **1.90** | 19.88 / **11.59** / 4.87 / 6.06 | **8,714** + 2,280 |
 
 With β 1, B's extra words fall to A's level (1,789 vs 1,803) but merges replace splits (spacing errors 2,989 -> 3,295 vs
 A's 2,797). Net: B ties A on WER (+0.06), keeps CER −0.27 / WER_seg −0.62 / GER −0.32, and has the best unseen-sentence
@@ -306,3 +312,37 @@ Findings (compare_errors.py; reference/grapheme/analysis/compare_{graph_lm_b1_vs
   compounds (fewer extra words) but merges/splits differently rather than less; still the main gap to close for B.
 - Next if continuing: combine both LMs (word LM at "|", grapheme LM per unit; decoder change), or a higher order/less
   pruning. Files: bucket `lm/si_graph8/`, `lm/si_corpus/corpus.txt`, `runs/gr_v6x_top8/best/lm/*_glm8*`.
+
+### B + word 4-gram + grapheme 8-gram (2026-10-20; GRAPHEME_PLAN §14; reference/grapheme/training/gr_v6x_top8/eval_lm_test_dual{,2}.json)
+
+`--lm-kind dual --glm /data/lm/si_graph8` (word LM weights α/β at word ends, grapheme LM weights gα/gβ per unit), grid
+on all 2,000 dev2k. `_dual`: α {0.1, 0.2, 0.35} × β {0, 1} × gα {0.3, 0.5} × gβ {0.5, 1}; best **α 0.2, β 1.0, gα 0.3,
+gβ 1.0** (dev2k 16.19 / 9.92 / 4.36 / 5.28, hyp/ref words 1.017), with β, gα, gβ on grid edges. `_dual2` extended once
+(α 0.2 × β {1, 2} × gα {0.2, 0.3} × gβ {1, 1.5}): every step outward is worse (β 2: 17.17–18.50, gβ 1.5: 16.63–17.07,
+gα 0.2: 16.35), same point confirmed, identical test output. Ran with 32 procs, no memory problems.
+
+Dev2k grid, WER (hyp/ref words for a few):
+
+| α, β \ gα, gβ | 0.3, 0.5 | 0.3, 1.0 | 0.5, 0.5 | 0.5, 1.0 |
+|---|---|---|---|---|
+| 0.1, 0 | 16.77 (0.997) | 16.40 (1.005) | 16.54 | 16.28 (0.999) |
+| 0.1, 1 | 16.59 | 16.42 (1.023) | 16.51 | 16.56 |
+| 0.2, 0 | 16.46 | 16.45 | 16.59 | 16.48 (0.997) |
+| 0.2, 1 | 16.49 | **16.19** (1.017) | 16.58 | 16.32 (1.010) |
+| 0.35, 0 | 16.71 | 16.56 | 17.00 | 16.84 |
+| 0.35, 1 | 16.64 | 16.41 | 16.88 | 16.64 |
+
+Test: **14.59 / 7.90 / 3.23 / 4.10** (B + grapheme 8-gram 14.26 / 8.05 / 3.20 / 4.06; A 14.72 / 8.95 / 3.68 / 4.61);
+unseen 19.88 / 11.59 / 4.87 / 6.06 (glm8 19.23 WER), seen 10.33 WER (glm8 10.25, A 10.01). Per source WER: openslr
+13.48 (glm8 13.09), linga 20.42 (18.59), youtube 28.76 (29.14), bizbrains 34.12 (34.92).
+
+Findings (compare_errors.py; reference/grapheme/analysis/compare_{graph_glm8_vs_dual,gemma_lm_vs_graph_dual}_test.txt):
+- **Spacing errors drop, but the insertion gain is lost.** Spacing-only errors 3,441 → 3,018 (A 2,797) and all word
+  errors 9,268 → 8,714 (fewest of any system; A 9,289), but inserted words 1,474 → 2,280 (A 1,803; runaway utts 11 → 16).
+  WER = (8,714 + 2,280) / 75,338 = 14.59%: worse than glm8 alone (14.26), still below A (14.72).
+- **Dev picked the wrong side of the insertion trade-off.** On dev2k dual beat glm8 by 0.52 WER (16.19 vs 16.71); on test
+  it loses by 0.33. The chosen point has the word bonus β = 1 (dev hyp/ref words 1.017 vs glm8 0.997); on test the extra
+  words cost more than the merges it fixes. WER_seg (7.90, best of all) shows the spelling side did improve.
+- Next if continuing (CPU only, ~$0.3 each): test the β = 0 runner-up α 0.1, β 0, gα 0.5, gβ 1.0 (dev 16.28, hyp/ref
+  0.999), or select on dev with a word-count constraint (hyp/ref ≤ 1.00). As it stands, **B + grapheme 8-gram (14.26)
+  stays the best WER**; dual is best on WER_seg and word errors.

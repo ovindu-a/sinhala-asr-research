@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |               total b_glm8 |               total b_dual |                only b_glm8 |                only b_dual
+spacing        |   3,441  ( 4.57% of words) |   3,018  ( 4.01% of words) |     990  ( 1.31% of words) |     573  ( 0.76% of words)
+orthographic   |   1,111  ( 1.47% of words) |   1,082  ( 1.44% of words) |      85  ( 0.11% of words) |      69  ( 0.09% of words)
+one_letter     |   2,403  ( 3.19% of words) |   2,363  ( 3.14% of words) |     182  ( 0.24% of words) |     151  ( 0.20% of words)
+near_miss      |     620  ( 0.82% of words) |     603  ( 0.80% of words) |      54  ( 0.07% of words) |      44  ( 0.06% of words)
+wrong_word     |   1,258  ( 1.67% of words) |   1,256  ( 1.67% of words) |      79  ( 0.10% of words) |      38  ( 0.05% of words)
+missed_word    |     233  ( 0.31% of words) |     205  ( 0.27% of words) |      22  ( 0.03% of words) |       1  ( 0.00% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     142  ( 0.19% of words) |     127  ( 0.17% of words) |      21  ( 0.03% of words) |       3  ( 0.00% of words)
+ALL word errs  |   9,268  (12.30% of words) |   8,714  (11.57% of words) |   1,433  ( 1.90% of words) |     879  ( 1.17% of words)
+
+words both get wrong: 7,835 ({'same output': 7307, 'different outputs': 528})
+extra (inserted) words: b_glm8 1,474, b_dual 2,280; runaway utterances (>=4 extra words): b_glm8 11, b_dual 16
+
+examples of errors only b_glm8 makes (ref -> b_glm8):
+  spacing       ආලකමන්දාව -> ∅; උපන් -> ∅; දිනයක් -> ∅; උපලක්ෂිත -> ∅
+  orthographic  වේලාව -> වෙලාව; ගැහුනේ -> ගැහුණේ; වීතරාගී -> වීතරාගි; අපායේ -> අපායෙ
+  one_letter    කිසිඳු -> කිසිදු; ඉන්න -> න්න; ආනන්තරිය -> ආනන්තරි; ද -> ට
+  near_miss     කියනවා -> කියන; කැඩුනට -> කැඩුණාට; සම්බන්ධයෙනුත් -> සම්බන්ධයෙන්නුත්; කෑල්ලක් -> කෑල්ල
+  wrong_word    නොකළ -> නොකලා; අහනවා -> නවා; විඳවා -> ිඳ; මහා -> ම
+  missed_word   එක -> ∅; ඒ -> ∅; පන්නලා -> ∅; ඒ -> ∅
+  english       upset -> සෙට්; ministers -> insters; try -> රයි; business -> iss
+
+examples of errors only b_dual makes (ref -> b_dual):
+  spacing       තේරෙයිද -> ∅; බලනකොට -> ∅; මුල්කොට -> ∅; හොඳටම -> ∅
+  orthographic  මිනිස්සුන්ගේ -> මිනිස්සුන්ගෙ; වෙන්නේත් -> වෙන්නෙත්; බරපතළ -> බරපතල; නවාතැනකදි -> නවාතැනකදී
+  one_letter    වදාළා -> වදාළ; අසරණකමම -> අසරණකම; එන්ඩයි -> එන්නයි; අද -> ද
+  near_miss     ශ්‍රාවකයෙක් -> ශ්‍රාවකයන්; දකින්නයි -> දකින්න; තියෙනවා -> තියෙන; විම්බර්ලි -> විම්බලි
+  wrong_word    අඬන -> අඬන්න; අම්මා -> කියලඅම්ම; පොඩි -> ඕකේ; හුණු -> උණු
+  missed_word   මේක -> ∅
+  english       ev -> වී; diversify -> diversity; customer -> customerමේ
