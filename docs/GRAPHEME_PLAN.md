@@ -479,3 +479,31 @@ B + word LM (14.78 / 8.33 / 3.41 / 4.29, unseen WER 20.26) and A + word LM (14.7
 lm/si_graph8/`, `runs/gr_v6x_top8/best/lm/`) so molab can use them.
 
 If it helps but WER still trails: combine both LMs (needs a decoder change: word LM at "▁|", grapheme LM per unit).
+
+---
+
+## 14. Next: word 4-gram + grapheme 8-gram together for B (decoder only, CPU)
+
+Why: B + grapheme 8-gram (14.26 / 8.05 / 3.20 / 4.06) beats A on everything, but its spacing-only errors rose
+(3,441 vs B + word LM 3,295, A 2,797). The grapheme LM knows spelling and typical space positions; the word 4-gram
+judges whole words at each boundary. Using both should cut the remaining spacing errors.
+
+Code: `sinhala_asr/dual_lm.py` (DualLMDecoder: QUAN's prefix beam search with two KenLM states per beam; grapheme LM
+on every unit, "|" for spaces; word LM when a space closes a word and at the end) and `08_lm_decode.py --lm-kind dual
+--glm <dir>` with `--g-alphas/--g-betas` (grapheme LM weights) next to `--alphas/--betas` (word LM weights).
+Tested locally: with the grapheme weights at 0 it returns exactly the word-LM decoder's output (40/40), same speed.
+
+Steps (Modal account `chatgptgroup321`; budget row first):
+
+```bash
+modal run --detach modal_app.py::lm_decode --ckpt gr_v6x_top8/best --lm si_4gram \
+    --extra "--lm-kind dual --glm /data/lm/si_graph8 --tag _dual --tune-limit 2000 \
+             --alphas 0.1 0.2 0.35 --betas 0 1.0 --g-alphas 0.3 0.5 --g-betas 0.5 1.0"
+```
+
+24 combinations on all 2,000 dev2k utts + test: est. ~45–60 min on 32 CPU, ~$1.5–2. If a best value is on a grid
+edge, extend once in that direction with `--tag _dual2`. If the container runs out of memory (two LMs + the
+word-prefix set per process), add `--procs 16`.
+
+Compare (`rescore.py`, `compare_errors.py`) with B + grapheme 8-gram (14.26 / 8.05 / 3.20 / 4.06, unseen WER 19.23,
+spacing-only 3,441) and A (14.72, spacing-only 2,797). Outputs: `/runs/gr_v6x_top8/best/lm/eval_lm_test_dual.*`.

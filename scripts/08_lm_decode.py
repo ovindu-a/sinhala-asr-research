@@ -10,6 +10,8 @@ Two phases so the GPU is used only briefly:
 --lm-kind grapheme (grapheme units only; LM from 14_grapheme_lm.py): every unit becomes its own "word" for QUAN's
 decoder (piece "▁"+grapheme, the space unit "▁|"), so the grapheme n-gram scores each grapheme, spaces included.
 beta is then a per-grapheme bonus, not a per-word one.
+--lm-kind dual --glm G (grapheme units only): both LMs at once (sinhala_asr/dual_lm.py): --lm is the word 4-gram
+(alphas/betas), --glm the grapheme n-gram (--g-alphas/--g-betas); the grid is the product of all four lists.
 """
 
 import argparse
@@ -69,10 +71,16 @@ def dump(args):
 _G = {}
 
 
-def _init(lm, pieces, unigrams, alpha, beta, vocab, space_offset=0.0, beam=32):
-    from quan_transcribe.lm import KenLMDecoder
+def _init(lm, pieces, unigrams, alpha, beta, vocab, space_offset=0.0, beam=32, dual=None):
+    if dual:  # {"glm": path, "g_alpha": x, "g_beta": y}; lm/alpha/beta are the word LM's
+        from sinhala_asr.dual_lm import DualLMDecoder
 
-    _G["dec"] = KenLMDecoder(lm, pieces, unigrams, alpha=alpha, beta=beta)
+        _G["dec"] = DualLMDecoder(lm, dual["glm"], pieces, unigrams, alpha_w=alpha, beta_w=beta,
+                                  alpha_g=dual["g_alpha"], beta_g=dual["g_beta"])
+    else:
+        from quan_transcribe.lm import KenLMDecoder
+
+        _G["dec"] = KenLMDecoder(lm, pieces, unigrams, alpha=alpha, beta=beta)
     _G["V"] = vocab
     _G["beam"] = beam
     # grapheme units: added to the log-prob of the bare "▁" (space) unit, so the beam needs more acoustic evidence to
@@ -101,9 +109,9 @@ def _decode_one(item):
         return [int(u) for u in best[keep] if u != 0]
 
 
-def run(data, units, lm, pieces, unigrams, alpha, beta, procs, limit=None, space_offset=0.0, beam=32):
+def run(data, units, lm, pieces, unigrams, alpha, beta, procs, limit=None, space_offset=0.0, beam=32, dual=None):
     items = data["topk"][:limit] if limit else data["topk"]
-    init = (lm, pieces, unigrams, alpha, beta, data["vocab"], space_offset, beam)
+    init = (lm, pieces, unigrams, alpha, beta, data["vocab"], space_offset, beam, dual)
     with Pool(procs, initializer=_init, initargs=init) as pool:
         seqs = pool.map(_decode_one, items, chunksize=16)
     return [units.decode(s) for s in seqs]
@@ -112,8 +120,9 @@ def run(data, units, lm, pieces, unigrams, alpha, beta, procs, limit=None, space
 def decode(args):
     units = load_units(os.path.join(args.ckpt, "units.json"))
     pieces = units.pieces  # "" for blank/unk/byte pieces; "▁" starts a word (grapheme units: the space unit)
+    if args.lm_kind != "word":
+        assert units.kind == "grapheme", f"--lm-kind {args.lm_kind} needs grapheme units"
     if args.lm_kind == "grapheme":
-        assert units.kind == "grapheme", "--lm-kind grapheme needs grapheme units"
         pieces = [p if not p else "▁|" if p == "▁" else "▁" + p for p in pieces]
         vocab_file = "vocab.txt"
     else:
@@ -127,12 +136,18 @@ def decode(args):
     refs = [r["text"] for r in tune["rows"]]
     lim = args.tune_limit
     grid = []
-    for a, b, so in itertools.product(args.alphas, args.betas, args.space_offsets):
-        hyps = run(tune, units, lm, pieces, unigrams, a, b, procs, lim, so, **kw)
+    dual_grid = [None]
+    if args.lm_kind == "dual":
+        glm = os.path.join(args.glm, "lm.bin")
+        dual_grid = [{"glm": glm, "g_alpha": ga, "g_beta": gb} for ga, gb in itertools.product(args.g_alphas, args.g_betas)]
+    for a, b, so, du in itertools.product(args.alphas, args.betas, args.space_offsets, dual_grid):
+        hyps = run(tune, units, lm, pieces, unigrams, a, b, procs, lim, so, dual=du, **kw)
         m = score(refs[: len(hyps)], hyps)
         n_hyp, n_ref = sum(len(h.split()) for h in hyps), sum(len(r.split()) for r in refs[: len(hyps)])
-        grid.append({"alpha": a, "beta": b, "space_offset": so, "hyp_ref_words": n_hyp / n_ref} | m)
-        print(f"alpha {a:.2f} beta {b:.1f} space {so:+.1f}: WER {m['wer']:.2%} WER_seg {m['wer_seg']:.2%} "
+        g = {"g_alpha": du["g_alpha"], "g_beta": du["g_beta"]} if du else {}
+        grid.append({"alpha": a, "beta": b, "space_offset": so} | g | {"dual": du, "hyp_ref_words": n_hyp / n_ref} | m)
+        gtxt = f" g_alpha {du['g_alpha']:.2f} g_beta {du['g_beta']:.1f}" if du else ""
+        print(f"alpha {a:.2f} beta {b:.1f} space {so:+.1f}{gtxt}: WER {m['wer']:.2%} WER_seg {m['wer_seg']:.2%} "
               f"CER {m['cer']:.2%} GER {m['ger']:.2%} hyp/ref words {n_hyp / n_ref:.3f}", flush=True)
     best = min(grid, key=lambda g: g["wer"])
     print("best on", args.tune_split, best)
@@ -140,13 +155,13 @@ def decode(args):
     ev = torch.load(os.path.join(args.out, f"{args.eval_split}.logits.pt"), weights_only=False)
     rows = ev["rows"]
     hyps = run(ev, units, lm, pieces, unigrams, best["alpha"], best["beta"], procs, space_offset=best["space_offset"],
-               **kw)
+               dual=best["dual"], **kw)
     by_src = collections.defaultdict(lambda: ([], []))
     for r, h in zip(rows, hyps):
         by_src[r.get("src") or "all"][0].append(r["text"])
         by_src[r.get("src") or "all"][1].append(h)
     res = {"lm": args.lm, "lm_kind": args.lm_kind, "beam": args.beam, "alpha": best["alpha"], "beta": best["beta"], "space_offset": best["space_offset"],
-           "tune_utts": best["utts"], "grid": grid,
+           "glm": args.glm, "g_alpha": best.get("g_alpha"), "g_beta": best.get("g_beta"), "tune_utts": best["utts"], "grid": grid,
            "overall": score([r["text"] for r in rows], hyps),
            "by_source": {s: score(a, b) for s, (a, b) in sorted(by_src.items())}}
     tag = f"eval_lm_{args.eval_split}{args.tag}"
@@ -177,7 +192,10 @@ def main(argv=None):
     ap.add_argument("--space-offsets", type=float, nargs="+", default=[0.0],
                     help="added to the bare '▁' unit's log-prob (grapheme units); grid like alphas/betas")
     ap.add_argument("--tag", default="", help="suffix for the output files, e.g. _space (keeps earlier results)")
-    ap.add_argument("--lm-kind", default="word", choices=["word", "grapheme"])
+    ap.add_argument("--lm-kind", default="word", choices=["word", "grapheme", "dual"])
+    ap.add_argument("--glm", default=None, help="grapheme n-gram dir for --lm-kind dual (14_grapheme_lm.py)")
+    ap.add_argument("--g-alphas", type=float, nargs="+", default=[0.5])
+    ap.add_argument("--g-betas", type=float, nargs="+", default=[1.0])
     ap.add_argument("--beam", type=int, default=32)
     ap.add_argument("--procs", type=int, default=0, help="decoder processes (default: all CPUs)")
     args = ap.parse_args(argv)
