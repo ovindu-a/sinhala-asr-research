@@ -189,10 +189,15 @@ def _(CODE, PRESETS, WORK, bucket_sync, data_btn, mo, os, preset, run_name):
     assert bucket_sync(f"data/manifests/{_m}", f"{D}/manifests/{_m}", "--include", "train.jsonl")
     assert bucket_sync("data/manifests/ss_v6", f"{D}/manifests/ss_v6")
     RUNS = os.path.join(WORK, "runs")
+    # a sync of a missing bucket folder copies nothing and still succeeds, so check the files themselves
     if _p["init"]:
-        assert bucket_sync(f"runs/{_p['init']}/best", f"{RUNS}/{_p['init']}/best"), "starting checkpoint missing"
+        bucket_sync(f"runs/{_p['init']}/best", f"{RUNS}/{_p['init']}/best")
+        assert os.path.exists(f"{RUNS}/{_p['init']}/best/model.safetensors"), (
+            f"starting checkpoint runs/{_p['init']}/best is not in the bucket: run that preset (steps 1-3) first")
     if _p["units"]:
-        assert bucket_sync(_p["units"], f"{D}/{_p['units']}"), "units missing: run notebooks/molab_units.py first"
+        bucket_sync(_p["units"], f"{D}/{_p['units']}")
+        assert os.path.exists(f"{D}/{_p['units']}/units.json"), (
+            f"{_p['units']}/units.json is not in the bucket: run notebooks/molab_units.py and press its Upload first")
     # resume: whatever this run already has in the bucket (last/, best/, metrics.jsonl)
     bucket_sync(f"runs/{run_name.value}", f"{RUNS}/{run_name.value}")
     _have = os.path.exists(f"{RUNS}/{run_name.value}/last/state.pt")
