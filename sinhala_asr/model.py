@@ -8,6 +8,7 @@ and gradients through the reader and the top `unfreeze_top_k` encoder layers.
 """
 
 import random
+import re
 from dataclasses import asdict, dataclass, field
 
 import torch
@@ -31,6 +32,9 @@ class Config:
     layer_mix: bool = True
     unfreeze_top_k: int = 0
     head_init: str = "text"  # "text": unit rows start from Gemma text embeddings; "random"
+    # grapheme units only: each unit's row = its own row + shared rows for its base (consonant / conjunct / vowel),
+    # vowel sign (or al-lakuna) and ං/ඃ, so rare graphemes share what their parts learned (see grapheme_parts)
+    head_parts: bool = False
     freeze_head: bool = False
     specaug: dict = field(default_factory=lambda: {"freq_masks": 2, "freq_width": 27, "time_masks": 10, "time_width_frac": 0.04})
     dynamic_chunk: bool = True
@@ -71,10 +75,25 @@ def spec_augment(feats: torch.Tensor, lens: torch.Tensor, cfg: dict) -> torch.Te
     return torch.where(m, fill[:, None, None], feats)
 
 
+_SIGNS = "\u0dca\u0dcf-\u0ddf\u0df2\u0df3"  # al-lakuna + dependent vowel signs
+_PARTS = re.compile(f"^(.+?)([{_SIGNS}]?)([\u0d82\u0d83]?)$")
+
+
+def grapheme_parts(g: str) -> tuple[str, str, str]:
+    """(base, sign, modifier) of a grapheme unit: කො -> (ක, ො, ""), ක්‍රීං -> (ක්‍ර, ී, ං), න් -> (න, ්, "").
+    Units that are not Sinhala syllables (space "▁", Latin, digits) are their own base."""
+    m = _PARTS.match(g)
+    if not m or not m.group(1).strip():
+        return g, "", ""
+    return m.group(1), m.group(2), m.group(3)
+
+
 class CTCModel(nn.Module):
-    def __init__(self, cfg: Config, full_model=None, gemma_ids: list[int] | list[list[int]] | None = None):
+    def __init__(self, cfg: Config, full_model=None, gemma_ids: list[int] | list[list[int]] | None = None,
+                 pieces: list[str] | None = None):
         """gemma_ids: `units.init_ids` — one Gemma id per unit, or a list of ids per unit (grapheme/gbpe units),
-        whose text embeddings are averaged to start that unit's head row."""
+        whose text embeddings are averaged to start that unit's head row. pieces: `units.pieces` (needed for
+        cfg.head_parts)."""
         super().__init__()
         self.cfg = cfg
         full = full_model if full_model is not None else load_full(cfg.encoder_id)
@@ -124,6 +143,15 @@ class CTCModel(nn.Module):
                 self.unit_rows.normal_(0, 0.02)
         if cfg.freeze_head:
             self.unit_rows.requires_grad_(False)
+        if cfg.head_parts:
+            assert pieces is not None and len(pieces) == cfg.vocab_size, "head_parts needs units.pieces"
+            parts = [grapheme_parts(p) for p in pieces[2:]]
+            for k, name in enumerate(("base", "sign", "mod")):
+                vocab = sorted({pt[k] for pt in parts})
+                idx = torch.tensor([vocab.index(pt[k]) for pt in parts])
+                self.register_buffer(f"part_{name}_idx", idx, persistent=False)  # rebuilt from pieces on load
+                # zero init: the head starts exactly as the flat one, so a flat checkpoint can be continued
+                setattr(self, f"part_{name}", nn.Parameter(torch.zeros(len(vocab), text_dim)))
         del full
 
     # ---- encoder
@@ -170,9 +198,17 @@ class CTCModel(nn.Module):
         for blk in self.blocks:
             x = blk(x, attn)
         t = self.to_text(self.out_norm(x))
-        rows = torch.cat([self.special_rows, self.unit_rows], dim=0)
+        rows = torch.cat([self.special_rows, self.head_rows()], dim=0)
         logits = t.float() @ rows.float().t() + self.head_bias.float()
         return logits.log_softmax(-1), mask.sum(1)
+
+    def head_rows(self) -> torch.Tensor:
+        """Output rows of the real units (not blank/unk)."""
+        rows = self.unit_rows
+        if self.cfg.head_parts:
+            rows = rows + self.part_base[self.part_base_idx] + self.part_sign[self.part_sign_idx] \
+                + self.part_mod[self.part_mod_idx]
+        return rows
 
     def trainable_state_dict(self):
         """Reader + fine-tuned encoder layers; the frozen encoder comes from the base model at load time."""

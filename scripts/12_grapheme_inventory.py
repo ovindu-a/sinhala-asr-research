@@ -13,6 +13,11 @@ writes <out>/graphemes.json  {alphabet, corpus_counts, speech_counts, stats}
 
   python scripts/12_grapheme_inventory.py --corpus /data/lm/si_corpus/corpus.txt \
       --train-manifests /data/manifests/v6_plus_slr52/train.jsonl --out /data/units
+
+C redo (tokenizer fitted to speech, see GRAPHEME_PLAN.md section 16): --speech-alphabet keeps only graphemes seen in
+the speech transcripts (+ a-z, 0-9), and --transcript-weight W adds the transcripts' word counts W more times to
+words.tsv, so BPE merges follow spoken words instead of web text:
+  ... --out /data/units_speech --speech-alphabet --transcript-weight 50
 """
 
 import argparse
@@ -33,6 +38,8 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--min-count", type=int, default=50, help="corpus count for a grapheme not seen in speech text")
     ap.add_argument("--min-word-count", type=int, default=2, help="drop corpus hapaxes (mostly typos) from words.tsv")
+    ap.add_argument("--speech-alphabet", action="store_true", help="alphabet = graphemes of the speech transcripts only")
+    ap.add_argument("--transcript-weight", type=int, default=0, help="add transcript word counts this many times")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     cache = WordCache()
@@ -51,15 +58,21 @@ def main():
     for w, c in words.items():
         for g in cache.word(w):
             corpus_g[g] += c
-    speech_g = collections.Counter()
+    speech_g, speech_w = collections.Counter(), collections.Counter()
     for path in args.train_manifests:
         with open(path, encoding="utf-8") as f:
             for line in f:
-                speech_g.update(g for g in cache.sentence(json.loads(line)["text"]) if g != " ")
+                text = json.loads(line)["text"]
+                speech_g.update(g for g in cache.sentence(text) if g != " ")
+                speech_w.update(text.split())
+    if args.transcript_weight:  # the corpus already holds the transcripts once
+        for w, c in speech_w.items():
+            words[w] += c * args.transcript_weight
+        print(f"transcripts x{args.transcript_weight}: {sum(speech_w.values()):,} words, {len(speech_w):,} distinct")
     print(f"graphemes: corpus {len(corpus_g):,} distinct, speech transcripts {len(speech_g):,} distinct "
           f"({time.time() - t:.0f}s)")
 
-    keep = {g for g in corpus_g if is_valid(g) and corpus_g[g] >= args.min_count}
+    keep = set() if args.speech_alphabet else {g for g in corpus_g if is_valid(g) and corpus_g[g] >= args.min_count}
     keep |= {g for g in speech_g if is_valid(g)}
     keep |= set(LATIN_DIGITS)
     alphabet = sorted(keep, key=lambda g: (-(corpus_g[g] + speech_g[g]), g))
@@ -70,7 +83,8 @@ def main():
     stats = {
         "corpus_words": n_tokens, "corpus_distinct_words": len(words),
         "corpus_distinct_graphemes": len(corpus_g), "speech_distinct_graphemes": len(speech_g),
-        "alphabet": len(alphabet), "min_count": args.min_count,
+        "alphabet": len(alphabet), "min_count": args.min_count, "speech_alphabet": args.speech_alphabet,
+        "transcript_weight": args.transcript_weight,
         "corpus_grapheme_tokens": tot,
         "corpus_tokens_covered": sum(corpus_g[g] for g in keep) / tot,
         "invalid_distinct": len(invalid), "invalid_token_share": sum(invalid.values()) / tot,
@@ -91,7 +105,7 @@ def main():
                 dropped_tok += c
     stats |= {"words_tsv": kept_words, "min_word_count": args.min_word_count,
               "words_tsv_token_share": (sum(c for c in words.values() if c >= args.min_word_count) - dropped_tok)
-              / n_tokens}
+              / sum(words.values())}  # incl. transcript weighting
 
     with open(os.path.join(args.out, "graphemes.json"), "w", encoding="utf-8") as f:
         json.dump({"alphabet": alphabet, "corpus_counts": {g: corpus_g[g] for g in alphabet},

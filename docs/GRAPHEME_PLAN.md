@@ -543,3 +543,12 @@ memorize them, so the "seen" numbers will drop a lot. That is legitimate (it is 
 contains the same transcripts) but says little about new speech. The **unseen** subset (6,508 utts; B + grapheme
 8-gram: WER 19.23) is the honest measure of whether the conventions transfer. Dev2k has the same kind of overlap,
 so tuning on it is consistent with test.
+
+---
+
+## 16. Next: B for longer, a parts-based head, C with a speech-fitted tokenizer (molab)
+
+Runs on molab with the private HF bucket instead of Modal volumes: see **docs/MOLAB.md** (notebooks
+`notebooks/molab_train.py`, `notebooks/molab_units.py`; one-time data upload `upload_hf_bucket.py --what data`;
+KenLM decoding back on Modal via `--what pull`). Code: `train.py` memory-maps packed audio; `--head-parts`
+(`sinhala_asr/model.py`); `12_grapheme_inventory.py --speech-alphabet --transcript-weight`.

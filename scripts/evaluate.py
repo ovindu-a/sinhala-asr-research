@@ -37,7 +37,7 @@ def main(argv=None):
     with open(os.path.join(args.ckpt, "config.json")) as f:
         cfg = Config(**{k: v for k, v in json.load(f).items() if k in Config.__dataclass_fields__})
     units = load_units(os.path.join(args.ckpt, "units.json"))
-    model = CTCModel(cfg, load_full(cfg.encoder_id), units.init_ids)
+    model = CTCModel(cfg, load_full(cfg.encoder_id), units.init_ids, units.pieces)
     load_weights(model, args.ckpt)
     model = model.to(device).eval()
 

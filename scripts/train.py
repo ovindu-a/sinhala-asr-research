@@ -44,7 +44,7 @@ def read_jsonl(path):
 
 class AudioSet(Dataset):
     def __init__(self, rows, units: Units, packed: str | None = None):
-        """packed: prefix from 04_pack_audio.py (.npy) or 05_pack_parquet.py (.pcm); read into RAM once."""
+        """packed: prefix from 04_pack_audio.py (.npy) or 05_pack_parquet.py (.pcm); memory-mapped."""
         self.rows = rows
         self.targets = [units.encode(r["text"]) for r in rows]
         self.pcm = self.offsets = None
@@ -53,12 +53,14 @@ class AudioSet(Dataset):
                 meta = json.load(f)
             assert meta["ids"] == [r["id"] for r in rows], f"{packed} does not match the manifest"
             t = time.time()
+            # memory-mapped: pages come in from disk as clips are read, so a 20 GB train set fits a 32 GB machine
+            # (molab) and DataLoader workers share the page cache instead of each holding a copy
             if os.path.exists(packed + ".pcm"):
-                self.pcm = np.fromfile(packed + ".pcm", dtype=np.int16)
+                self.pcm = np.memmap(packed + ".pcm", dtype=np.int16, mode="r")
             else:
-                self.pcm = np.load(packed + ".npy")
+                self.pcm = np.load(packed + ".npy", mmap_mode="r")
             self.offsets = np.asarray(meta["offsets"])
-            print(f"loaded {packed} ({self.pcm.nbytes / 1e9:.2f} GB) in {time.time() - t:.0f}s")
+            print(f"mapped {packed} ({self.pcm.nbytes / 1e9:.2f} GB) in {time.time() - t:.0f}s")
 
     def __len__(self):
         return len(self.rows)
@@ -161,7 +163,9 @@ def save_ckpt(out, tag, model, cfg, units, state=None):
 
 def load_weights(model, d):
     missing, unexpected = model.load_state_dict(load_file(os.path.join(d, "model.safetensors")), strict=False)
-    missing = [k for k in missing if not k.startswith("encoder.")]
+    # encoder: frozen layers come from the base model; part_*: a flat-head checkpoint continued with --head-parts
+    # (the part rows start at zero, so the model starts exactly where the checkpoint left off)
+    missing = [k for k in missing if not k.startswith(("encoder.", "part_"))]
     assert not missing and not unexpected, f"checkpoint mismatch: missing={missing} unexpected={unexpected}"
 
 
@@ -175,6 +179,8 @@ def main(argv=None, on_checkpoint=None):
                     "sinhala_asr/units.py); default: Gemma units built from --train")
     ap.add_argument("--unfreeze-top-k", type=int, default=0)
     ap.add_argument("--head-init", default="text", choices=["text", "random"])
+    ap.add_argument("--head-parts", action="store_true",
+                    help="grapheme units: add shared base / vowel-sign / modifier rows to the output head")
     ap.add_argument("--steps", type=int, default=3000)
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--enc-lr-mult", type=float, default=0.1)
@@ -221,8 +227,9 @@ def main(argv=None, on_checkpoint=None):
           f"dev {len(dev_rows):,}; units {len(units):,} ({units.kind})")
 
     cfg = Config(vocab_size=len(units), unfreeze_top_k=args.unfreeze_top_k, head_init=args.head_init,
-                 dynamic_chunk=not args.no_dynamic_chunk)
-    model = CTCModel(cfg, load_full(cfg.encoder_id), units.init_ids)
+                 dynamic_chunk=not args.no_dynamic_chunk, head_parts=args.head_parts)
+    assert not cfg.head_parts or units.kind == "grapheme", "--head-parts needs grapheme units"
+    model = CTCModel(cfg, load_full(cfg.encoder_id), units.init_ids, units.pieces)
     if resuming or args.init_from:
         load_weights(model, last_dir if resuming else args.init_from)
         print("loaded weights from", last_dir if resuming else args.init_from)
