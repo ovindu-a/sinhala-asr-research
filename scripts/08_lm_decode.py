@@ -12,6 +12,8 @@ decoder (piece "▁"+grapheme, the space unit "▁|"), so the grapheme n-gram sc
 beta is then a per-grapheme bonus, not a per-word one.
 --lm-kind dual --glm G (grapheme units only): both LMs at once (sinhala_asr/dual_lm.py): --lm is the word 4-gram
 (alphas/betas), --glm the grapheme n-gram (--g-alphas/--g-betas); the grid is the product of all four lists.
+  --glm2 G2 --g2-alphas ...: a second grapheme n-gram (e.g. training transcripts only), weight grid of its own.
+  Pure grapheme fusion with the extra LM: --alphas 0 --betas 0 (the word LM is then loaded but unused).
 """
 
 import argparse
@@ -76,7 +78,8 @@ def _init(lm, pieces, unigrams, alpha, beta, vocab, space_offset=0.0, beam=32, d
         from sinhala_asr.dual_lm import DualLMDecoder
 
         _G["dec"] = DualLMDecoder(lm, dual["glm"], pieces, unigrams, alpha_w=alpha, beta_w=beta,
-                                  alpha_g=dual["g_alpha"], beta_g=dual["g_beta"])
+                                  alpha_g=dual["g_alpha"], beta_g=dual["g_beta"],
+                                  extra_glms=[(dual["glm2"], dual["g2_alpha"])] if dual.get("glm2") else ())
     else:
         from quan_transcribe.lm import KenLMDecoder
 
@@ -139,14 +142,18 @@ def decode(args):
     dual_grid = [None]
     if args.lm_kind == "dual":
         glm = os.path.join(args.glm, "lm.bin")
-        dual_grid = [{"glm": glm, "g_alpha": ga, "g_beta": gb} for ga, gb in itertools.product(args.g_alphas, args.g_betas)]
+        glm2 = os.path.join(args.glm2, "lm.bin") if args.glm2 else None
+        dual_grid = [{"glm": glm, "g_alpha": ga, "g_beta": gb, "glm2": glm2, "g2_alpha": g2}
+                     for ga, gb, g2 in itertools.product(args.g_alphas, args.g_betas,
+                                                         args.g2_alphas if glm2 else [0.0])]
     for a, b, so, du in itertools.product(args.alphas, args.betas, args.space_offsets, dual_grid):
         hyps = run(tune, units, lm, pieces, unigrams, a, b, procs, lim, so, dual=du, **kw)
         m = score(refs[: len(hyps)], hyps)
         n_hyp, n_ref = sum(len(h.split()) for h in hyps), sum(len(r.split()) for r in refs[: len(hyps)])
-        g = {"g_alpha": du["g_alpha"], "g_beta": du["g_beta"]} if du else {}
+        g = {"g_alpha": du["g_alpha"], "g_beta": du["g_beta"], "g2_alpha": du["g2_alpha"]} if du else {}
         grid.append({"alpha": a, "beta": b, "space_offset": so} | g | {"dual": du, "hyp_ref_words": n_hyp / n_ref} | m)
         gtxt = f" g_alpha {du['g_alpha']:.2f} g_beta {du['g_beta']:.1f}" if du else ""
+        gtxt += f" g2_alpha {du['g2_alpha']:.2f}" if du and du["glm2"] else ""
         print(f"alpha {a:.2f} beta {b:.1f} space {so:+.1f}{gtxt}: WER {m['wer']:.2%} WER_seg {m['wer_seg']:.2%} "
               f"CER {m['cer']:.2%} GER {m['ger']:.2%} hyp/ref words {n_hyp / n_ref:.3f}", flush=True)
     best = min(grid, key=lambda g: g["wer"])
@@ -161,7 +168,8 @@ def decode(args):
         by_src[r.get("src") or "all"][0].append(r["text"])
         by_src[r.get("src") or "all"][1].append(h)
     res = {"lm": args.lm, "lm_kind": args.lm_kind, "beam": args.beam, "alpha": best["alpha"], "beta": best["beta"], "space_offset": best["space_offset"],
-           "glm": args.glm, "g_alpha": best.get("g_alpha"), "g_beta": best.get("g_beta"), "tune_utts": best["utts"], "grid": grid,
+           "glm": args.glm, "g_alpha": best.get("g_alpha"), "g_beta": best.get("g_beta"),
+           "glm2": args.glm2, "g2_alpha": best.get("g2_alpha"), "tune_utts": best["utts"], "grid": grid,
            "overall": score([r["text"] for r in rows], hyps),
            "by_source": {s: score(a, b) for s, (a, b) in sorted(by_src.items())}}
     tag = f"eval_lm_{args.eval_split}{args.tag}"
@@ -196,6 +204,8 @@ def main(argv=None):
     ap.add_argument("--glm", default=None, help="grapheme n-gram dir for --lm-kind dual (14_grapheme_lm.py)")
     ap.add_argument("--g-alphas", type=float, nargs="+", default=[0.5])
     ap.add_argument("--g-betas", type=float, nargs="+", default=[1.0])
+    ap.add_argument("--glm2", default=None, help="second grapheme n-gram dir for --lm-kind dual (log-linear mix)")
+    ap.add_argument("--g2-alphas", type=float, nargs="+", default=[0.2])
     ap.add_argument("--beam", type=int, default=32)
     ap.add_argument("--procs", type=int, default=0, help="decoder processes (default: all CPUs)")
     args = ap.parse_args(argv)

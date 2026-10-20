@@ -507,3 +507,39 @@ word-prefix set per process), add `--procs 16`.
 
 Compare (`rescore.py`, `compare_errors.py`) with B + grapheme 8-gram (14.26 / 8.05 / 3.20 / 4.06, unseen WER 19.23,
 spacing-only 3,441) and A (14.72, spacing-only 2,797). Outputs: `/runs/gr_v6x_top8/best/lm/eval_lm_test_dual.*`.
+
+---
+
+## 15. Next: in-domain grapheme LM from the training transcripts (decoder only, CPU)
+
+Why: the speech transcripts are only ~0.8 M of si_graph8's 160 M words, so the grapheme LM mostly learned web-text
+spelling and spacing. A small grapheme 8-gram trained on the training transcripts alone, mixed in with its own
+weight, carries the references' conventions (which compounds are written joined, which split).
+
+Code: `14_grapheme_lm.py --manifest` (text from a jsonl manifest, `--discount-fallback` for the small corpus);
+`DualLMDecoder(extra_glms=[(path, alpha)])` adds more grapheme LMs log-linearly on every unit;
+`08_lm_decode.py --lm-kind dual --glm2 <dir> --g2-alphas ...`; `modal_app.py::grapheme_lm --manifest`.
+Tested locally: an extra LM at weight 0 gives identical output (30/30); one LM split 0.25 + 0.25 over two slots
+equals 0.5 in one (30/30).
+
+Steps (Modal account `chatgptgroup321`; budget rows first):
+
+```bash
+# 1. in-domain grapheme 8-gram from v6 + SLR-52 training transcripts (~0.8 M words; minutes, cents)
+modal run modal_app.py::grapheme_lm --order 8 --manifest v6_plus_slr52 --prune 0 --out tr_graph8
+
+# 2. B: big grapheme LM + in-domain grapheme LM, word LM off (alpha/beta 0); g2 0 = the si_graph8-only baseline
+modal run --detach modal_app.py::lm_decode --ckpt gr_v6x_top8/best --lm si_4gram \
+    --extra "--lm-kind dual --glm /data/lm/si_graph8 --glm2 /data/lm/tr_graph8 --tag _tr --tune-limit 2000 \
+             --alphas 0 --betas 0 --g-alphas 0.3 0.5 --g-betas 0.5 1.0 --g2-alphas 0 0.1 0.2 0.3 0.5"
+```
+
+20 combinations on all 2,000 dev2k + test: est. ~45 min on 32 CPU, ~$1.5. Extend once if a best value is on a grid
+edge (`--tag _tr2`). Then compare with B + grapheme 8-gram (14.26 / 8.05 / 3.20 / 4.06; spacing-only 3,441).
+
+**Read the seen / unseen split, not just the total.** 59% of test sentences occur verbatim in the training
+transcripts (OpenSLR prompts repeat across speakers), and an LM trained on those transcripts will largely
+memorize them, so the "seen" numbers will drop a lot. That is legitimate (it is training data, and A's word LM
+contains the same transcripts) but says little about new speech. The **unseen** subset (6,508 utts; B + grapheme
+8-gram: WER 19.23) is the honest measure of whether the conventions transfer. Dev2k has the same kind of overlap,
+so tuning on it is consistent with test.

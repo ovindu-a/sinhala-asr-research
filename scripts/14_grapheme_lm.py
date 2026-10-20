@@ -10,6 +10,9 @@ writes <out>/lm.bin, <out>/vocab.txt (graphemes + "|", most frequent first), <ou
 Order > 6 needs KenLM built with KENLM_MAX_ORDER >= order (lmplz) and the Python module with MAX_ORDER >= order.
 
   python scripts/14_grapheme_lm.py --corpus /data/lm/si_corpus/corpus.txt --out /data/lm/si_graph8 --order 8
+  # in-domain LM from the speech training transcripts only (~0.8 M words), mixed in by 08_lm_decode.py --glm2:
+  python scripts/14_grapheme_lm.py --manifest /data/manifests/v6_plus_slr52/train.jsonl --out /data/lm/tr_graph8 \
+      --order 8 --prune 0 --discount-fallback
 """
 
 import argparse
@@ -26,13 +29,16 @@ SEP = "|"
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--corpus", required=True)
+    src = ap.add_mutually_exclusive_group(required=True)
+    src.add_argument("--corpus", help="text file, one normalized sentence per line")
+    src.add_argument("--manifest", help="jsonl manifest; uses each row's normalized 'text'")
     ap.add_argument("--out", required=True)
     ap.add_argument("--order", type=int, default=8)
     ap.add_argument("--prune", default="0 0 1", help="lmplz --prune thresholds; last value repeats for higher orders")
     ap.add_argument("--max-words", type=int, default=0, help="stop after this many corpus words (0 = all)")
     ap.add_argument("--memory", default="80%", help="lmplz -S")
     ap.add_argument("--tmp", default="/tmp")
+    ap.add_argument("--discount-fallback", action="store_true", help="lmplz --discount_fallback (small corpora)")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
 
@@ -40,8 +46,9 @@ def main():
     cache, counts = WordCache(), collections.Counter()
     text = os.path.join(args.tmp, "graphemes.txt")
     n_words = n_lines = 0
-    with open(args.corpus, encoding="utf-8") as f, open(text, "w", encoding="utf-8") as out:
-        for line in f:
+    with open(args.corpus or args.manifest, encoding="utf-8") as f, open(text, "w", encoding="utf-8") as out:
+        lines = f if args.corpus else (json.loads(row)["text"] for row in f)
+        for line in lines:
             line = line.strip()
             if not line:
                 continue
@@ -59,7 +66,8 @@ def main():
           f"({time.time() - t:.0f}s)", flush=True)
 
     arpa, binary = os.path.join(args.tmp, "lm.arpa"), os.path.join(args.out, "lm.bin")
-    subprocess.run(f"lmplz -o {args.order} -S {args.memory} -T {args.tmp} --prune {args.prune} "
+    fallback = "--discount_fallback " if args.discount_fallback else ""
+    subprocess.run(f"lmplz -o {args.order} -S {args.memory} -T {args.tmp} --prune {args.prune} {fallback}"
                    f"< {text} > {arpa}", shell=True, check=True)
     os.remove(text)
     subprocess.run(f"build_binary -q 8 -b 8 trie {arpa} {binary}", shell=True, check=True)
@@ -69,7 +77,7 @@ def main():
             f.write(g + "\n")
     with open(os.path.join(args.out, "lm_config.json"), "w") as f:
         json.dump({"kind": "grapheme", "order": args.order, "prune": args.prune, "separator": SEP,
-                   "corpus": args.corpus, "sentences": n_lines, "words": n_words, "tokens": n_tok,
+                   "corpus": args.corpus or args.manifest, "sentences": n_lines, "words": n_words, "tokens": n_tok,
                    "types": len(counts), "max_words": args.max_words}, f, indent=1)
     print(f"lm: {binary} {os.path.getsize(binary) / 1e9:.2f} GB ({time.time() - t:.0f}s)")
 

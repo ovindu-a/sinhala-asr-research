@@ -10,6 +10,10 @@ handling, pruning, unknown-word and non-prefix penalties on the word side), so w
 word-LM decoder's result. With alpha_w = beta_w = 0 it is close to `08_lm_decode.py --lm-kind grapheme` (which scores
 each grapheme one unit later, when the next unit starts) but not identical.
 
+extra_glms: more grapheme n-grams [(path, alpha), ...] added log-linearly on every unit, e.g. one trained on the
+speech training transcripts only (14_grapheme_lm.py --manifest), which carries the references' own spelling and
+spacing conventions that the 160 M-word web-text LM drowns out. beta_g is shared (one bonus per unit).
+
 pieces: text of every unit (index = unit id): "" for blank/unk, "▁" for the space unit, else the grapheme.
 """
 
@@ -38,7 +42,7 @@ class _Beam:
         self.pb = NEG_INF
         self.pnb = NEG_INF
         self.w_state = w_state  # word LM state after the completed words
-        self.g_state = g_state  # grapheme LM state after every emitted unit
+        self.g_state = g_state  # grapheme LM states (one per grapheme LM) after every emitted unit
         self.lm_score = lm_score  # weighted LM scores so far (both LMs, incl. betas)
         self.partial = partial  # graphemes of the word in progress
 
@@ -46,10 +50,11 @@ class _Beam:
 class DualLMDecoder:
     def __init__(self, word_lm: str, graph_lm: str, pieces: list[str], unigrams: list[str] | None = None,
                  alpha_w: float = 0.35, beta_w: float = 1.0, alpha_g: float = 0.5, beta_g: float = 1.0,
-                 unk_offset: float = -10.0, blank: int = 0):
+                 unk_offset: float = -10.0, blank: int = 0, extra_glms=()):
         import kenlm
 
-        self.wlm, self.glm = kenlm.Model(word_lm), kenlm.Model(graph_lm)
+        self.wlm = kenlm.Model(word_lm)
+        self.glms = [(kenlm.Model(graph_lm), alpha_g)] + [(kenlm.Model(p), a) for p, a in extra_glms]
         self.pieces = pieces
         self.alpha_w, self.beta_w, self.alpha_g, self.beta_g = alpha_w, beta_w, alpha_g, beta_g
         self.unk_offset, self.blank = unk_offset, blank
@@ -65,9 +70,13 @@ class DualLMDecoder:
             s += self.unk_offset
         return out, s
 
-    def _graph(self, state, token: str):
-        out = type(state)()
-        return out, self.glm.BaseScore(state, token, out) * LN10 * self.alpha_g + self.beta_g
+    def _graph(self, states: tuple, token: str):
+        outs, s = [], self.beta_g
+        for (lm, alpha), st in zip(self.glms, states):
+            out = type(st)()
+            s += lm.BaseScore(st, token, out) * LN10 * alpha
+            outs.append(out)
+        return tuple(outs), s
 
     def _partial_penalty(self, partial: str) -> float:
         if not partial or self.prefixes is None or partial in self.prefixes:
@@ -79,10 +88,14 @@ class DualLMDecoder:
         """log_probs: (T, V) CTC log-probabilities of one utterance. Returns the best unit-id sequence."""
         import kenlm
 
-        ws, gs = kenlm.State(), kenlm.State()
+        ws = kenlm.State()
         self.wlm.BeginSentenceWrite(ws)
-        self.glm.BeginSentenceWrite(gs)
-        root = _Beam(ws, gs, 0.0, "")
+        gs = []
+        for lm, _ in self.glms:
+            st = kenlm.State()
+            lm.BeginSentenceWrite(st)
+            gs.append(st)
+        root = _Beam(ws, tuple(gs), 0.0, "")
         root.pb = 0.0
         beams: dict[tuple, _Beam] = {(): root}
 
@@ -140,7 +153,7 @@ class DualLMDecoder:
             best = scored[0][0]
             beams = {k: new[k] for s, k in scored[:beam_width] if s >= best + beam_prune_logp}
 
-        def final(item):  # finish the last word and both sentences
+        def final(item):  # finish the last word and every LM's sentence
             prefix, b = item
             w_state, score = b.w_state, b.lm_score
             if b.partial:
@@ -148,8 +161,8 @@ class DualLMDecoder:
                 score += s
             end = type(w_state)()
             score += self.wlm.BaseScore(w_state, "</s>", end) * LN10 * self.alpha_w
-            end = type(b.g_state)()
-            score += self.glm.BaseScore(b.g_state, "</s>", end) * LN10 * self.alpha_g
+            for (lm, alpha), st in zip(self.glms, b.g_state):
+                score += lm.BaseScore(st, "</s>", type(st)()) * LN10 * alpha
             return _lse(b.pb, b.pnb) + score
 
         return list(max(beams.items(), key=final)[0])

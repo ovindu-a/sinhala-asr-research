@@ -288,12 +288,17 @@ def grapheme_units(corpus: str = "si_corpus", vocabs: str = "3000", grapheme: bo
 
 
 @app.function(image=lm_image, volumes=VOLS, cpu=16, memory=131072, ephemeral_disk=512 * 1024, timeout=6 * 3600)  # Modal minimum is 512 GiB
-def grapheme_lm(order: int = 8, corpus: str = "si_corpus", out: str = "", prune: str = "0 0 1", max_words: int = 0):
+def grapheme_lm(order: int = 8, corpus: str = "si_corpus", out: str = "", prune: str = "0 0 1", max_words: int = 0,
+                manifest: str = ""):
     """Grapheme n-gram KenLM over the si_4gram text -> /data/lm/<out or si_graph<order>> (lm.bin, vocab.txt).
-    modal run --detach modal_app.py::grapheme_lm --order 8"""
+    modal run --detach modal_app.py::grapheme_lm --order 8
+    In-domain LM from a training manifest instead (no pruning, discount fallback for the small corpus):
+    modal run modal_app.py::grapheme_lm --order 8 --manifest v6_plus_slr52 --prune 0 --out tr_graph8"""
     out = out or f"si_graph{order}"
+    src = (f"--manifest /data/manifests/{manifest}/train.jsonl --discount-fallback" if manifest
+           else f"--corpus /data/lm/{corpus}/corpus.txt")
     try:
-        sh(f"python scripts/14_grapheme_lm.py --corpus /data/lm/{corpus}/corpus.txt --out /data/lm/{out} "
+        sh(f"python scripts/14_grapheme_lm.py {src} --out /data/lm/{out} "
            f"--order {order} --prune '{prune}' --max-words {max_words} --tmp /tmp")
     finally:
         data_vol.commit()
