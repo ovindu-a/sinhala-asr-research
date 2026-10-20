@@ -6,6 +6,7 @@
   modal run upload_hf_bucket.py --what pull --run gr_v6x_top8_long [--no-dry-run]
       # the other way: a run trained on molab (bucket runs/<run>/best) -> /runs/<run>/best, for lm_decode on Modal
   modal run upload_hf_bucket.py --what dual [--no-dry-run]   # B's *_dual* eval files (word 4-gram + grapheme 8-gram)
+  modal run upload_hf_bucket.py --what tr [--no-dry-run]     # in-domain grapheme LM tr_graph8 + B's *_tr* eval files
 """
 import subprocess
 
@@ -56,6 +57,11 @@ def upload(dry_run: bool = True, what: str = "ckpts", run: str = ""):
     if what == "dual":  # GRAPHEME_PLAN §14: decode results only (both LMs are already in the bucket / on HF)
         sh(f"hf buckets sync /runs/gr_v6x_top8/best/lm hf://buckets/{BUCKET}/runs/gr_v6x_top8/best/lm "
            f"--include '*_dual*' {flag}")
+        return
+    if what == "tr":  # GRAPHEME_PLAN §15: in-domain grapheme 8-gram (20 MB) + decode results
+        sh(f"hf buckets sync /data/lm/tr_graph8 hf://buckets/{BUCKET}/lm/tr_graph8 {flag}")
+        sh(f"hf buckets sync /runs/gr_v6x_top8/best/lm hf://buckets/{BUCKET}/runs/gr_v6x_top8/best/lm "
+           f"--include '*_tr*' {flag}")
         return
     for r in RUNS:  # best/ only (weights, config, units, eval files, lm/ logits); never last/
         sh(f"hf buckets sync /runs/{r}/best hf://buckets/{BUCKET}/runs/{r}/best {flag}")

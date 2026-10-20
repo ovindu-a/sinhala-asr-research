@@ -1,0 +1,33 @@
+33,611 reference words, 6,508 utterances
+
+category       |               total b_glm8 |                total b_tr2 |                only b_glm8 |                 only b_tr2
+spacing        |   1,809  ( 5.38% of words) |   1,684  ( 5.01% of words) |     442  ( 1.32% of words) |     356  ( 1.06% of words)
+orthographic   |     664  ( 1.98% of words) |     657  ( 1.95% of words) |      88  ( 0.26% of words) |     112  ( 0.33% of words)
+one_letter     |   1,479  ( 4.40% of words) |   1,652  ( 4.92% of words) |     183  ( 0.54% of words) |     371  ( 1.10% of words)
+near_miss      |     374  ( 1.11% of words) |     419  ( 1.25% of words) |      32  ( 0.10% of words) |      68  ( 0.20% of words)
+wrong_word     |     840  ( 2.50% of words) |     945  ( 2.81% of words) |      71  ( 0.21% of words) |     136  ( 0.40% of words)
+missed_word    |     194  ( 0.58% of words) |     231  ( 0.69% of words) |      12  ( 0.04% of words) |      17  ( 0.05% of words)
+digits         |      60  ( 0.18% of words) |      60  ( 0.18% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     142  ( 0.42% of words) |     141  ( 0.42% of words) |      19  ( 0.06% of words) |      14  ( 0.04% of words)
+ALL word errs  |   5,562  (16.55% of words) |   5,789  (17.22% of words) |     847  ( 2.52% of words) |   1,074  ( 3.20% of words)
+
+words both get wrong: 4,715 ({'same output': 4034, 'different outputs': 681})
+extra (inserted) words: b_glm8 902, b_tr2 962; runaway utterances (>=4 extra words): b_glm8 10, b_tr2 9
+
+examples of errors only b_glm8 makes (ref -> b_glm8):
+  spacing       උපන් -> ∅; දිනයක් -> ∅; පවත් -> ∅; වනු -> ∅
+  orthographic  වේලාව -> වෙලාව; වේලාව -> වෙලාව; මදුරුවෝ -> මදුරුවො; බලන්නකො -> බලන්නකෝ
+  one_letter    නෙවෙයි -> නොවෙයි; පෘතග්ජන -> පෘථග්ජන; තරහ -> තරහා; ආනන්තරිය -> ආනන්තරි
+  near_miss     දක්වාත් -> දක්වා; ඇවිල්ලා -> ඇවිලා; රත්තරන් -> රත්තරං; කියනවා -> කියන
+  wrong_word    විතර -> විතරක්; නොකළ -> නොකලා; ද -> වැඩියිමොකද; ඊට -> et
+  missed_word   කියා -> ∅; අයියට -> ∅; එක -> ∅; ඒ -> ∅
+  english       ministers -> insters; try -> රයි; business -> iss; day -> d
+
+examples of errors only b_tr2 makes (ref -> b_tr2):
+  spacing       තේරෙයිද -> ∅; මුල්කොට -> ∅; වටපිටාවකදීය -> ∅; කර -> ∅
+  orthographic  ඉන්නේ -> ඉන්නෙ; අයියේ -> අයියෙ; වහන්සේත් -> වහන්සෙත්; බණ -> බන
+  one_letter    මන්ද -> මන්දා; ඉන්නේ -> න්නේ; මුලෙන් -> මුලින්; අච්චාරුව -> ච්චාරුව
+  near_miss     ශ්‍රාවකයෙක් -> ශ්‍රාවකයන්; කරන්නෑ -> කරන්නේනෑ; සම්බුද්ධයි -> සම්බුද්ධඒ; යෝධයෙක් -> ධයෙක්
+  wrong_word    කිය -> කී; බුදු -> දු; තාම -> තාමත්; අඬන -> අඬන්න
+  missed_word   මේ -> ∅; අසරණකමම -> ∅; ඒ -> ∅; ඉන්නවා -> ∅
+  english       exporters -> experts; icc -> ice; wall -> al; analysis -> anlysis

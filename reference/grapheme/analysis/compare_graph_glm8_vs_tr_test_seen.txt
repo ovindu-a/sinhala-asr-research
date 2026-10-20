@@ -1,0 +1,31 @@
+41,727 reference words, 9,352 utterances
+
+category       |               total b_glm8 |                 total b_tr |                only b_glm8 |                  only b_tr
+spacing        |   1,632  ( 3.91% of words) |   1,031  ( 2.47% of words) |     689  ( 1.65% of words) |      66  ( 0.16% of words)
+orthographic   |     447  ( 1.07% of words) |     235  ( 0.56% of words) |     212  ( 0.51% of words) |       6  ( 0.01% of words)
+one_letter     |     924  ( 2.21% of words) |     518  ( 1.24% of words) |     417  ( 1.00% of words) |      13  ( 0.03% of words)
+near_miss      |     246  ( 0.59% of words) |     153  ( 0.37% of words) |      89  ( 0.21% of words) |       1  ( 0.00% of words)
+wrong_word     |     418  ( 1.00% of words) |     275  ( 0.66% of words) |     137  ( 0.33% of words) |       3  ( 0.01% of words)
+missed_word    |      39  ( 0.09% of words) |      38  ( 0.09% of words) |       3  ( 0.01% of words) |       2  ( 0.00% of words)
+digits         |       0  ( 0.00% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |       0  ( 0.00% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+ALL word errs  |   3,706  ( 8.88% of words) |   2,250  ( 5.39% of words) |   1,547  ( 3.71% of words) |      91  ( 0.22% of words)
+
+words both get wrong: 2,159 ({'same output': 2037, 'different outputs': 122})
+extra (inserted) words: b_glm8 572, b_tr 225; runaway utterances (>=4 extra words): b_glm8 1, b_tr 1
+
+examples of errors only b_glm8 makes (ref -> b_glm8):
+  spacing       නගිනවිට -> ∅; උපලක්ෂිත -> ∅; ය -> ∅; ගමන්මළු -> ∅
+  orthographic  වුනාද -> වුණාද; පාෂාණීභූත -> පාෂාණිභූත; වුයේ -> වූයේ; කළකිරුනා -> කළකිරුණා
+  one_letter    කිසිඳු -> කිසිදු; ඇමෙරිකාව -> ඇමරිකාව; විදිහට -> විදියට; විදිහට -> විදියට
+  near_miss     කටුස්සගෙ -> කටුස්සාගේ; ගාමිණියගෙ -> ගාමිණියාගේ; තත්වයන් -> තත්ත්වයන්; තත්වයට -> තත්ත්වයට
+  wrong_word    ඉතිං -> ඉතින්; තිබෙන -> තිබෙනවා; සිංදුවා -> සින්දුව; වැඩි -> වැඩියි
+  missed_word   අනිත් -> ∅; වූ -> ∅; ඒ -> ∅
+
+examples of errors only b_tr makes (ref -> b_tr):
+  spacing       සිදු -> ∅; වන -> ∅; වග -> ∅; කිව -> ∅
+  orthographic  ගළපා -> ගලපා; තිබුණේ -> තිබුනේ; පස්සේ -> පස්සෙ; වැඩපිළිවෙළක් -> වැඩපිළිවෙලක්
+  one_letter    නඟා -> නගා; ගිහිල්ලා -> ගිහිල්ල; පුද්ගලයකුගේ -> පුද්ගලයෙකුගේ; කථාව -> කතාව
+  near_miss     යුතුවේ -> යුතුය
+  wrong_word    අරන් -> අරං; ලැබෙයි -> ලැබේ; වේ -> වෙයි
+  missed_word   හා -> ∅; ය -> ∅

@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |               total b_glm8 |                 total b_tr |                only b_glm8 |                  only b_tr
+spacing        |   3,441  ( 4.57% of words) |   2,780  ( 3.69% of words) |     976  ( 1.30% of words) |     332  ( 0.44% of words)
+orthographic   |   1,111  ( 1.47% of words) |     896  ( 1.19% of words) |     287  ( 0.38% of words) |      98  ( 0.13% of words)
+one_letter     |   2,403  ( 3.19% of words) |   2,071  ( 2.75% of words) |     579  ( 0.77% of words) |     269  ( 0.36% of words)
+near_miss      |     620  ( 0.82% of words) |     561  ( 0.74% of words) |     114  ( 0.15% of words) |      53  ( 0.07% of words)
+wrong_word     |   1,258  ( 1.67% of words) |   1,166  ( 1.55% of words) |     201  ( 0.27% of words) |      93  ( 0.12% of words)
+missed_word    |     233  ( 0.31% of words) |     302  ( 0.40% of words) |       8  ( 0.01% of words) |      33  ( 0.04% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     142  ( 0.19% of words) |     146  ( 0.19% of words) |      12  ( 0.02% of words) |      13  ( 0.02% of words)
+ALL word errs  |   9,268  (12.30% of words) |   7,982  (10.59% of words) |   2,177  ( 2.89% of words) |     891  ( 1.18% of words)
+
+words both get wrong: 7,091 ({'same output': 6374, 'different outputs': 717})
+extra (inserted) words: b_glm8 1,474, b_tr 1,075; runaway utterances (>=4 extra words): b_glm8 11, b_tr 9
+
+examples of errors only b_glm8 makes (ref -> b_glm8):
+  spacing       උපන් -> ∅; දිනයක් -> ∅; පවත් -> ∅; වනු -> ∅
+  orthographic  වුනාද -> වුණාද; පාෂාණීභූත -> පාෂාණිභූත; වේලාව -> වෙලාව; වේලාව -> වෙලාව
+  one_letter    කිසිඳු -> කිසිදු; පෘතග්ජන -> පෘථග්ජන; තරහ -> තරහා; ආනන්තරිය -> ආනන්තරි
+  near_miss     දක්වාත් -> දක්වා; ඇවිල්ලා -> ඇවිලා; දෙයින් -> දෙන්; ඥානයෙන් -> ඤාණයෙන්
+  wrong_word    නොකළ -> නොකලා; ඊට -> et; බුදුන්ගේ -> බුදුන්ගෙන්; එයා -> එයාත්
+  missed_word   පන්නලා -> ∅; අයියට -> ∅; ඒ -> ∅; හොද -> ∅
+  english       try -> රයි; business -> iss; reference -> rece; right -> ∅
+
+examples of errors only b_tr makes (ref -> b_tr):
+  spacing       තේරෙයිද -> ∅; කර -> ∅; නිසා -> ∅; ද -> ∅
+  orthographic  ඉන්නේ -> ඉන්නෙ; අයියේ -> අයියෙ; වහන්සේත් -> වහන්සෙත්; බණ -> බන
+  one_letter    මන්ද -> මන්දා; ඉන්නේ -> න්නේ; මුලෙන් -> මුලින්; අච්චාරුව -> ච්චාරුව
+  near_miss     ශ්‍රාවකයෙක් -> ශ්‍රාවකයන්; සම්බුද්ධයි -> සම්බුද්ධඒ; යෝධයෙක් -> ධයෙක්; මිදෙන්න -> දෙන්න
+  wrong_word    බුදු -> දු; මෝරලා -> මරල; පාපෙන් -> පාපවිඳ; කියලා -> ය
+  missed_word   මේ -> ∅; ආයේ -> ∅; ඒක -> ∅; ඒ -> ∅
+  english       exporters -> experts; icc -> ic; wall -> al; capital -> ail

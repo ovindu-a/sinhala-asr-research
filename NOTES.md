@@ -72,6 +72,11 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-20 | §14 extension (_dual best β 1, gα 0.3, gβ 1 all on grid edges): lm_decode dual α 0.2 × β {1, 2} × gα {0.2, 0.3} × gβ {1.0, 1.5} on all 2,000 dev2k, then test; tag _dual2 | 32 CPU, 64 GB | ~20 min actual | (in total below) | |
 | 2026-10-20 | `modal run upload_hf_bucket.py --what dual` (dry run, upload, re-dry-run = 4 skipped): eval_lm_test_dual{,2}.{json,hyps.jsonl} | 4 CPU | ~1 min | < $0.01 | |
 | 2026-10-20 | **`modal billing summary`** after the dual-LM runs | | | | **$20.43 metered** |
+| 2026-10-20 | GRAPHEME_PLAN §15 step 1: `grapheme_lm --order 8 --manifest v6_plus_slr52 --prune 0 --out tr_graph8` (in-domain grapheme 8-gram from training transcripts): 171,163 sents, 813 K words, 3.29 M grapheme tokens, 876 types; lm.bin 0.02 GB | 16 CPU, 128 GB, 512 GiB disk | ~1 min actual | < $0.05 | |
+| 2026-10-20 | §15 step 2: lm_decode gr_v6x_top8/best --lm-kind dual, word LM off (α β 0), si_graph8 gα {0.3, 0.5} × gβ {0.5, 1} × tr_graph8 g2α {0, 0.1, 0.2, 0.3, 0.5} on all 2,000 dev2k, then test; tag _tr | 32 CPU, 64 GB | ~35 min actual | | |
+| 2026-10-20 | §15 extension (_tr best gα 0.3, gβ 1, g2α 0.5 all on grid edges; chosen from dev only, launched before the _tr test result): α β 0 × gα {0.2, 0.3} × gβ {1.0, 1.5} × g2α {0.5, 0.7, 1.0}; tag _tr2 | 32 CPU, 64 GB | ~25 min actual | | |
+| 2026-10-20 | `modal run upload_hf_bucket.py --what tr` (dry run, upload, re-dry-run = 7 skipped): /data/lm/tr_graph8 (21 MB) + eval_lm_test_tr{,2}.{json,hyps.jsonl} | 4 CPU | ~1 min | < $0.01 | |
+| 2026-10-20 | **`modal billing summary`** after §15 (tr_graph8 build, _tr, _tr2, upload) | | | | **$20.71 metered** |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -221,6 +226,7 @@ identical to si_4gram (gate 1), so A / B / C saw the same audio, transcripts and
 | B graphemes | **6.02** | 22.73 / **14.53** / **5.78** / **6.96** | 19.58 / **11.71** / **4.32** / **5.40** | 15.18 / **8.31** / **3.43** / **4.33** (0.35, 2.0) | 20.79 / **12.20** / **5.17** / **6.42** |
 | B + grapheme 8-gram (2026-10-20) | | | | **14.26** / **8.05** / **3.20** / **4.06** (0.5, 1.0) | **19.23** / **11.70** / **4.81** / **5.98** |
 | B + word 4-gram + grapheme 8-gram (2026-10-20) | | | | 14.59 / **7.90** / 3.23 / 4.10 (0.2, 1.0; g 0.3, 1.0) | 19.88 / **11.59** / 4.87 / 6.06 |
+| B + si_graph8 + in-domain tr_graph8 (2026-10-20; dev pick, `_tr2`) | | | | **11.77** / 7.18 / **2.88** / **3.59** (g 0.2, 1.5; g2 0.7; word LM off) | 20.09 / 12.74 / 5.16 / 6.36 (seen WER **5.08**) |
 
 Seen-sentence subset + KenLM (9,352): A 10.01 / 5.61 / 2.13 / 2.70, C 9.85 / 5.51 / 2.09 / 2.65, B 10.66 / 5.18 / 2.01 / 2.61.
 B's KenLM grid best was β = 2.0 (edge); extended once (α 0.2/0.35/0.5 × β 2/3/4): β 3 and 4 raise dev WER, so 2.0 stays.
@@ -277,6 +283,8 @@ never lowers dev WER: it removes right splits with the wrong ones. Dev picks **�
 | B grapheme (0.35, 1.0) | 14.78 | 8.33 | 3.41 | 4.29 | 10.37 / 1.97 | 20.26 / 12.29 / 5.19 / 6.40 | 9,346 + 1,789 |
 | **B + grapheme 8-gram (0.5, 1.0)** | **14.26** | **8.05** | **3.20** | **4.06** | 10.25 / **1.90** | **19.23** / **11.70** / **4.81** / **5.98** | 9,268 + 1,474 |
 | B + word + grapheme LM (0.2, 1.0; g 0.3, 1.0) | 14.59 | **7.90** | 3.23 | 4.10 | 10.33 / **1.90** | 19.88 / **11.59** / 4.87 / 6.06 | **8,714** + 2,280 |
+| B + si_graph8 + tr_graph8 (g 0.3, 1.0; g2 0.5), `_tr` | 12.02 | 7.17 | 2.92 | 3.64 | 5.93 / 1.15 | 19.58 / 12.36 / 5.09 / 6.27 | 7,982 + 1,075 |
+| B + si_graph8 + tr_graph8 (g 0.2, 1.5; g2 0.7), `_tr2` (dev pick) | **11.77** | 7.18 | **2.88** | **3.59** | **5.08** / **1.03** | 20.09 / 12.74 / 5.16 / 6.36 | **7,677** + 1,193 |
 
 With β 1, B's extra words fall to A's level (1,789 vs 1,803) but merges replace splits (spacing errors 2,989 -> 3,295 vs
 A's 2,797). Net: B ties A on WER (+0.06), keeps CER −0.27 / WER_seg −0.62 / GER −0.32, and has the best unseen-sentence
@@ -346,3 +354,48 @@ Findings (compare_errors.py; reference/grapheme/analysis/compare_{graph_glm8_vs_
 - Next if continuing (CPU only, ~$0.3 each): test the β = 0 runner-up α 0.1, β 0, gα 0.5, gβ 1.0 (dev 16.28, hyp/ref
   0.999), or select on dev with a word-count constraint (hyp/ref ≤ 1.00). As it stands, **B + grapheme 8-gram (14.26)
   stays the best WER**; dual is best on WER_seg and word errors.
+
+### B + grapheme 8-gram + in-domain grapheme 8-gram (2026-10-20; GRAPHEME_PLAN §15; reference/grapheme/training/gr_v6x_top8/eval_lm_test_tr{,2}.json)
+
+tr_graph8 = grapheme 8-gram over the v6_plus_slr52 training transcripts (171,163 sentences, 813 K words, 3.29 M grapheme
+tokens, 876 types, no pruning, discount fallback; lm.bin 21 MB, ~1 min). Decoded B with `--lm-kind dual`, word LM off
+(α = β = 0), si_graph8 gα/gβ plus tr_graph8 g2α (log-linear, every unit), grid on all 2,000 dev2k. Note: g2α = 0 here
+(gα 0.5, gβ 1.0) gives dev 16.59, not the 16.71 of the `--lm-kind grapheme` run at the same weights (different decoder
+path, same LM).
+
+| dev2k WER | g2α 0 | 0.1 | 0.2 | 0.3 | 0.5 | 0.7 | 1.0 |
+|---|---|---|---|---|---|---|---|
+| gα 0.3, gβ 0.5 | 17.29 | 15.97 | 15.21 | 14.88 | 14.66 | | |
+| gα 0.3, gβ 1.0 | 17.01 | 15.71 | 14.93 | 14.52 | 14.26 (`_tr` pick) | 14.35 | 14.75 |
+| gα 0.5, gβ 0.5 | 16.90 | 16.09 | 15.56 | 15.20 | 15.06 | | |
+| gα 0.5, gβ 1.0 | 16.59 | 15.54 | 15.00 | 14.75 | 14.65 | | |
+| gα 0.2, gβ 1.0 | | | | | 14.17 | 14.19 | 14.46 |
+| gα 0.2, gβ 1.5 | | | | | 13.98 | **13.88** (`_tr2` pick) | 14.05 |
+| gα 0.3, gβ 1.5 | | | | | 13.99 | 13.98 | 14.34 |
+
+`_tr` best gα 0.3, gβ 1.0, g2α 0.5 had all three on grid edges; `_tr2` (chosen from dev only and launched before the
+`_tr` test result) extended once: **gα 0.2, gβ 1.5, g2α 0.7** (dev 13.88 / 9.35 / 4.07 / 4.87, hyp/ref 0.997). g2α now
+peaks inside the grid; gα (0.2) and gβ (1.5) are still on edges, but the protocol allows one extension, so not
+extended further. No extra settings were test-decoded.
+
+| v6 test, B + … | all WER / WER_seg / CER / GER | seen (9,352) WER / CER | unseen (6,508) WER / WER_seg / CER / GER |
+|---|---|---|---|
+| word LM (A for reference: 14.72 / 8.95 / 3.68 / 4.61, seen 10.01, unseen 20.57) | 14.78 / 8.33 / 3.41 / 4.29 | 10.37 / 1.97 | 20.26 / 12.29 / 5.19 / 6.40 |
+| si_graph8 | 14.26 / 8.05 / 3.20 / 4.06 | 10.25 / 1.90 | **19.23 / 11.70 / 4.81 / 5.98** |
+| + tr_graph8 g2α 0.5 (`_tr`) | 12.02 / 7.17 / 2.92 / 3.64 | 5.93 / 1.15 | 19.58 / 12.36 / 5.09 / 6.27 |
+| + tr_graph8 g2α 0.7 (`_tr2`, dev pick) | **11.77** / 7.18 / **2.88** / **3.59** | **5.08** / **1.03** | 20.09 / 12.74 / 5.16 / 6.36 |
+
+Findings (compare_errors.py, whole test and split by seen/unseen; reference/grapheme/analysis/
+compare_graph_glm8_vs_tr{,2}_test{,_seen,_unseen}.txt, compare_gemma_lm_vs_graph_tr2_test.txt):
+- **The whole gain is on seen sentences (memorization), as §15 expected.** Seen WER 10.25 → 5.08; unseen WER gets
+  *worse* 19.23 → 20.09 (WER_seg 11.70 → 12.74, CER 4.81 → 5.16). The more weight on tr_graph8, the better seen and the
+  worse unseen. On unseen sentences B + si_graph8 alone stays best (and still beats A's 20.57).
+- Spacing-only errors, whole test: 3,441 → 2,469 (below A's 2,797 for the first time); inserted words 1,474 → 1,193.
+  Seen only: spacing 1,632 → 785, extra words 572 → 231, word errors 3,706 → 1,888. **Unseen only: spacing 1,809 →
+  1,684 (−7%), extra words 902 → 962, word errors 5,562 → 5,789.** The reference spacing conventions transfer only a
+  little to new sentences, and the in-domain LM pulls other words toward training-sentence spellings.
+- Dev2k has the same seen/unseen overlap, so dev tuning rewards memorization and keeps pushing g2α up. To tune for new
+  speech, select on unseen-only dev utterances (or on dev without its seen sentences).
+- Honest headline: **11.77 WER overall but only because 59% of test sentences are in the training transcripts**; for
+  new sentences the best decoder is still B + si_graph8 (unseen 19.23). A deployment that hears prompts from the
+  OpenSLR scripts would benefit; general Sinhala speech would not.
