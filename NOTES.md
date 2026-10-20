@@ -63,6 +63,7 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-18 | B extended grid confirmed α 0.35 β 2.0 (β 3/4 worse on WER). **`modal billing summary`** at end (meter lags, GPU jobs not all counted yet; check the dashboard) | | | | **$19.37 metered** |
 | 2026-10-18 | B decoder fix: lm_decode gr_v6x_top8 with --space-offsets (penalty on the bare ▁ unit), α {0.35, 0.5} × β {1, 2} × space {0, −1, −2} on all 2,000 dev2k, tag _space | 32 CPU | ~1–1.5 h est. | ~$2 | |
 | 2026-10-18 | B decoder fix done: dev picks α 0.35 β 1.0 space 0 (no penalty); test WER 15.18 → 14.78; **`modal billing summary`** (meter lags) | | ~1 h | | **$19.44 metered** |
+| 2026-10-20 | upload_hf_bucket.py: best/ of gr_v6_top6, gr_v6x_top8, gb3k_v6_top6, gb3k_v6x_top8 (weights, config, units, eval files, lm/ logits) + /data/units (minus words.tsv) → private HF bucket `ovindu-a/sinhala-grapheme-asr`, 33 files, 3.78 GB (dry run + upload + listing) | 4 CPU, 8 GB | ~1 min upload | < $0.05 | |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -185,6 +186,10 @@ encoder = 25 frames/s vs ≤ 10.6 gbpe targets/s (p99 5.0). Est. cost: ~$11 for 
 New Modal account for the grapheme runs: Phase 0 in docs/GRAPHEME_PLAN.md rebuilds the data there (pack_v6,
 slr52_extra), downloads the exact KenLM + v6x_top8 from HF (`fetch_reference`) and checks the manifests against
 reference/SHA256SUMS (`verify_data`). reference/ = manifests, OpenSLR speaker table, baseline hyps, A's metrics.
+Backup (2026-10-20, `modal run upload_hf_bucket.py --no-dry-run`): private HF Storage Bucket
+**hf://buckets/ovindu-a/sinhala-grapheme-asr**: runs/{gr,gb3k}_{v6_top6,v6x_top8}/best/ (model.safetensors 0.78–0.99 GB,
+config, units, eval files; v6x_top8 also lm/{dev2k,test}.logits.pt + eval_lm_*) and units/ (graphemes.json, grapheme/,
+gbpe3000/; words.tsv left out). last/ (optimizer state) not uploaded; Modal volumes untouched.
 Unit stats on the real corpus (v6_plus_slr52 train | v6 test), from /data/units/*/report.json:
 
 | units | size | units/word | graphemes/unit | single-unit words | unk | round-trip fails | targets/s mean / p99 / max | units seen <20× in speech text |
