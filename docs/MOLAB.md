@@ -27,12 +27,17 @@ dev2k / test from ss_v6.) Check the bucket's storage limits / billing on Hugging
 
 | preset | run name | starts from | data | steps, peak lr | GPU time (est.) |
 |---|---|---|---|---|---|
+| A longer (Gemma units) | `v6x_top8_long` | A's `v6x_top8/best` (public HF repo `ctc/`) | v6 + SLR-52, top 8 | 6,000, 5e-5 | ~1–1.5 h |
 | **B longer (flat head)** | `gr_v6x_top8_long` | `gr_v6x_top8/best` | v6 + SLR-52, top 8 | 6,000, 5e-5 | ~1–1.5 h |
 | B longer + head parts | `gr_v6x_top8_long_parts` | `gr_v6x_top8/best` | same | 6,000, 5e-5 | ~1–1.5 h |
 | C redo: v6_top6 | `gbs3k_v6_top6` | scratch, `units_speech/gbpe3000` | v6, top 6 | 7,500, 2e-4 | ~1–1.5 h |
 | C redo: v6x_top8 | `gbs3k_v6x_top8` | `gbs3k_v6_top6/best` | v6 + SLR-52, top 8 | 6,000, 1e-4 | ~1–1.5 h |
 
 Why:
+- **A longer**: the fair baseline for "B longer": the same 6,000-step continuation with the same schedule, from A's
+  checkpoint (not in the bucket; the notebook downloads it from `ovindu-a/sinhala-gemma-asr`). A's dev CER had
+  levelled off (6.53 @5000, 6.58 @6000), so it may gain less, but only this run shows it. Decode with the word
+  4-gram (A's LM): `lm_decode --ckpt v6x_top8_long/best --lm si_4gram --extra "--tune-limit 2000"`.
 - **B longer**: B's dev CER was still falling at the end of gr_v6x_top8 (5.88 -> 5.78 over the last 2,000 steps, LR
   already at its 1e-5 floor). A fresh cosine schedule from 5e-5 continues it.
 - **+ head parts** (`--head-parts`, `sinhala_asr/model.py: grapheme_parts`): each grapheme's output row = its own row

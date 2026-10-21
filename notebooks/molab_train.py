@@ -65,6 +65,9 @@ def _():
     REPO_ZIP = "https://codeload.github.com/ovindu-a/sinhala-asr-research/zip/refs/heads/grapheme-units"
     WORK = "/tmp/sinhala"  # local disk of the session; nothing here survives it except what is synced
     PRESETS = {
+        "A longer (Gemma units)": dict(  # fair baseline for "B longer": same continuation from A's checkpoint
+            name="v6x_top8_long", manifests="v6_plus_slr52", init="v6x_top8", units="", top_k=8,
+            steps=6000, lr=5e-5, warmup=0.03, head_parts=False),
         "B longer (flat head)": dict(
             name="gr_v6x_top8_long", manifests="v6_plus_slr52", init="gr_v6x_top8", units="", top_k=8,
             steps=6000, lr=5e-5, warmup=0.03, head_parts=False),
@@ -192,6 +195,14 @@ def _(CODE, PRESETS, WORK, bucket_sync, data_btn, mo, os, preset, run_name):
     # a sync of a missing bucket folder copies nothing and still succeeds, so check the files themselves
     if _p["init"]:
         bucket_sync(f"runs/{_p['init']}/best", f"{RUNS}/{_p['init']}/best")
+        if _p["init"] == "v6x_top8" and not os.path.exists(f"{RUNS}/v6x_top8/best/model.safetensors"):
+            # A (Gemma units) is not in the bucket: its checkpoint is the public HF repo's ctc/ folder
+            from huggingface_hub import hf_hub_download
+
+            os.makedirs(f"{RUNS}/v6x_top8/best", exist_ok=True)
+            for _f in ("config.json", "units.json", "model.safetensors"):
+                os.replace(hf_hub_download("ovindu-a/sinhala-gemma-asr", f"ctc/{_f}", local_dir=f"{WORK}/hf"),
+                           f"{RUNS}/v6x_top8/best/{_f}")
         assert os.path.exists(f"{RUNS}/{_p['init']}/best/model.safetensors"), (
             f"starting checkpoint runs/{_p['init']}/best is not in the bucket: run that preset (steps 1-3) first")
     if _p["units"]:
@@ -305,10 +316,13 @@ def _(CODE, RUNS, json, mo, os, run_name):
             return {d["step"]: d["eval"]["dev"]["cer"] for d in map(json.loads, f) if "eval" in d}
 
     _new = _curve(f"{RUNS}/{run_name.value}/metrics.jsonl")
-    _ref = _curve(f"{CODE}/reference/grapheme/training/gr_v6x_top8/metrics.jsonl")
+    _is_a = run_name.value.startswith("v6x_top8")
+    _ref = _curve(f"{CODE}/reference/runs/v6x_top8/metrics.jsonl" if _is_a
+                  else f"{CODE}/reference/grapheme/training/gr_v6x_top8/metrics.jsonl")
     _rows = "\n".join(f"| {s} | {_ref.get(s, float('nan')):.2%} | {_new.get(s, float('nan')):.2%} |"
                       for s in sorted(set(_new) | set(_ref)))
-    mo.md("Dev2k CER by step (rerun this cell to refresh)\n\n| step | B gr_v6x_top8 | this run |\n|---|---|---|\n" + _rows)
+    mo.md("Dev2k CER by step (rerun this cell to refresh)\n\n| step | "
+          + ("A v6x_top8" if _is_a else "B gr_v6x_top8") + " | this run |\n|---|---|---|\n" + _rows)
     return
 
 
