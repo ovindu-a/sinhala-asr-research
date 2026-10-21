@@ -160,14 +160,14 @@ def decode(args):
     print("best on", args.tune_split, best)
 
     ev = torch.load(os.path.join(args.out, f"{args.eval_split}.logits.pt"), weights_only=False)
-    rows = ev["rows"]
-    hyps = run(ev, units, lm, pieces, unigrams, best["alpha"], best["beta"], procs, space_offset=best["space_offset"],
-               dual=best["dual"], **kw)
+    rows = ev["rows"][: args.eval_limit] if args.eval_limit else ev["rows"]
+    hyps = run(ev, units, lm, pieces, unigrams, best["alpha"], best["beta"], procs, limit=args.eval_limit or None,
+               space_offset=best["space_offset"], dual=best["dual"], **kw)
     by_src = collections.defaultdict(lambda: ([], []))
     for r, h in zip(rows, hyps):
         by_src[r.get("src") or "all"][0].append(r["text"])
         by_src[r.get("src") or "all"][1].append(h)
-    res = {"lm": args.lm, "lm_kind": args.lm_kind, "beam": args.beam, "alpha": best["alpha"], "beta": best["beta"], "space_offset": best["space_offset"],
+    res = {"lm": args.lm, "eval_utts": len(rows), "lm_kind": args.lm_kind, "beam": args.beam, "alpha": best["alpha"], "beta": best["beta"], "space_offset": best["space_offset"],
            "glm": args.glm, "g_alpha": best.get("g_alpha"), "g_beta": best.get("g_beta"),
            "glm2": args.glm2, "g2_alpha": best.get("g2_alpha"), "tune_utts": best["utts"], "grid": grid,
            "overall": score([r["text"] for r in rows], hyps),
@@ -195,6 +195,7 @@ def main(argv=None):
     ap.add_argument("--tune-split", default="dev2k")
     ap.add_argument("--eval-split", default="test")
     ap.add_argument("--tune-limit", type=int, default=1000)
+    ap.add_argument("--eval-limit", type=int, default=0, help="decode only the first N eval utts (quick checks)")
     ap.add_argument("--alphas", type=float, nargs="+", default=[0.2, 0.35, 0.5, 0.7])
     ap.add_argument("--betas", type=float, nargs="+", default=[0.0, 1.0, 2.0])
     ap.add_argument("--space-offsets", type=float, nargs="+", default=[0.0],

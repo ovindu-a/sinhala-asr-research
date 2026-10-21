@@ -8,8 +8,9 @@ the private HF bucket `hf://buckets/ovindu-a/sinhala-grapheme-asr`, so nothing h
 |---|---|---|
 | `notebooks/molab_train.py` | GPU | train / continue a run from a preset, checkpoints synced to the bucket, then greedy test eval + log-prob dump |
 | `notebooks/molab_units.py` | CPU | C redo, step 1: grapheme-BPE tokenizer fitted to speech -> bucket `units_speech/` |
+| `notebooks/molab_decode.py` | CPU | KenLM decoding (grapheme 8-gram / word 4-gram) of a run's log-probs, results to the bucket |
 
-KenLM decoding (word 4-gram + grapheme 8-gram grids) stays on Modal: it needs 32 CPUs for a grid in reasonable time.
+KenLM decoding runs on either: molab_decode.py (4 CPUs, ~1 h per test decode) or Modal (32 CPUs, for big grids).
 
 ## 0. One-time: put the training data in the bucket (Modal account `chatgptgroup321`)
 
@@ -62,7 +63,19 @@ Order: B longer first (largest expected gain, directly usable with the grapheme 
 For C redo: run `molab_units.py` first (CPU is enough; ~15–30 min), check its table (round-trip failures 0,
 units/word clearly below the old 1.99), press Upload, then the two C presets in order.
 
-## 3. KenLM decoding on Modal (VM agent)
+## 3a. KenLM decoding on molab (CPU, slower)
+
+`notebooks/molab_decode.py`: pick a run, the LM (grapheme 8-gram for `gr_*` runs, word 4-gram for any) and a mode,
+then 1. Set up (builds KenLM's Python module with max order 10, which the 8-gram needs; needs a C++ compiler in the
+session), 2. Download (the run's `units.json` + dumped log-probs, not the weights; the LM), 3. Decode. Results go to
+`runs/<run>/best/lm/eval_lm_test<tag>.*` in the bucket, and the last cell shows all / seen / unseen.
+
+- **quick**: B's dev-tuned weights (8-gram α 0.5 β 1.0; 4-gram α 0.35 β 1.0), 200 dev utts as a sanity check, then
+  all 15,860 test utts: ~1 h on 4 CPUs (measured ~6 utts/s with 4 processes on a laptop).
+- **grid**: every α × β on all 2,000 dev utts, then test with the best: ~8 min per setting + ~1 h.
+- `08_lm_decode.py --eval-limit N` decodes only the first N test utts (timing checks).
+
+## 3. KenLM decoding on Modal (VM agent, 32 CPUs: fast grids)
 
 ```bash
 git pull --rebase origin grapheme-units
