@@ -1,0 +1,12 @@
+{
+ "slr30_utts": 5364,
+ "after_transcript_exclusion": 4501,
+ "found_in_lm_text": 431,
+ "heldout_utts": 4070,
+ "hours": 8.849209097222223,
+ "utts_by_source": {
+  "pn_sin_01": 3063,
+  "slr30": 1007
+ },
+ "speakers": 13
+}

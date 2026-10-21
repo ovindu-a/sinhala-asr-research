@@ -454,3 +454,43 @@ gemma_long_lm_vs_graph_long_glm8,gemma_lm_vs_gemma_long_lm}_test.txt):
   the pick, with hyp/ref 0.994. That gives a like-for-like comparison with parts and avoids the β-edge insertions. Or
   use the one allowed grid extension around α 0.7–1.0 × β 1–3 with a hyp/ref ≤ 1.00 constraint. The best general
   (unseen) decoder is still B + si_graph8 (19.23).
+
+## Held-out test: OpenSLR-30 sentences no model or LM has seen (2026-10-21; scripts/15-16, reference/heldout/)
+
+OpenSLR-30 (Google's studio-recorded Sinhala TTS corpus, CC BY-SA 4.0) from the HF mirror keshan/multispeaker-tts-sinhala
+(5,364 utts: 2,064 `sin_*` = OpenSLR-30 proper, 12 speakers; 3,300 `pn_sin_01` = one more speaker). Removed: every
+sentence in the v6 + SLR-52 training transcripts or v6 dev/test (863), and every sentence found word-bounded in the LM
+text si_corpus (431). Left: **4,070 utts, 8.85 h, 13 speakers** (1,007 slr30 + 3,063 pn_sin_01): new sentences, new
+speakers, studio audio. LM weights = each system's v6 dev2k choice (nothing tuned here). Run on the M2 Mac (MPS +
+KenLM built with MAX_ORDER=10), ~70 min for all systems.
+
+| system | LM | all: WER / WER_seg / CER / GER | slr30 (12 spk) | pn_sin_01 (1 spk) |
+|---|---|---|---|---|
+| Whisper-small (SinhaSpeech run12-best) | – | 37.43 / 22.12 / 11.92 / 13.94 | 33.04 / 16.38 / 5.73 / 7.83 | 38.24 / 23.19 / 13.14 / 15.11 |
+| A Gemma units | – | 36.47 / 20.57 / 7.60 / 9.86 | 31.49 / 19.06 / 5.82 / 7.87 | 37.40 / 20.85 / 7.95 / 10.24 |
+| A longer | – | 36.19 / 20.73 / 7.57 / 9.80 | 31.36 / 19.27 / 5.88 / 7.85 | 37.09 / 20.99 / 7.90 / 10.18 |
+| B graphemes | – | 32.89 / 15.72 / 5.85 / 7.54 | 28.35 / 15.51 / 4.69 / 6.31 | 33.73 / 15.76 / 6.07 / 7.78 |
+| B longer | – | 32.73 / 15.84 / 5.84 / 7.55 | 27.92 / 15.28 / 4.63 / 6.24 | 33.62 / 15.94 / 6.08 / 7.80 |
+| B longer + head parts | – | 32.62 / 15.88 / 5.83 / 7.53 | 27.51 / 15.33 / 4.56 / 6.18 | 33.57 / 15.99 / 6.07 / 7.79 |
+| C grapheme-BPE (web-fitted) | – | 37.28 / 21.44 / 8.56 / 10.24 | 32.22 / 18.92 / 6.46 / 8.16 | 38.21 / 21.91 / 8.97 / 10.64 |
+| C redo (speech-fitted) | – | 38.01 / 22.25 / 9.10 / 10.86 | 34.13 / 20.29 / 7.16 / 8.97 | 38.73 / 22.61 / 9.48 / 11.22 |
+| A | word 4-gram | 28.74 / 14.50 / 5.80 / 7.36 | 25.74 / 13.31 / 4.27 / 5.79 | 29.30 / 14.72 / 6.10 / 7.66 |
+| A longer | word 4-gram | 28.46 / 14.57 / 5.80 / 7.39 | 25.05 / 13.12 / 4.17 / 5.65 | 29.08 / 14.83 / 6.11 / 7.73 |
+| C (web-fitted) | word 4-gram | 29.49 / 15.52 / 6.56 / 7.98 | 26.57 / 13.44 / 4.61 / 6.04 | 30.03 / 15.91 / 6.95 / 8.35 |
+| C redo | word 4-gram (C's weights) | 29.48 / 15.98 / 6.88 / 8.30 | 27.58 / 14.26 / 4.92 / 6.45 | 29.83 / 16.30 / 7.26 / 8.65 |
+| B | word 4-gram | 26.64 / 12.20 / 4.75 / 6.17 | 24.64 / 12.26 / 3.83 / 5.28 | 27.01 / 12.19 / 4.93 / 6.34 |
+| B | word + grapheme 8-gram | 26.14 / 11.37 / 4.50 / 5.87 | 25.31 / 11.51 / 3.77 / 5.21 | 26.29 / 11.35 / 4.64 / 6.00 |
+| B | grapheme 8-gram | 25.41 / 11.41 / 4.38 / 5.75 | 22.69 / 11.48 / 3.49 / 4.82 | 25.91 / 11.40 / 4.56 / 5.93 |
+| B longer | grapheme 8-gram | 25.29 / 11.35 / 4.34 / 5.71 | 22.93 / 11.38 / 3.47 / 4.81 | 25.73 / 11.35 / 4.52 / 5.88 |
+| **B longer + head parts** | grapheme 8-gram | **25.07** / 11.56 / 4.41 / 5.75 | **21.61** / 11.55 / **3.41** / **4.71** | 25.71 / 11.56 / 4.61 / 5.94 |
+
+Findings:
+- **Graphemes generalize much better than Gemma tokens.** B beats A by 3.6 WER / 1.8 CER greedy and by 3.3 WER /
+  1.4 CER with their LMs (B + grapheme 8-gram 25.41 vs A + word 4-gram 28.74); on v6 test the gap was 0.5 WER. B is
+  ahead even without an LM (32.89 vs 36.47), unlike on v6.
+- **The +6,000-step training is worth almost nothing on new data**: A 28.74 → 28.46, B 25.41 → 25.29 (with LMs); on v6
+  test it was −0.5 / −0.15 WER, mostly on seen sentences. Head parts ≈ flat head (25.07 vs 25.29, within noise).
+- **Merged grapheme pieces (C) are worst** of the CTC systems, behind A; the speech-fitted tokenizer doesn't help.
+- **Whisper-small falls apart on new data**: greedy 37.43 WER / 11.92 CER (v6 test 15.50 / 4.43), behind every CTC
+  model on CER. On pn_sin_01 it stops early on 34 clips (< 0.6× the reference words; B: 2) and loops on 11.
+- The word + grapheme combination again loses to the grapheme 8-gram alone on WER (best WER_seg on pn only).
