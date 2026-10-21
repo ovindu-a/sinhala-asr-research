@@ -1,0 +1,5602 @@
+✓ Initialized. View run at 
+https://modal.com/apps/chatgptgroup321/main/ap-8kWMDU7MQSPY2JqA9lRkDW
+✓ Created objects.
+├── ✓ Uploaded /workspace/sinhala-asr-research/upload_hf_bucket.py
+└── ✓ Created Function upload.
++ hf version && hf buckets --help
+[90mHint: The `hf-cli` skill is not installed. Run `hf skills add -g` to teach your AI agents how to use the `hf` CLI.[0m
+[32m✓ hf version[0m
+  version: 2.2.0
+Usage: hf buckets [OPTIONS] COMMAND [ARGS]...
+
+  Commands to interact with buckets.
+
+Options:
+  -h, --help  Show this message and exit.
+
+Main commands:
+  cp        Copy files between local paths, repositories, and buckets.
+  create    Create a new bucket.
+  delete    Delete a bucket.
+  info      Get info about a bucket.
+  list      List buckets or files in a bucket. [alias: ls]
+  move      Move (rename) a bucket to a new name or namespace.
+  remove    Remove files from a bucket. [alias: rm]
+  settings  Update bucket settings (visibility).
+  sync      Sync files between local directory and a bucket.
+
+Examples
+  $ hf buckets cp hf://buckets/username/my-bucket/config.json config.json
+  $ hf buckets create my-bucket
+  $ hf buckets delete user/my-bucket
+  $ hf buckets info user/my-bucket
+  $ hf buckets list
+  $ hf buckets move user/old-bucket user/new-bucket
+  $ hf buckets remove user/my-bucket/file.txt
+  $ hf buckets settings user/my-bucket --private
+  $ hf buckets sync ./data hf://buckets/user/my-bucket
+
+Learn more
+  Use `hf <command> --help` for more information about a command.
+  Read the documentation at
+  https://huggingface.co/docs/huggingface_hub/en/guides/cli
++ hf auth whoami
+[32m✓ Logged in[0m
+  user: ovindu-a
+  orgs: mistral-hackaton-2026
++ hf buckets create ovindu-a/sinhala-grapheme-asr --private --exist-ok
+[32m✓ Bucket created[0m
+  uri: hf://buckets/ovindu-a/sinhala-grapheme-asr
+  url: https://huggingface.co/buckets/ovindu-a/sinhala-grapheme-asr
++ hf buckets sync /data/lm/si_graph8 hf://buckets/ovindu-a/sinhala-grapheme-asr/lm/si_graph8 
+Sync plan: /data/lm/si_graph8 -> hf://buckets/ovindu-a/sinhala-grapheme-asr/lm/si_graph8
+  Uploads: 3
+  Downloads: 0
+  Deletes: 0
+  Skips: 0
+Syncing...
+
+[1AProcessing Files (0 / 0)      : |          |  0.00B /  0.00B            
+
+[1A
+[1ANew Data Upload               : |          |  0.00B /  0.00B            [A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :   0%|          |  525kB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   0%|          |  525kB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   0%|          |  525kB /  750MB, 44.5kB/s  
+
+[1A
+[1ANew Data Upload               :   1%|          |  525kB / 67.0MB, 44.5kB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   0%|          |  525kB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   0%|          | 1.57MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   0%|          | 1.57MB /  750MB,  131kB/s  
+
+[1A
+[1ANew Data Upload               :   1%|          | 1.57MB /  134MB,  131kB/s  [A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :   0%|          | 1.57MB /  750MB            [A[A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :   1%|          | 4.20MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   1%|          | 4.20MB /  750MB,  323kB/s  
+
+[1A
+[1ANew Data Upload               :   3%|▎         | 4.20MB /  134MB,  323kB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   1%|          | 4.20MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   1%|          | 5.25MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   1%|          | 5.25MB /  750MB,  397kB/s  
+
+[1A
+[1ANew Data Upload               :   3%|▎         | 5.25MB /  201MB,  397kB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   1%|          | 8.92MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   1%|          | 8.92MB /  750MB,  690kB/s  
+
+[1A
+[1ANew Data Upload               :   4%|▍         | 8.92MB /  201MB,  690kB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   2%|▏         | 14.7MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   2%|▏         | 14.7MB /  750MB, 1.15MB/s  
+
+[1A
+[1ANew Data Upload               :   7%|▋         | 14.7MB /  201MB, 1.15MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   3%|▎         | 22.6MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   3%|▎         | 22.6MB /  750MB, 1.77MB/s  
+
+[1A
+[1ANew Data Upload               :  11%|█         | 22.6MB /  201MB, 1.77MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   5%|▍         | 34.6MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   5%|▍         | 34.6MB /  750MB, 2.73MB/s  
+
+[1A
+[1ANew Data Upload               :  17%|█▋        | 34.6MB /  201MB, 2.73MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   5%|▍         | 37.2MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   5%|▍         | 37.2MB /  750MB, 2.92MB/s  
+
+[1A
+[1ANew Data Upload               :  19%|█▊        | 37.2MB /  201MB, 2.92MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   6%|▌         | 44.6MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   6%|▌         | 44.6MB /  750MB, 3.48MB/s  
+
+[1A
+[1ANew Data Upload               :  22%|██▏       | 44.6MB /  201MB, 3.48MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   6%|▌         | 44.6MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   6%|▌         | 44.6MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   7%|▋         | 51.9MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   7%|▋         | 51.9MB /  750MB, 3.99MB/s  
+
+[1A
+[1ANew Data Upload               :  26%|██▌       | 51.9MB /  201MB, 3.99MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   7%|▋         | 54.0MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   7%|▋         | 54.0MB /  750MB, 4.12MB/s  
+
+[1A
+[1ANew Data Upload               :  27%|██▋       | 54.0MB /  201MB, 4.12MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   7%|▋         | 56.1MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   7%|▋         | 56.1MB /  750MB, 4.25MB/s  
+
+[1A
+[1ANew Data Upload               :  28%|██▊       | 56.1MB /  201MB, 4.25MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   8%|▊         | 60.3MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   8%|▊         | 60.3MB /  750MB, 4.55MB/s  
+
+[1A
+[1ANew Data Upload               :  30%|██▉       | 60.3MB /  201MB, 4.55MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   8%|▊         | 60.3MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   9%|▊         | 65.6MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   9%|▊         | 65.6MB /  750MB, 4.90MB/s  
+
+[1A
+[1ANew Data Upload               :  33%|███▎      | 65.6MB /  201MB, 4.90MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   9%|▉         | 69.8MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :   9%|▉         | 69.8MB /  750MB, 5.19MB/s  
+
+[1A
+[1ANew Data Upload               :  35%|███▍      | 69.8MB /  201MB, 5.19MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :   9%|▉         | 69.8MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  10%|▉         | 73.9MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  10%|▉         | 73.9MB /  750MB, 5.44MB/s  
+
+[1A
+[1ANew Data Upload               :  37%|███▋      | 73.9MB /  201MB, 5.44MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  10%|█         | 76.0MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  10%|█         | 76.0MB /  750MB, 5.57MB/s  
+
+[1A
+[1ANew Data Upload               :  38%|███▊      | 76.0MB /  201MB, 5.57MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  10%|█         | 78.1MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  10%|█         | 78.1MB /  750MB, 5.69MB/s  
+
+[1A
+[1ANew Data Upload               :  39%|███▉      | 78.1MB /  201MB, 5.69MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  11%|█         | 82.3MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  11%|█         | 82.3MB /  750MB, 5.97MB/s  
+
+[1A
+[1ANew Data Upload               :  41%|████      | 82.3MB /  201MB, 5.97MB/s  [A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  11%|█▏        | 84.4MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  11%|█▏        | 84.4MB /  750MB, 6.09MB/s  
+
+[1A
+[1ANew Data Upload               :  42%|████▏     | 84.4MB /  201MB, 6.09MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  12%|█▏        | 86.5MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  12%|█▏        | 86.5MB /  750MB, 6.21MB/s  
+
+[1A
+[1ANew Data Upload               :  43%|████▎     | 86.5MB /  201MB, 6.21MB/s  [A
+
+  /data/lm/si_graph8/lm.bin   :  12%|█▏        | 90.7MB /  750MB            [A[AProcessing Files (0 / 3)      :  12%|█▏        | 90.7MB /  750MB, 6.49MB/s  
+
+[1ANew Data Upload               :  45%|████▌     | 90.7MB /  201MB, 6.49MB/s  [A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  12%|█▏        | 92.8MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  12%|█▏        | 92.8MB /  750MB, 6.60MB/s  
+
+[1A
+[1ANew Data Upload               :  46%|████▌     | 92.8MB /  201MB, 6.60MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  13%|█▎        | 95.5MB /  750MB            [A[AProcessing Files (0 / 3)      :  13%|█▎        | 95.5MB /  750MB, 6.76MB/s  
+
+[1ANew Data Upload               :  47%|████▋     | 95.5MB /  201MB, 6.76MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  13%|█▎        | 97.5MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  13%|█▎        | 97.5MB /  750MB, 6.87MB/s  
+
+[1A
+[1ANew Data Upload               :  49%|████▊     | 97.5MB /  201MB, 6.87MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  14%|█▎        |  102MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  14%|█▎        |  102MB /  750MB, 7.14MB/s  
+
+[1A
+[1ANew Data Upload               :  51%|█████     |  102MB /  201MB, 7.14MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  14%|█▍        |  104MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  14%|█▍        |  104MB /  750MB, 7.25MB/s  
+
+[1A
+[1ANew Data Upload               :  52%|█████▏    |  104MB /  201MB, 7.25MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  14%|█▍        |  106MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  14%|█▍        |  106MB /  750MB, 7.36MB/s  
+
+[1A
+[1ANew Data Upload               :  53%|█████▎    |  106MB /  201MB, 7.36MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  14%|█▍        |  108MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  14%|█▍        |  108MB /  750MB, 7.46MB/s  
+
+[1A
+[1ANew Data Upload               :  54%|█████▎    |  108MB /  201MB, 7.46MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  15%|█▍        |  112MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  15%|█▍        |  112MB /  750MB, 7.73MB/s  
+
+[1A
+[1ANew Data Upload               :  56%|█████▌    |  112MB /  201MB, 7.73MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  15%|█▌        |  114MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  15%|█▌        |  114MB /  750MB, 7.84MB/s  
+
+[1A
+[1ANew Data Upload               :  57%|█████▋    |  114MB /  201MB, 7.84MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  16%|█▌        |  116MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  16%|█▌        |  116MB /  750MB, 7.94MB/s  
+
+[1A
+[1ANew Data Upload               :  58%|█████▊    |  116MB /  201MB, 7.94MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  16%|█▌        |  119MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  16%|█▌        |  119MB /  750MB, 8.04MB/s  
+
+[1A
+[1ANew Data Upload               :  59%|█████▉    |  119MB /  201MB, 8.04MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  16%|█▋        |  123MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  16%|█▋        |  123MB /  750MB, 8.30MB/s  
+
+[1A
+[1ANew Data Upload               :  61%|██████    |  123MB /  201MB, 8.30MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  17%|█▋        |  126MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  17%|█▋        |  126MB /  750MB, 8.48MB/s  
+
+[1A
+[1ANew Data Upload               :  63%|██████▎   |  126MB /  201MB, 8.48MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  17%|█▋        |  127MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  17%|█▋        |  127MB /  750MB, 8.54MB/s  
+
+[1A
+[1ANew Data Upload               :  63%|██████▎   |  127MB /  201MB, 8.54MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  132MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  18%|█▊        |  132MB /  750MB, 8.79MB/s  
+
+[1A
+[1ANew Data Upload               :  65%|██████▌   |  132MB /  201MB, 8.79MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  132MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  18%|█▊        |  132MB /  750MB, 8.77MB/s  
+
+[1A
+[1ANew Data Upload               :  66%|██████▌   |  132MB /  201MB, 8.77MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  134MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  18%|█▊        |  134MB /  750MB, 8.85MB/s  
+
+[1A
+[1ANew Data Upload               :  67%|██████▋   |  134MB /  201MB, 8.85MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  134MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  134MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  134MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  134MB /  750MB            [A[A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  134MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  134MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  138MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  18%|█▊        |  138MB /  750MB, 8.66MB/s  
+
+[1A
+[1ANew Data Upload               :  68%|██████▊   |  138MB /  201MB, 8.66MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  138MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  18%|█▊        |  138MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  18%|█▊        |  138MB /  750MB, 8.53MB/s  
+
+[1A
+[1ANew Data Upload               :  68%|██████▊   |  138MB /  201MB, 8.53MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  19%|█▉        |  146MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  19%|█▉        |  146MB /  750MB, 8.18MB/s  
+
+[1A
+[1ANew Data Upload               :  54%|█████▍    |  146MB /  268MB, 8.18MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  19%|█▉        |  146MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  19%|█▉        |  146MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  19%|█▉        |  146MB /  750MB, 8.08MB/s  
+
+[1A
+[1ANew Data Upload               :  44%|████▎     |  146MB /  335MB, 8.08MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  19%|█▉        |  146MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  19%|█▉        |  146MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  19%|█▉        |  146MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  21%|██        |  156MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  21%|██        |  156MB /  750MB, 7.86MB/s  
+
+[1A
+[1ANew Data Upload               :  46%|████▋     |  156MB /  335MB, 7.86MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  21%|██        |  156MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  21%|██        |  156MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  21%|██        |  156MB /  750MB, 7.78MB/s  
+
+[1A
+[1ANew Data Upload               :  39%|███▉      |  156MB /  402MB, 7.78MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  21%|██        |  156MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  21%|██        |  156MB /  750MB            [A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  21%|██        |  157MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  21%|██        |  157MB /  750MB, 7.68MB/s  
+
+[1A
+[1ANew Data Upload               :  29%|██▉       |  157MB /  536MB, 7.68MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  22%|██▏       |  164MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  22%|██▏       |  164MB /  750MB, 8.13MB/s  
+
+[1A
+[1ANew Data Upload               :  27%|██▋       |  164MB /  604MB, 8.13MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  22%|██▏       |  169MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  22%|██▏       |  169MB /  750MB, 8.42MB/s  
+
+[1A
+[1ANew Data Upload               :  28%|██▊       |  169MB /  604MB, 8.42MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  23%|██▎       |  175MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  23%|██▎       |  175MB /  750MB, 8.86MB/s  
+
+[1A
+[1ANew Data Upload               :  29%|██▉       |  175MB /  604MB, 8.86MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  24%|██▍       |  182MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  24%|██▍       |  182MB /  750MB, 9.26MB/s  
+
+[1A
+[1ANew Data Upload               :  30%|███       |  182MB /  604MB, 9.26MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  25%|██▍       |  187MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  25%|██▍       |  187MB /  750MB, 9.54MB/s  
+
+[1A
+[1ANew Data Upload               :  31%|███       |  187MB /  604MB, 9.54MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  26%|██▋       |  198MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  26%|██▋       |  198MB /  750MB, 10.3MB/s  
+
+[1A
+[1ANew Data Upload               :  33%|███▎      |  198MB /  604MB, 10.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  28%|██▊       |  210MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  28%|██▊       |  210MB /  750MB, 11.1MB/s  
+
+[1A
+[1ANew Data Upload               :  35%|███▍      |  210MB /  604MB, 11.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  29%|██▉       |  216MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  29%|██▉       |  216MB /  750MB, 11.5MB/s  
+
+[1A
+[1ANew Data Upload               :  32%|███▏      |  216MB /  671MB, 11.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  30%|███       |  227MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  30%|███       |  227MB /  750MB, 12.3MB/s  
+
+[1A
+[1ANew Data Upload               :  34%|███▍      |  227MB /  671MB, 12.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  32%|███▏      |  236MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  32%|███▏      |  236MB /  750MB, 12.8MB/s  
+
+[1A
+[1ANew Data Upload               :  35%|███▌      |  236MB /  671MB, 12.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  33%|███▎      |  245MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  33%|███▎      |  245MB /  750MB, 13.3MB/s  
+
+[1A
+[1ANew Data Upload               :  33%|███▎      |  245MB /  738MB, 13.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  34%|███▍      |  256MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  34%|███▍      |  256MB /  750MB, 14.1MB/s  
+
+[1A
+[1ANew Data Upload               :  35%|███▍      |  256MB /  738MB, 14.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  35%|███▌      |  265MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  35%|███▌      |  265MB /  750MB, 14.7MB/s  
+
+[1A
+[1ANew Data Upload               :  36%|███▌      |  265MB /  738MB, 14.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  37%|███▋      |  280MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  37%|███▋      |  280MB /  750MB, 15.6MB/s  
+
+[1A
+[1ANew Data Upload               :  38%|███▊      |  280MB /  738MB, 15.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  38%|███▊      |  284MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  38%|███▊      |  284MB /  750MB, 15.8MB/s  
+
+[1A
+[1ANew Data Upload               :  39%|███▊      |  284MB /  738MB, 15.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  40%|███▉      |  298MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  40%|███▉      |  298MB /  750MB, 16.8MB/s  
+
+[1A
+[1ANew Data Upload               :  40%|███▉      |  298MB /  750MB, 16.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  42%|████▏     |  315MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  42%|████▏     |  315MB /  750MB, 17.9MB/s  
+
+[1A
+[1ANew Data Upload               :  42%|████▏     |  315MB /  750MB, 17.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  44%|████▍     |  330MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  44%|████▍     |  330MB /  750MB, 18.9MB/s  
+
+[1A
+[1ANew Data Upload               :  44%|████▍     |  330MB /  750MB, 18.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  45%|████▌     |  337MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  45%|████▍     |  337MB /  750MB, 19.3MB/s  
+
+[1A
+[1ANew Data Upload               :  45%|████▍     |  337MB /  750MB, 19.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  47%|████▋     |  351MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  47%|████▋     |  351MB /  750MB, 20.1MB/s  
+
+[1A
+[1ANew Data Upload               :  47%|████▋     |  351MB /  750MB, 20.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  48%|████▊     |  363MB /  750MB            [A[A
+[1AProcessing Files (0 / 3)      :  48%|████▊     |  363MB /  750MB, 20.9MB/s  
+
+[1A
+[1ANew Data Upload               :  48%|████▊     |  363MB /  750MB, 20.9MB/s  [A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:   4%|▍         | 4.63kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:   4%|▍         |  9.00B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  50%|█████     |  376MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:   4%|▍         | 4.63kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:   4%|▍         |  9.00B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  50%|█████     |  376MB /  750MB, 21.6MB/s  
+
+[1A
+[1ANew Data Upload               :  50%|█████     |  376MB /  750MB, 21.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  52%|█████▏    |  391MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:   9%|▊         | 9.27kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:   8%|▊         |  18.0B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  52%|█████▏    |  391MB /  750MB, 22.6MB/s  
+
+[1A
+[1ANew Data Upload               :  52%|█████▏    |  391MB /  750MB, 22.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  54%|█████▍    |  406MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:   9%|▊         | 9.27kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:   8%|▊         |  18.0B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  54%|█████▍    |  406MB /  750MB, 23.5MB/s  
+
+[1A
+[1ANew Data Upload               :  54%|█████▍    |  406MB /  750MB, 23.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  57%|█████▋    |  426MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:   9%|▊         | 9.27kB /  109kB            [A[A[A
+
+
+
+
+[1A  .../si_graph8/lm_config.json:   8%|▊         |  18.0B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  57%|█████▋    |  426MB /  750MB, 24.8MB/s  
+
+[1A
+[1ANew Data Upload               :  57%|█████▋    |  426MB /  750MB, 24.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  59%|█████▉    |  443MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:   9%|▊         | 9.27kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:   8%|▊         |  18.0B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  59%|█████▉    |  443MB /  750MB, 25.9MB/s  
+
+[1A
+[1ANew Data Upload               :  59%|█████▉    |  443MB /  750MB, 25.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  61%|██████    |  455MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:  21%|██▏       | 23.2kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:  21%|██        |  46.0B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  61%|██████    |  455MB /  750MB, 26.6MB/s  
+
+[1A
+[1ANew Data Upload               :  61%|██████    |  455MB /  750MB, 26.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  63%|██████▎   |  471MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:  38%|███▊      | 41.7kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:  38%|███▊      |  83.0B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  63%|██████▎   |  471MB /  750MB, 27.5MB/s  
+
+[1A
+[1ANew Data Upload               :  63%|██████▎   |  471MB /  750MB, 27.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  65%|██████▍   |  487MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:  60%|█████▉    | 64.9kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:  60%|█████▉    |   130B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  65%|██████▍   |  487MB /  750MB, 28.5MB/s  
+
+[1A
+[1ANew Data Upload               :  65%|██████▍   |  487MB /  750MB, 28.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  68%|██████▊   |  510MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:  94%|█████████▎|  102kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:  94%|█████████▎|   204B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  68%|██████▊   |  510MB /  750MB, 30.0MB/s  
+
+[1A
+[1ANew Data Upload               :  68%|██████▊   |  510MB /  750MB, 30.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  69%|██████▉   |  521MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt:  94%|█████████▎|  102kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json:  94%|█████████▎|   204B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  69%|██████▉   |  521MB /  750MB, 30.6MB/s  
+
+[1A
+[1ANew Data Upload               :  69%|██████▉   |  521MB /  750MB, 30.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  71%|███████   |  530MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|█████████▉|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|█████████▉|   217B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  71%|███████   |  530MB /  750MB, 31.0MB/s  
+
+[1A
+[1ANew Data Upload               :  71%|███████   |  530MB /  750MB, 31.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  72%|███████▏  |  542MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|█████████▉|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|█████████▉|   217B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  72%|███████▏  |  542MB /  750MB, 31.6MB/s  
+
+[1A
+[1ANew Data Upload               :  72%|███████▏  |  542MB /  750MB, 31.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  74%|███████▍  |  554MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|█████████▉|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|█████████▉|   217B /   218B            [A[A[A[A
+[1AProcessing Files (0 / 3)      :  74%|███████▍  |  554MB /  750MB, 32.3MB/s  
+
+[1A
+[1ANew Data Upload               :  74%|███████▍  |  554MB /  750MB, 32.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  75%|███████▍  |  561MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  75%|███████▍  |  562MB /  750MB, 32.6MB/s  
+
+[1A
+[1ANew Data Upload               :  75%|███████▍  |  562MB /  750MB, 32.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  76%|███████▌  |  571MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  76%|███████▌  |  572MB /  750MB, 33.1MB/s  
+
+[1A
+[1ANew Data Upload               :  76%|███████▌  |  572MB /  750MB, 33.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  77%|███████▋  |  580MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  77%|███████▋  |  580MB /  750MB, 33.5MB/s  
+
+[1A
+[1ANew Data Upload               :  77%|███████▋  |  580MB /  750MB, 33.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  79%|███████▊  |  589MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  79%|███████▊  |  589MB /  750MB, 33.9MB/s  
+
+[1A
+[1ANew Data Upload               :  79%|███████▊  |  589MB /  750MB, 33.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  80%|███████▉  |  599MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  80%|███████▉  |  599MB /  750MB, 34.4MB/s  
+
+[1A
+[1ANew Data Upload               :  80%|███████▉  |  599MB /  750MB, 34.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  81%|████████  |  607MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  81%|████████  |  607MB /  750MB, 34.7MB/s  
+
+[1A
+[1ANew Data Upload               :  81%|████████  |  607MB /  750MB, 34.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  82%|████████▏ |  613MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  82%|████████▏ |  613MB /  750MB, 34.9MB/s  
+
+[1A
+[1ANew Data Upload               :  82%|████████▏ |  613MB /  750MB, 34.9MB/s  [A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  83%|████████▎ |  619MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  83%|████████▎ |  619MB /  750MB, 35.1MB/s  
+
+[1A
+[1ANew Data Upload               :  83%|████████▎ |  619MB /  750MB, 35.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  84%|████████▍ |  631MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  84%|████████▍ |  631MB /  750MB, 35.7MB/s  
+
+[1A
+[1ANew Data Upload               :  84%|████████▍ |  631MB /  750MB, 35.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  84%|████████▍ |  633MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  84%|████████▍ |  633MB /  750MB, 35.6MB/s  
+
+[1A
+[1ANew Data Upload               :  84%|████████▍ |  633MB /  750MB, 35.6MB/s  [A
+
+  /data/lm/si_graph8/lm.bin   :  85%|████████▌ |  638MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  85%|████████▌ |  639MB /  750MB, 35.7MB/s  
+
+[1A
+[1ANew Data Upload               :  85%|████████▌ |  639MB /  750MB, 35.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  85%|████████▌ |  641MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  85%|████████▌ |  641MB /  750MB, 35.6MB/s  
+
+[1A
+[1ANew Data Upload               :  85%|████████▌ |  641MB /  750MB, 35.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  87%|████████▋ |  649MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  87%|████████▋ |  649MB /  750MB, 36.0MB/s  
+
+[1A
+[1ANew Data Upload               :  87%|████████▋ |  649MB /  750MB, 36.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  87%|████████▋ |  655MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  87%|████████▋ |  655MB /  750MB, 36.1MB/s  
+
+[1A
+[1ANew Data Upload               :  87%|████████▋ |  655MB /  750MB, 36.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  88%|████████▊ |  658MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  88%|████████▊ |  658MB /  750MB, 36.1MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ |  658MB /  750MB, 36.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  88%|████████▊ |  663MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  88%|████████▊ |  663MB /  750MB, 36.1MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ |  663MB /  750MB, 36.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  89%|████████▉ |  666MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  89%|████████▉ |  666MB /  750MB, 36.1MB/s  
+
+[1A
+[1ANew Data Upload               :  89%|████████▉ |  666MB /  750MB, 36.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  89%|████████▉ |  670MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  89%|████████▉ |  671MB /  750MB, 36.2MB/s  
+
+[1A
+[1ANew Data Upload               :  89%|████████▉ |  671MB /  750MB, 36.2MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  90%|████████▉ |  674MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  90%|████████▉ |  674MB /  750MB, 36.2MB/s  
+
+[1A
+[1ANew Data Upload               :  90%|████████▉ |  674MB /  750MB, 36.2MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  90%|█████████ |  677MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  90%|█████████ |  677MB /  750MB, 36.1MB/s  
+
+[1A
+[1ANew Data Upload               :  90%|█████████ |  677MB /  750MB, 36.1MB/s  [A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  90%|█████████ |  677MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  91%|█████████ |  679MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  91%|█████████ |  679MB /  750MB, 35.7MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████ |  679MB /  750MB, 35.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  91%|█████████ |  681MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  91%|█████████ |  682MB /  750MB, 35.7MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████ |  682MB /  750MB, 35.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  91%|█████████ |  684MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  91%|█████████ |  684MB /  750MB, 35.6MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████ |  684MB /  750MB, 35.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  91%|█████████▏|  686MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  91%|█████████▏|  686MB /  750MB, 35.5MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████▏|  686MB /  750MB, 35.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  687MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  92%|█████████▏|  687MB /  750MB, 35.3MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏|  687MB /  750MB, 35.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  687MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  687MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  92%|█████████▏|  687MB /  750MB, 34.8MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏|  687MB /  750MB, 34.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  690MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  92%|█████████▏|  690MB /  750MB, 34.7MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏|  690MB /  750MB, 34.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  690MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  690MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  92%|█████████▏|  690MB /  750MB, 34.3MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏|  690MB /  750MB, 34.3MB/s  [A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  690MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  691MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  92%|█████████▏|  691MB /  750MB, 33.8MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏|  691MB /  750MB, 33.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  691MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  92%|█████████▏|  691MB /  750MB, 33.5MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏|  691MB /  750MB, 33.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  92%|█████████▏|  693MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  92%|█████████▏|  693MB /  750MB, 33.5MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏|  693MB /  750MB, 33.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  93%|█████████▎|  694MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  93%|█████████▎|  694MB /  750MB, 33.3MB/s  
+
+[1A
+[1ANew Data Upload               :  93%|█████████▎|  694MB /  750MB, 33.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  93%|█████████▎|  694MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  93%|█████████▎|  694MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  93%|█████████▎|  695MB /  750MB, 32.8MB/s  
+
+[1A
+[1ANew Data Upload               :  93%|█████████▎|  695MB /  750MB, 32.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  93%|█████████▎|  694MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  93%|█████████▎|  697MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  93%|█████████▎|  697MB /  750MB, 32.5MB/s  
+
+[1A
+[1ANew Data Upload               :  93%|█████████▎|  697MB /  750MB, 32.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  93%|█████████▎|  698MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  93%|█████████▎|  698MB /  750MB, 32.3MB/s  
+
+[1A
+[1ANew Data Upload               :  93%|█████████▎|  698MB /  750MB, 32.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  93%|█████████▎|  698MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  93%|█████████▎|  698MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  93%|█████████▎|  698MB /  750MB, 31.9MB/s  
+
+[1A
+[1ANew Data Upload               :  93%|█████████▎|  698MB /  750MB, 31.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▎|  701MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  94%|█████████▎|  701MB /  750MB, 31.9MB/s  
+
+[1A
+[1ANew Data Upload               :  94%|█████████▎|  701MB /  750MB, 31.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▎|  701MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▎|  702MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  94%|█████████▎|  702MB /  750MB, 31.5MB/s  
+
+[1A
+[1ANew Data Upload               :  94%|█████████▎|  702MB /  750MB, 31.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▎|  702MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▎|  702MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  94%|█████████▎|  702MB /  750MB, 31.1MB/s  
+
+[1A
+[1ANew Data Upload               :  94%|█████████▎|  702MB /  750MB, 31.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▍|  705MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  94%|█████████▍|  705MB /  750MB, 31.0MB/s  
+
+[1A
+[1ANew Data Upload               :  94%|█████████▍|  705MB /  750MB, 31.0MB/s  [A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▍|  705MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▍|  705MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  94%|█████████▍|  706MB /  750MB, 30.6MB/s  
+
+[1A
+[1ANew Data Upload               :  94%|█████████▍|  706MB /  750MB, 30.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▍|  706MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  94%|█████████▍|  706MB /  750MB, 30.4MB/s  
+
+[1A
+[1ANew Data Upload               :  94%|█████████▍|  706MB /  750MB, 30.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  94%|█████████▍|  709MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  94%|█████████▍|  709MB /  750MB, 30.4MB/s  
+
+[1A
+[1ANew Data Upload               :  94%|█████████▍|  709MB /  750MB, 30.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▍|  709MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▍|  709MB /  750MB, 30.2MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▍|  709MB /  750MB, 30.2MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▍|  710MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▍|  710MB /  750MB, 30.1MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▍|  710MB /  750MB, 30.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▍|  710MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▍|  711MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▍|  711MB /  750MB, 29.7MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▍|  711MB /  750MB, 29.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▍|  711MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▍|  711MB /  750MB, 29.5MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▍|  711MB /  750MB, 29.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▍|  712MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▍|  712MB /  750MB, 29.3MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▍|  712MB /  750MB, 29.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▍|  712MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▍|  712MB /  750MB, 29.1MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▍|  712MB /  750MB, 29.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▍|  712MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▌|  713MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▌|  713MB /  750MB, 28.7MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▌|  713MB /  750MB, 28.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▌|  714MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▌|  714MB /  750MB, 28.6MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▌|  714MB /  750MB, 28.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▌|  714MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▌|  714MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▌|  714MB /  750MB, 28.2MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▌|  714MB /  750MB, 28.2MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▌|  714MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▌|  715MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▌|  715MB /  750MB, 27.9MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▌|  715MB /  750MB, 27.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▌|  715MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▌|  715MB /  750MB, 27.7MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▌|  715MB /  750MB, 27.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  95%|█████████▌|  715MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  95%|█████████▌|  715MB /  750MB, 27.5MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▌|  715MB /  750MB, 27.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  716MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  717MB /  750MB, 27.4MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  717MB /  750MB, 27.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  717MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  717MB /  750MB, 27.2MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  717MB /  750MB, 27.2MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  717MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  717MB /  750MB            [A[A
+
+
+  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  718MB /  750MB, 26.9MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  718MB /  750MB, 26.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  717MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  718MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  718MB /  750MB, 26.5MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  718MB /  750MB, 26.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  719MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  719MB /  750MB, 26.4MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  719MB /  750MB, 26.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  719MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  720MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  720MB /  750MB, 26.1MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  720MB /  750MB, 26.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  720MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  720MB /  750MB, 25.9MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  720MB /  750MB, 25.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  721MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  721MB /  750MB, 25.8MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  721MB /  750MB, 25.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  721MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  721MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  721MB /  750MB, 25.4MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  721MB /  750MB, 25.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▌|  722MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▌|  722MB /  750MB, 25.3MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌|  722MB /  750MB, 25.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▋|  722MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▋|  722MB /  750MB, 25.1MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▋|  722MB /  750MB, 25.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▋|  722MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  96%|█████████▋|  723MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  96%|█████████▋|  723MB /  750MB, 24.8MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▋|  723MB /  750MB, 24.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  724MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  724MB /  750MB, 24.7MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  724MB /  750MB, 24.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  724MB /  750MB            [A[A
+
+
+  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  724MB /  750MB, 24.6MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  724MB /  750MB, 24.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  724MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  725MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  725MB /  750MB, 24.2MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  725MB /  750MB, 24.2MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  725MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  725MB /  750MB, 24.1MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  725MB /  750MB, 24.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  726MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[AProcessing Files (2 / 3)      :  97%|█████████▋|  726MB /  750MB, 24.0MB/s  
+
+[1ANew Data Upload               :  97%|█████████▋|  726MB /  750MB, 24.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  726MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  726MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  726MB /  750MB, 23.7MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  726MB /  750MB, 23.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  727MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  727MB /  750MB, 23.5MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  727MB /  750MB, 23.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  728MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  728MB /  750MB, 23.4MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  728MB /  750MB, 23.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  728MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  729MB /  750MB, 23.3MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  729MB /  750MB, 23.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  728MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  730MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  730MB /  750MB, 23.0MB/s  
+
+[1ANew Data Upload               :  97%|█████████▋|  730MB /  750MB, 23.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  730MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  730MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  730MB /  750MB, 22.8MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  730MB /  750MB, 22.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  731MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  731MB /  750MB, 22.6MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  731MB /  750MB, 22.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  97%|█████████▋|  731MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  97%|█████████▋|  731MB /  750MB, 22.5MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋|  731MB /  750MB, 22.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  732MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  732MB /  750MB, 22.4MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  732MB /  750MB, 22.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  732MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  732MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  732MB /  750MB, 22.1MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  732MB /  750MB, 22.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  733MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  733MB /  750MB, 22.0MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  733MB /  750MB, 22.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  733MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  733MB /  750MB, 21.9MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  733MB /  750MB, 21.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  734MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  734MB /  750MB, 21.7MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  734MB /  750MB, 21.7MB/s  [A
+
+
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  734MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  735MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  735MB /  750MB, 21.5MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  735MB /  750MB, 21.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  735MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  736MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  736MB /  750MB, 21.3MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  736MB /  750MB, 21.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  736MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  736MB /  750MB, 21.1MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  736MB /  750MB, 21.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  737MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  737MB /  750MB, 21.0MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  737MB /  750MB, 21.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  737MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  737MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  737MB /  750MB, 20.8MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  737MB /  750MB, 20.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  737MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  738MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  738MB /  750MB, 20.5MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  738MB /  750MB, 20.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  738MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  98%|█████████▊|  739MB /  750MB, 20.4MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊|  739MB /  750MB, 20.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  98%|█████████▊|  738MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▊|  739MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▊|  739MB /  750MB, 20.1MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▊|  739MB /  750MB, 20.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▊|  739MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▊|  740MB /  750MB, 20.0MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▊|  740MB /  750MB, 20.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▊|  739MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▊|  739MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▊|  741MB /  750MB            [A[A
+
+
+  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▊|  741MB /  750MB, 19.7MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▊|  741MB /  750MB, 19.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  741MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  741MB /  750MB, 19.6MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  741MB /  750MB, 19.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  741MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  742MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  742MB /  750MB, 19.3MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  742MB /  750MB, 19.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  742MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  742MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  742MB /  750MB, 19.1MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  742MB /  750MB, 19.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  743MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  743MB /  750MB, 19.0MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  743MB /  750MB, 19.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  743MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  743MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  743MB /  750MB, 18.8MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  743MB /  750MB, 18.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  744MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  744MB /  750MB, 18.7MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  744MB /  750MB, 18.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  744MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  744MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  744MB /  750MB, 18.4MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  744MB /  750MB, 18.4MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  744MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  745MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  745MB /  750MB, 18.2MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  745MB /  750MB, 18.2MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  745MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  745MB /  750MB, 18.1MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  745MB /  750MB, 18.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  745MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   :  99%|█████████▉|  746MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      :  99%|█████████▉|  746MB /  750MB, 17.9MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉|  746MB /  750MB, 17.9MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  746MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      : 100%|█████████▉|  746MB /  750MB, 17.8MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉|  746MB /  750MB, 17.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  746MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  747MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      : 100%|█████████▉|  747MB /  750MB, 17.6MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉|  747MB /  750MB, 17.6MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  747MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      : 100%|█████████▉|  747MB /  750MB, 17.5MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉|  747MB /  750MB, 17.5MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  747MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  748MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      : 100%|█████████▉|  748MB /  750MB, 17.3MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉|  748MB /  750MB, 17.3MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  748MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  748MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      : 100%|█████████▉|  748MB /  750MB, 17.1MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉|  748MB /  750MB, 17.1MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  749MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      : 100%|█████████▉|  749MB /  750MB, 17.0MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉|  749MB /  750MB, 17.0MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  749MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  749MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      : 100%|█████████▉|  750MB /  750MB, 16.8MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉|  750MB /  750MB, 16.8MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (2 / 3)      : 100%|█████████▉|  750MB /  750MB, 16.7MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉|  750MB /  750MB, 16.7MB/s  [A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|█████████▉|  750MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|██████████|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+[1AProcessing Files (3 / 3)      : 100%|██████████|  750MB /  750MB, 15.6MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|██████████|  750MB /  750MB, 15.6MB/s  [A
+
+
+
+
+
+[1AValidating                    :           |   0%            [A[A[A[A[A
+
+
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|██████████|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A[A[A
+
+
+[1A  /data/lm/si_graph8/lm.bin   : 100%|██████████|  750MB /  750MB            [A[A
+
+
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A[A[A
+
+
+[1A  /data/lm/si_graph8/lm.bin   : 100%|██████████|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A[A[A
+
+
+[1A  /data/lm/si_graph8/lm.bin   : 100%|██████████|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|██████████|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+
+
+
+[1A
+[1AValidating                    : ██████████| 100%            [A[A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|██████████|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+
+
+
+[1A
+[1AValidating                    : ██████████| 100%            [A[A[A[A[A
+
+
+[1A
+[1A  /data/lm/si_graph8/lm.bin   : 100%|██████████|  750MB /  750MB            [A[A
+
+
+
+[1A
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            [A[A[A
+
+
+
+
+[1A
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            [A[A[A[A
+
+
+
+
+
+[1A
+[1AValidating                    : ██████████| 100%            [A[A[A[A[A
+[1AProcessing Files (3 / 3)      : 100%|██████████|  750MB /  750MB, 14.8MB/s  
+
+[1ANew Data Upload               : 100%|██████████|  750MB /  750MB, 14.8MB/s  
+
+[1AValidating                    : ██████████| 100%            
+
+[1A  /data/lm/si_graph8/lm.bin   : 100%|██████████|  750MB /  750MB            
+
+[1A  /data/lm/si_graph8/vocab.txt: 100%|██████████|  109kB /  109kB            
+
+[1A  .../si_graph8/lm_config.json: 100%|██████████|   218B /   218B            
+Sync completed.
++ hf buckets sync /runs/gr_v6x_top8/best/lm hf://buckets/ovindu-a/sinhala-grapheme-asr/runs/gr_v6x_top8/best/lm --include '*_glm8*' 
+Sync plan: /runs/gr_v6x_top8/best/lm -> hf://buckets/ovindu-a/sinhala-grapheme-asr/runs/gr_v6x_top8/best/lm
+  Uploads: 2
+  Downloads: 0
+  Deletes: 0
+  Skips: 0
+Syncing...
+
+[1AProcessing Files (0 / 0)      : |          |  0.00B /  0.00B            
+
+[1A
+[1ANew Data Upload               : |          |  0.00B /  0.00B            [A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|█████████▉| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|█████████▉| 5.79kB / 5.80kB            [A[A[A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|█████████▉| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|█████████▉| 5.79kB / 5.80kB            [A[A[A
+[1AProcessing Files (0 / 2)      : 100%|█████████▉| 3.30MB / 3.30MB,  324kB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉| 3.30MB / 3.30MB,  324kB/s  [A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|█████████▉| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|█████████▉| 5.79kB / 5.80kB            [A[A[A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|█████████▉| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|█████████▉| 5.79kB / 5.80kB            [A[A[A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|█████████▉| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|█████████▉| 5.79kB / 5.80kB            [A[A[A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|█████████▉| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|█████████▉| 5.79kB / 5.80kB            [A[A[A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|█████████▉| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|█████████▉| 5.79kB / 5.80kB            [A[A[A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|██████████| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|██████████| 5.80kB / 5.80kB            [A[A[A
+[1AProcessing Files (2 / 2)      : 100%|██████████| 3.30MB / 3.30MB,  306kB/s  
+
+[1A
+[1ANew Data Upload               : 100%|██████████| 3.30MB / 3.30MB,  306kB/s  [A
+
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A[A
+
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A[A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|██████████| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|██████████| 5.80kB / 5.80kB            [A[A[A
+
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A[A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|██████████| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|██████████| 5.80kB / 5.80kB            [A[A[A
+
+
+
+
+[1A
+[1AValidating                    : ██████████| 100%            [A[A[A[A
+
+
+[1A
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|██████████| 3.30MB / 3.30MB            [A[A
+
+
+
+[1A
+[1A  ...lm/eval_lm_test_glm8.json: 100%|██████████| 5.80kB / 5.80kB            [A[A[A
+
+
+
+
+[1A
+[1AValidating                    : ██████████| 100%            [A[A[A[A
+[1AProcessing Files (2 / 2)      : 100%|██████████| 3.30MB / 3.30MB,  297kB/s  
+
+[1ANew Data Upload               : 100%|██████████| 3.30MB / 3.30MB,  297kB/s  
+
+[1AValidating                    : ██████████| 100%            
+
+[1A  ...l_lm_test_glm8.hyps.jsonl: 100%|██████████| 3.30MB / 3.30MB            
+
+[1A  ...lm/eval_lm_test_glm8.json: 100%|██████████| 5.80kB / 5.80kB            
+Sync completed.
++ hf buckets sync /data/lm/si_corpus hf://buckets/ovindu-a/sinhala-grapheme-asr/lm/si_corpus --include 'corpus.txt' 
+Sync plan: /data/lm/si_corpus -> hf://buckets/ovindu-a/sinhala-grapheme-asr/lm/si_corpus
+  Uploads: 1
+  Downloads: 0
+  Deletes: 0
+  Skips: 0
+Syncing...
+
+[1AProcessing Files (0 / 0)      : |          |  0.00B /  0.00B            
+
+[1A
+[1ANew Data Upload               : |          |  0.00B /  0.00B            [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   0%|          | 1.27MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   0%|          | 1.27MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   0%|          | 1.27MB / 2.60GB,  114kB/s  
+
+[1A
+[1ANew Data Upload               :   2%|▏         | 1.27MB / 67.0MB,  114kB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   0%|          | 1.27MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   0%|          | 5.06MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   0%|          | 5.06MB / 2.60GB,  423kB/s  
+
+[1A
+[1ANew Data Upload               :   8%|▊         | 5.06MB / 67.0MB,  423kB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   0%|          | 7.59MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   0%|          | 7.59MB / 2.60GB,  623kB/s  
+
+[1A
+[1ANew Data Upload               :  11%|█▏        | 7.59MB / 67.0MB,  623kB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   0%|          | 12.7MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   0%|          | 12.7MB / 2.60GB, 1.05MB/s  
+
+[1A
+[1ANew Data Upload               :   9%|▉         | 12.7MB /  134MB, 1.05MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:   1%|          | 25.4MB / 2.60GB            [A[AProcessing Files (0 / 1)      :   1%|          | 25.4MB / 2.60GB, 2.13MB/s  
+
+[1ANew Data Upload               :  19%|█▉        | 25.4MB /  134MB, 2.13MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   2%|▏         | 39.5MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   2%|▏         | 39.5MB / 2.60GB, 2.93MB/s  
+
+[1A
+[1ANew Data Upload               :  29%|██▉       | 39.5MB /  134MB, 2.93MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   2%|▏         | 39.5MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   2%|▏         | 39.5MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   2%|▏         | 39.5MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   2%|▏         | 40.8MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   2%|▏         | 40.8MB / 2.60GB, 2.94MB/s  
+
+[1A
+[1ANew Data Upload               :  20%|██        | 40.8MB /  201MB, 2.94MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   2%|▏         | 46.1MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   2%|▏         | 46.1MB / 2.60GB, 3.35MB/s  
+
+[1A
+[1ANew Data Upload               :  23%|██▎       | 46.1MB /  201MB, 3.35MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   2%|▏         | 63.0MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   2%|▏         | 63.0MB / 2.60GB, 4.69MB/s  
+
+[1A
+[1ANew Data Upload               :  31%|███▏      | 63.0MB /  201MB, 4.69MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   3%|▎         | 69.7MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   3%|▎         | 69.7MB / 2.60GB, 5.19MB/s  
+
+[1A
+[1ANew Data Upload               :  35%|███▍      | 69.7MB /  201MB, 5.19MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   4%|▎         | 95.9MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   4%|▎         | 95.9MB / 2.60GB, 7.27MB/s  
+
+[1A
+[1ANew Data Upload               :  48%|████▊     | 95.9MB /  201MB, 7.27MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   4%|▍         |  102MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   4%|▍         |  102MB / 2.60GB, 7.73MB/s  
+
+[1A
+[1ANew Data Upload               :  51%|█████     |  102MB /  201MB, 7.73MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   4%|▍         |  109MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   4%|▍         |  109MB / 2.60GB, 8.20MB/s  
+
+[1A
+[1ANew Data Upload               :  54%|█████▍    |  109MB /  201MB, 8.20MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   4%|▍         |  116MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   4%|▍         |  116MB / 2.60GB, 8.75MB/s  
+
+[1A
+[1ANew Data Upload               :  58%|█████▊    |  116MB /  201MB, 8.75MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   5%|▍         |  128MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   5%|▍         |  128MB / 2.60GB, 9.62MB/s  
+
+[1ANew Data Upload               :  64%|██████▎   |  128MB /  201MB, 9.62MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   5%|▌         |  134MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   5%|▌         |  134MB / 2.60GB, 10.0MB/s  
+
+[1A
+[1ANew Data Upload               :  67%|██████▋   |  134MB /  201MB, 10.0MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   5%|▌         |  134MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   5%|▌         |  134MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   5%|▌         |  134MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   5%|▌         |  143MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   5%|▌         |  143MB / 2.60GB, 10.4MB/s  
+
+[1A
+[1ANew Data Upload               :  71%|███████   |  143MB /  201MB, 10.4MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   6%|▌         |  153MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   6%|▌         |  153MB / 2.60GB, 10.3MB/s  
+
+[1A
+[1ANew Data Upload               :  76%|███████▌  |  153MB /  201MB, 10.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   6%|▋         |  163MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   6%|▋         |  163MB / 2.60GB, 9.89MB/s  
+
+[1A
+[1ANew Data Upload               :  61%|██████    |  163MB /  268MB, 9.89MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   6%|▋         |  163MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   7%|▋         |  172MB / 2.60GB            [A[AProcessing Files (0 / 1)      :   7%|▋         |  172MB / 2.60GB, 10.4MB/s  
+
+[1A
+[1ANew Data Upload               :  64%|██████▍   |  172MB /  268MB, 10.4MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   7%|▋         |  172MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   7%|▋         |  172MB / 2.60GB, 10.3MB/s  
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   7%|▋         |  172MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   7%|▋         |  173MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   7%|▋         |  173MB / 2.60GB, 10.3MB/s  
+
+[1A
+[1ANew Data Upload               :  52%|█████▏    |  173MB /  335MB, 10.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   8%|▊         |  198MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   8%|▊         |  198MB / 2.60GB, 11.3MB/s  
+
+[1A
+[1ANew Data Upload               :  59%|█████▉    |  197MB /  335MB, 11.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   8%|▊         |  198MB / 2.60GB            [A[A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:   8%|▊         |  198MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   8%|▊         |  198MB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   8%|▊         |  200MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   8%|▊         |  200MB / 2.60GB, 11.2MB/s  
+
+[1A
+[1ANew Data Upload               :  50%|████▉     |  200MB /  402MB, 11.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   8%|▊         |  208MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   8%|▊         |  208MB / 2.60GB, 11.7MB/s  
+
+[1A
+[1ANew Data Upload               :  52%|█████▏    |  208MB /  402MB, 11.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   9%|▉         |  228MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   9%|▉         |  228MB / 2.60GB, 13.1MB/s  
+
+[1A
+[1ANew Data Upload               :  57%|█████▋    |  228MB /  402MB, 13.1MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:   9%|▉         |  237MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :   9%|▉         |  237MB / 2.60GB, 13.7MB/s  
+
+[1A
+[1ANew Data Upload               :  59%|█████▉    |  237MB /  402MB, 13.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  10%|▉         |  257MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  10%|▉         |  257MB / 2.60GB, 15.1MB/s  
+
+[1A
+[1ANew Data Upload               :  55%|█████▍    |  257MB /  469MB, 15.1MB/s  [A
+
+  ...a/lm/si_corpus/corpus.txt:  11%|█         |  276MB / 2.60GB            [A[AProcessing Files (0 / 1)      :  11%|█         |  276MB / 2.60GB, 16.5MB/s  
+
+[1ANew Data Upload               :  59%|█████▉    |  276MB /  469MB, 16.5MB/s  [A
+
+  ...a/lm/si_corpus/corpus.txt:  11%|█         |  284MB / 2.60GB            [A[AProcessing Files (0 / 1)      :  11%|█         |  284MB / 2.60GB, 16.9MB/s  
+
+[1ANew Data Upload               :  53%|█████▎    |  284MB /  536MB, 16.9MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  12%|█▏        |  308MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  12%|█▏        |  308MB / 2.60GB, 18.6MB/s  
+
+[1A
+[1ANew Data Upload               :  57%|█████▋    |  308MB /  536MB, 18.6MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  13%|█▎        |  328MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  13%|█▎        |  328MB / 2.60GB, 20.0MB/s  
+
+[1A
+[1ANew Data Upload               :  61%|██████    |  328MB /  536MB, 20.0MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  14%|█▎        |  353MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  14%|█▎        |  353MB / 2.60GB, 21.8MB/s  
+
+[1A
+[1ANew Data Upload               :  66%|██████▌   |  353MB /  536MB, 21.8MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  14%|█▍        |  369MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  14%|█▍        |  369MB / 2.60GB, 22.8MB/s  
+
+[1A
+[1ANew Data Upload               :  69%|██████▊   |  368MB /  536MB, 22.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  15%|█▍        |  390MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  15%|█▍        |  390MB / 2.60GB, 24.2MB/s  
+
+[1A
+[1ANew Data Upload               :  73%|███████▎  |  390MB /  536MB, 24.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  16%|█▌        |  404MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  16%|█▌        |  404MB / 2.60GB, 25.1MB/s  
+
+[1A
+[1ANew Data Upload               :  67%|██████▋   |  404MB /  603MB, 25.1MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  16%|█▌        |  418MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  16%|█▌        |  418MB / 2.60GB, 25.9MB/s  
+
+[1A
+[1ANew Data Upload               :  69%|██████▉   |  418MB /  603MB, 25.9MB/s  [A
+
+  ...a/lm/si_corpus/corpus.txt:  17%|█▋        |  439MB / 2.60GB            [A[AProcessing Files (0 / 1)      :  17%|█▋        |  439MB / 2.60GB, 27.4MB/s  
+
+[1ANew Data Upload               :  73%|███████▎  |  439MB /  603MB, 27.4MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  18%|█▊        |  461MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  18%|█▊        |  461MB / 2.60GB, 28.8MB/s  
+
+[1A
+[1ANew Data Upload               :  69%|██████▉   |  461MB /  670MB, 28.8MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  18%|█▊        |  479MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  18%|█▊        |  479MB / 2.60GB, 29.9MB/s  
+
+[1A
+[1ANew Data Upload               :  71%|███████▏  |  478MB /  670MB, 29.9MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  18%|█▊        |  480MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  18%|█▊        |  480MB / 2.60GB, 29.7MB/s  
+
+[1A
+[1ANew Data Upload               :  72%|███████▏  |  480MB /  670MB, 29.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  19%|█▉        |  501MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  19%|█▉        |  501MB / 2.60GB, 31.1MB/s  
+
+[1A
+[1ANew Data Upload               :  68%|██████▊   |  501MB /  737MB, 31.1MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  20%|██        |  524MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  20%|██        |  524MB / 2.60GB, 32.6MB/s  
+
+[1ANew Data Upload               :  71%|███████   |  524MB /  737MB, 32.6MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  20%|██        |  531MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  20%|██        |  531MB / 2.60GB, 32.8MB/s  
+
+[1A
+[1ANew Data Upload               :  66%|██████▌   |  530MB /  805MB, 32.8MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  21%|██        |  549MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  21%|██        |  549MB / 2.60GB, 34.0MB/s  
+
+[1A
+[1ANew Data Upload               :  68%|██████▊   |  549MB /  805MB, 34.0MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  22%|██▏       |  580MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  22%|██▏       |  580MB / 2.60GB, 36.0MB/s  
+
+[1A
+[1ANew Data Upload               :  72%|███████▏  |  580MB /  805MB, 36.0MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  23%|██▎       |  607MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  23%|██▎       |  607MB / 2.60GB, 37.8MB/s  
+
+[1A
+[1ANew Data Upload               :  70%|██████▉   |  606MB /  872MB, 37.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  25%|██▍       |  638MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  25%|██▍       |  638MB / 2.60GB, 39.8MB/s  
+
+[1A
+[1ANew Data Upload               :  73%|███████▎  |  638MB /  872MB, 39.8MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  25%|██▍       |  649MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  25%|██▍       |  649MB / 2.60GB, 40.4MB/s  
+
+[1A
+[1ANew Data Upload               :  74%|███████▍  |  649MB /  872MB, 40.4MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  26%|██▌       |  670MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  26%|██▌       |  670MB / 2.60GB, 41.6MB/s  
+
+[1A
+[1ANew Data Upload               :  71%|███████▏  |  669MB /  939MB, 41.6MB/s  [A
+
+  ...a/lm/si_corpus/corpus.txt:  27%|██▋       |  694MB / 2.60GB            [A[AProcessing Files (0 / 1)      :  27%|██▋       |  694MB / 2.60GB, 43.1MB/s  
+
+[1A
+[1ANew Data Upload               :  74%|███████▍  |  694MB /  939MB, 43.1MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  28%|██▊       |  733MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  28%|██▊       |  733MB / 2.60GB, 45.7MB/s  
+
+[1A
+[1ANew Data Upload               :  78%|███████▊  |  733MB /  939MB, 45.6MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  29%|██▊       |  746MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  29%|██▊       |  746MB / 2.60GB, 46.3MB/s  
+
+[1A
+[1ANew Data Upload               :  74%|███████▍  |  745MB / 1.01GB, 46.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  29%|██▉       |  758MB / 2.60GB            [A[AProcessing Files (0 / 1)      :  29%|██▉       |  758MB / 2.60GB, 46.8MB/s  
+
+[1ANew Data Upload               :  75%|███████▌  |  758MB / 1.01GB, 46.8MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  30%|███       |  786MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  30%|███       |  786MB / 2.60GB, 48.6MB/s  
+
+[1A
+[1ANew Data Upload               :  73%|███████▎  |  786MB / 1.07GB, 48.6MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  31%|███       |  804MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  31%|███       |  804MB / 2.60GB, 49.5MB/s  
+
+[1A
+[1ANew Data Upload               :  75%|███████▍  |  803MB / 1.07GB, 49.5MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  31%|███▏      |  819MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  31%|███▏      |  819MB / 2.60GB, 50.3MB/s  
+
+[1ANew Data Upload               :  76%|███████▋  |  819MB / 1.07GB, 50.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  32%|███▏      |  833MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  32%|███▏      |  833MB / 2.60GB, 50.9MB/s  
+
+[1A
+[1ANew Data Upload               :  73%|███████▎  |  833MB / 1.14GB, 50.9MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  33%|███▎      |  856MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  33%|███▎      |  856MB / 2.60GB, 52.2MB/s  
+
+[1A
+[1ANew Data Upload               :  75%|███████▌  |  855MB / 1.14GB, 52.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  33%|███▎      |  863MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  33%|███▎      |  863MB / 2.60GB, 52.4MB/s  
+
+[1A
+[1ANew Data Upload               :  76%|███████▌  |  863MB / 1.14GB, 52.4MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  34%|███▍      |  886MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  34%|███▍      |  886MB / 2.60GB, 53.7MB/s  
+
+[1A
+[1ANew Data Upload               :  78%|███████▊  |  886MB / 1.14GB, 53.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  35%|███▍      |  901MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  35%|███▍      |  901MB / 2.60GB, 54.4MB/s  
+
+[1ANew Data Upload               :  75%|███████▍  |  901MB / 1.21GB, 54.4MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  36%|███▌      |  926MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  36%|███▌      |  926MB / 2.60GB, 55.8MB/s  
+
+[1A
+[1ANew Data Upload               :  77%|███████▋  |  925MB / 1.21GB, 55.8MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  37%|███▋      |  964MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  37%|███▋      |  964MB / 2.60GB, 58.2MB/s  
+
+[1A
+[1ANew Data Upload               :  80%|███████▉  |  963MB / 1.21GB, 58.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  37%|███▋      |  970MB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  37%|███▋      |  970MB / 2.60GB, 58.3MB/s  
+
+[1A
+[1ANew Data Upload               :  76%|███████▌  |  970MB / 1.27GB, 58.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  39%|███▉      | 1.01GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  39%|███▉      | 1.01GB / 2.60GB, 60.9MB/s  
+
+[1A
+[1ANew Data Upload               :  79%|███████▉  | 1.01GB / 1.27GB, 60.9MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  40%|███▉      | 1.04GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  40%|███▉      | 1.04GB / 2.60GB, 62.3MB/s  
+
+[1A
+[1ANew Data Upload               :  81%|████████▏ | 1.04GB / 1.27GB, 62.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  41%|████      | 1.06GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  41%|████      | 1.06GB / 2.60GB, 63.5MB/s  
+
+[1A
+[1ANew Data Upload               :  83%|████████▎ | 1.06GB / 1.27GB, 63.5MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  42%|████▏     | 1.09GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  42%|████▏     | 1.09GB / 2.60GB, 65.2MB/s  
+
+[1A
+[1ANew Data Upload               :  85%|████████▌ | 1.09GB / 1.27GB, 65.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  42%|████▏     | 1.10GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  42%|████▏     | 1.10GB / 2.60GB, 65.9MB/s  
+
+[1A
+[1ANew Data Upload               :  82%|████████▏ | 1.10GB / 1.34GB, 65.8MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  43%|████▎     | 1.12GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  43%|████▎     | 1.12GB / 2.60GB, 66.7MB/s  
+
+[1A
+[1ANew Data Upload               :  84%|████████▎ | 1.12GB / 1.34GB, 66.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  44%|████▍     | 1.14GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  44%|████▍     | 1.14GB / 2.60GB, 67.7MB/s  
+
+[1A
+[1ANew Data Upload               :  85%|████████▌ | 1.14GB / 1.34GB, 67.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  44%|████▍     | 1.16GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  44%|████▍     | 1.16GB / 2.60GB, 68.2MB/s  
+
+[1A
+[1ANew Data Upload               :  86%|████████▌ | 1.16GB / 1.34GB, 68.2MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  45%|████▌     | 1.18GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  45%|████▌     | 1.18GB / 2.60GB, 69.7MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ | 1.18GB / 1.34GB, 69.6MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  46%|████▌     | 1.20GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  46%|████▌     | 1.20GB / 2.60GB, 70.6MB/s  
+
+[1A
+[1ANew Data Upload               :  85%|████████▌ | 1.20GB / 1.41GB, 70.5MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  48%|████▊     | 1.24GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  48%|████▊     | 1.24GB / 2.60GB, 72.9MB/s  
+
+[1ANew Data Upload               :  88%|████████▊ | 1.24GB / 1.41GB, 72.9MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  48%|████▊     | 1.25GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  48%|████▊     | 1.25GB / 2.60GB, 73.2MB/s  
+
+[1A
+[1ANew Data Upload               :  89%|████████▉ | 1.25GB / 1.41GB, 73.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  49%|████▊     | 1.26GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  49%|████▊     | 1.26GB / 2.60GB, 73.5MB/s  
+
+[1A
+[1ANew Data Upload               :  86%|████████▌ | 1.26GB / 1.48GB, 73.5MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  49%|████▉     | 1.28GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  49%|████▉     | 1.28GB / 2.60GB, 74.3MB/s  
+
+[1A
+[1ANew Data Upload               :  87%|████████▋ | 1.28GB / 1.48GB, 74.3MB/s  [A
+
+  ...a/lm/si_corpus/corpus.txt:  50%|████▉     | 1.30GB / 2.60GB            [A[AProcessing Files (0 / 1)      :  50%|████▉     | 1.30GB / 2.60GB, 74.7MB/s  
+
+[1A
+[1ANew Data Upload               :  84%|████████▍ | 1.30GB / 1.54GB, 74.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  50%|█████     | 1.30GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  50%|█████     | 1.30GB / 2.60GB, 74.5MB/s  
+
+[1A
+[1ANew Data Upload               :  84%|████████▍ | 1.30GB / 1.54GB, 74.5MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  51%|█████     | 1.32GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  51%|█████     | 1.32GB / 2.60GB, 75.5MB/s  
+
+[1A
+[1ANew Data Upload               :  86%|████████▌ | 1.32GB / 1.54GB, 75.4MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  51%|█████▏    | 1.33GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  51%|█████▏    | 1.33GB / 2.60GB, 75.9MB/s  
+
+[1A
+[1ANew Data Upload               :  83%|████████▎ | 1.33GB / 1.61GB, 75.8MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  52%|█████▏    | 1.35GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  52%|█████▏    | 1.35GB / 2.60GB, 76.2MB/s  
+
+[1A
+[1ANew Data Upload               :  84%|████████▎ | 1.35GB / 1.61GB, 76.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  53%|█████▎    | 1.37GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  53%|█████▎    | 1.37GB / 2.60GB, 77.6MB/s  
+
+[1A
+[1ANew Data Upload               :  85%|████████▌ | 1.37GB / 1.61GB, 77.6MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  53%|█████▎    | 1.39GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  53%|█████▎    | 1.39GB / 2.60GB, 78.1MB/s  
+
+[1A
+[1ANew Data Upload               :  86%|████████▌ | 1.39GB / 1.61GB, 78.0MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  54%|█████▍    | 1.41GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  54%|█████▍    | 1.41GB / 2.60GB, 79.3MB/s  
+
+[1A
+[1ANew Data Upload               :  84%|████████▍ | 1.41GB / 1.68GB, 79.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  55%|█████▌    | 1.44GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  55%|█████▌    | 1.44GB / 2.60GB, 81.0MB/s  
+
+[1A
+[1ANew Data Upload               :  86%|████████▌ | 1.44GB / 1.68GB, 81.0MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  57%|█████▋    | 1.47GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  57%|█████▋    | 1.47GB / 2.60GB, 82.5MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ | 1.47GB / 1.68GB, 82.5MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  57%|█████▋    | 1.50GB / 2.60GB            [A[AProcessing Files (0 / 1)      :  57%|█████▋    | 1.50GB / 2.60GB, 83.6MB/s  
+
+[1ANew Data Upload               :  89%|████████▉ | 1.50GB / 1.68GB, 83.6MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  59%|█████▊    | 1.53GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  59%|█████▊    | 1.53GB / 2.60GB, 85.4MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ | 1.53GB / 1.74GB, 85.4MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  60%|█████▉    | 1.56GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  60%|█████▉    | 1.56GB / 2.60GB, 87.0MB/s  
+
+[1A
+[1ANew Data Upload               :  89%|████████▉ | 1.56GB / 1.74GB, 87.0MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  60%|██████    | 1.57GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  60%|██████    | 1.57GB / 2.60GB, 87.2MB/s  
+
+[1A
+[1ANew Data Upload               :  87%|████████▋ | 1.57GB / 1.81GB, 87.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  61%|██████    | 1.59GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  61%|██████    | 1.59GB / 2.60GB, 87.9MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ | 1.59GB / 1.81GB, 87.9MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  62%|██████▏   | 1.62GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  62%|██████▏   | 1.62GB / 2.60GB, 89.8MB/s  
+
+[1A
+[1ANew Data Upload               :  90%|████████▉ | 1.62GB / 1.81GB, 89.8MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  63%|██████▎   | 1.64GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  63%|██████▎   | 1.64GB / 2.60GB, 90.1MB/s  
+
+[1A
+[1ANew Data Upload               :  90%|█████████ | 1.64GB / 1.81GB, 90.1MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  63%|██████▎   | 1.65GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  63%|██████▎   | 1.65GB / 2.60GB, 90.3MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ | 1.65GB / 1.88GB, 90.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  64%|██████▎   | 1.66GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  64%|██████▎   | 1.66GB / 2.60GB, 90.3MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ | 1.66GB / 1.88GB, 90.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  64%|██████▍   | 1.67GB / 2.60GB            [A[AProcessing Files (0 / 1)      :  64%|██████▍   | 1.67GB / 2.60GB, 90.6MB/s  
+
+[1A
+[1ANew Data Upload               :  86%|████████▌ | 1.67GB / 1.94GB, 90.5MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  65%|██████▌   | 1.69GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  65%|██████▌   | 1.69GB / 2.60GB, 91.5MB/s  
+
+[1A
+[1ANew Data Upload               :  87%|████████▋ | 1.69GB / 1.94GB, 91.4MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  66%|██████▌   | 1.72GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  66%|██████▌   | 1.72GB / 2.60GB, 92.7MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ | 1.72GB / 1.94GB, 92.6MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  66%|██████▋   | 1.73GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  66%|██████▋   | 1.73GB / 2.60GB, 92.8MB/s  
+
+[1A
+[1ANew Data Upload               :  86%|████████▌ | 1.73GB / 2.01GB, 92.8MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  67%|██████▋   | 1.75GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  67%|██████▋   | 1.75GB / 2.60GB, 93.3MB/s  
+
+[1A
+[1ANew Data Upload               :  87%|████████▋ | 1.75GB / 2.01GB, 93.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  68%|██████▊   | 1.77GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  68%|██████▊   | 1.77GB / 2.60GB, 94.3MB/s  
+
+[1A
+[1ANew Data Upload               :  88%|████████▊ | 1.77GB / 2.01GB, 94.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  69%|██████▉   | 1.79GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  69%|██████▉   | 1.79GB / 2.60GB, 95.4MB/s  
+
+[1A
+[1ANew Data Upload               :  86%|████████▌ | 1.79GB / 2.08GB, 95.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  69%|██████▉   | 1.80GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  69%|██████▉   | 1.80GB / 2.60GB, 95.1MB/s  
+
+[1A
+[1ANew Data Upload               :  87%|████████▋ | 1.80GB / 2.08GB, 95.1MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  70%|███████   | 1.83GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  70%|███████   | 1.83GB / 2.60GB, 96.7MB/s  
+
+[1ANew Data Upload               :  88%|████████▊ | 1.83GB / 2.08GB, 96.7MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  71%|███████▏  | 1.86GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  71%|███████▏  | 1.86GB / 2.60GB, 98.2MB/s  
+
+[1A
+[1ANew Data Upload               :  89%|████████▉ | 1.86GB / 2.08GB, 98.1MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  73%|███████▎  | 1.89GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  73%|███████▎  | 1.89GB / 2.60GB, 99.4MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████ | 1.89GB / 2.08GB, 99.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  73%|███████▎  | 1.91GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  73%|███████▎  | 1.91GB / 2.60GB,  100MB/s  
+
+[1A
+[1ANew Data Upload               :  89%|████████▉ | 1.91GB / 2.15GB,  100MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  75%|███████▍  | 1.94GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  75%|███████▍  | 1.94GB / 2.60GB,  102MB/s  
+
+[1A
+[1ANew Data Upload               :  90%|█████████ | 1.94GB / 2.15GB,  102MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  75%|███████▌  | 1.96GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  75%|███████▌  | 1.96GB / 2.60GB,  103MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████▏| 1.96GB / 2.15GB,  103MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  76%|███████▋  | 1.99GB / 2.60GB            [A[AProcessing Files (0 / 1)      :  76%|███████▋  | 1.99GB / 2.60GB,  104MB/s  
+
+[1A
+[1ANew Data Upload               :  90%|████████▉ | 1.99GB / 2.21GB,  104MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  77%|███████▋  | 2.01GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  77%|███████▋  | 2.01GB / 2.60GB,  104MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████ | 2.01GB / 2.21GB,  104MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  78%|███████▊  | 2.03GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  78%|███████▊  | 2.03GB / 2.60GB,  105MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏| 2.03GB / 2.21GB,  105MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  79%|███████▉  | 2.06GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  79%|███████▉  | 2.06GB / 2.60GB,  107MB/s  
+
+[1A
+[1ANew Data Upload               :  90%|█████████ | 2.06GB / 2.28GB,  107MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  80%|███████▉  | 2.08GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  80%|███████▉  | 2.08GB / 2.60GB,  107MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████ | 2.08GB / 2.28GB,  107MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  81%|████████  | 2.10GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  81%|████████  | 2.10GB / 2.60GB,  108MB/s  
+
+[1ANew Data Upload               :  89%|████████▉ | 2.09GB / 2.35GB,  108MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  81%|████████▏ | 2.11GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  81%|████████▏ | 2.11GB / 2.60GB,  108MB/s  
+
+[1A
+[1ANew Data Upload               :  90%|█████████ | 2.11GB / 2.35GB,  108MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  82%|████████▏ | 2.13GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  82%|████████▏ | 2.13GB / 2.60GB,  108MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████ | 2.13GB / 2.35GB,  108MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  82%|████████▏ | 2.14GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  82%|████████▏ | 2.14GB / 2.60GB,  109MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████ | 2.14GB / 2.35GB,  109MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  83%|████████▎ | 2.15GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  83%|████████▎ | 2.15GB / 2.60GB,  109MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏| 2.15GB / 2.35GB,  109MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  83%|████████▎ | 2.16GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  83%|████████▎ | 2.16GB / 2.60GB,  109MB/s  
+
+[1ANew Data Upload               :  90%|████████▉ | 2.16GB / 2.41GB,  108MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  84%|████████▎ | 2.18GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  84%|████████▎ | 2.18GB / 2.60GB,  109MB/s  
+
+[1ANew Data Upload               :  90%|█████████ | 2.18GB / 2.41GB,  109MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  85%|████████▍ | 2.21GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  85%|████████▍ | 2.21GB / 2.60GB,  110MB/s  
+
+[1A
+[1ANew Data Upload               :  89%|████████▉ | 2.21GB / 2.48GB,  110MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  85%|████████▌ | 2.22GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  85%|████████▌ | 2.22GB / 2.60GB,  110MB/s  
+
+[1A
+[1ANew Data Upload               :  89%|████████▉ | 2.22GB / 2.48GB,  110MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  86%|████████▋ | 2.25GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  86%|████████▋ | 2.25GB / 2.60GB,  112MB/s  
+
+[1ANew Data Upload               :  91%|█████████ | 2.25GB / 2.48GB,  112MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  87%|████████▋ | 2.27GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  87%|████████▋ | 2.27GB / 2.60GB,  112MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████▏| 2.27GB / 2.48GB,  112MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  88%|████████▊ | 2.30GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  88%|████████▊ | 2.30GB / 2.60GB,  114MB/s  
+
+[1A
+[1ANew Data Upload               :  90%|█████████ | 2.30GB / 2.55GB,  114MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  89%|████████▉ | 2.33GB / 2.60GB            [A[AProcessing Files (0 / 1)      :  89%|████████▉ | 2.33GB / 2.60GB,  115MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████▏| 2.33GB / 2.55GB,  115MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  90%|█████████ | 2.34GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  90%|█████████ | 2.34GB / 2.60GB,  115MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏| 2.34GB / 2.55GB,  115MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  91%|█████████ | 2.36GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  91%|█████████ | 2.36GB / 2.60GB,  115MB/s  
+
+[1A
+[1ANew Data Upload               :  91%|█████████ | 2.36GB / 2.60GB,  115MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  92%|█████████▏| 2.40GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  92%|█████████▏| 2.40GB / 2.60GB,  117MB/s  
+
+[1A
+[1ANew Data Upload               :  92%|█████████▏| 2.40GB / 2.60GB,  117MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  93%|█████████▎| 2.42GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  93%|█████████▎| 2.42GB / 2.60GB,  118MB/s  
+
+[1A
+[1ANew Data Upload               :  93%|█████████▎| 2.42GB / 2.60GB,  118MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  94%|█████████▎| 2.44GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  94%|█████████▎| 2.44GB / 2.60GB,  118MB/s  
+
+[1A
+[1ANew Data Upload               :  94%|█████████▎| 2.44GB / 2.60GB,  118MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  94%|█████████▍| 2.45GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  94%|█████████▍| 2.45GB / 2.60GB,  119MB/s  
+
+[1A
+[1ANew Data Upload               :  94%|█████████▍| 2.45GB / 2.60GB,  119MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  95%|█████████▍| 2.47GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  95%|█████████▍| 2.47GB / 2.60GB,  119MB/s  
+
+[1A
+[1ANew Data Upload               :  95%|█████████▍| 2.47GB / 2.60GB,  119MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  95%|█████████▌| 2.48GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  95%|█████████▌| 2.48GB / 2.60GB,  119MB/s  
+
+[1ANew Data Upload               :  95%|█████████▌| 2.48GB / 2.60GB,  119MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  96%|█████████▌| 2.49GB / 2.60GB            [A[AProcessing Files (0 / 1)      :  96%|█████████▌| 2.49GB / 2.60GB,  119MB/s  
+
+[1ANew Data Upload               :  96%|█████████▌| 2.49GB / 2.60GB,  119MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  96%|█████████▌| 2.50GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  96%|█████████▌| 2.50GB / 2.60GB,  119MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▌| 2.50GB / 2.60GB,  119MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  96%|█████████▋| 2.51GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  96%|█████████▋| 2.51GB / 2.60GB,  119MB/s  
+
+[1A
+[1ANew Data Upload               :  96%|█████████▋| 2.51GB / 2.60GB,  119MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  97%|█████████▋| 2.53GB / 2.60GB            [A[AProcessing Files (0 / 1)      :  97%|█████████▋| 2.53GB / 2.60GB,  119MB/s  
+
+[1ANew Data Upload               :  97%|█████████▋| 2.53GB / 2.60GB,  119MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  97%|█████████▋| 2.53GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  97%|█████████▋| 2.53GB / 2.60GB,  118MB/s  
+
+[1A
+[1ANew Data Upload               :  97%|█████████▋| 2.53GB / 2.60GB,  118MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  98%|█████████▊| 2.54GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  98%|█████████▊| 2.54GB / 2.60GB,  118MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊| 2.54GB / 2.60GB,  118MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  98%|█████████▊| 2.54GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  98%|█████████▊| 2.55GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  98%|█████████▊| 2.55GB / 2.60GB,  117MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊| 2.55GB / 2.60GB,  117MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt:  98%|█████████▊| 2.56GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  98%|█████████▊| 2.56GB / 2.60GB,  117MB/s  
+
+[1ANew Data Upload               :  98%|█████████▊| 2.56GB / 2.60GB,  117MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  98%|█████████▊| 2.56GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  98%|█████████▊| 2.56GB / 2.60GB,  116MB/s  
+
+[1A
+[1ANew Data Upload               :  98%|█████████▊| 2.56GB / 2.60GB,  116MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  98%|█████████▊| 2.56GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▊| 2.57GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  99%|█████████▊| 2.57GB / 2.60GB,  115MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▊| 2.57GB / 2.60GB,  115MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▊| 2.57GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▊| 2.57GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▊| 2.57GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  99%|█████████▊| 2.57GB / 2.60GB,  112MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▊| 2.57GB / 2.60GB,  112MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.57GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  99%|█████████▉| 2.57GB / 2.60GB,  112MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉| 2.57GB / 2.60GB,  112MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.57GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.57GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.57GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.58GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  99%|█████████▉| 2.58GB / 2.60GB,  109MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉| 2.58GB / 2.60GB,  109MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.58GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.58GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.58GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  99%|█████████▉| 2.58GB / 2.60GB,  107MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉| 2.58GB / 2.60GB,  107MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.58GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.58GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.58GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.59GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      :  99%|█████████▉| 2.59GB / 2.60GB,  105MB/s  
+
+[1A
+[1ANew Data Upload               :  99%|█████████▉| 2.59GB / 2.60GB,  105MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.59GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt:  99%|█████████▉| 2.59GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.59GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      : 100%|█████████▉| 2.59GB / 2.60GB,  103MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉| 2.59GB / 2.60GB,  103MB/s  [A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.59GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.59GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.59GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      : 100%|█████████▉| 2.60GB / 2.60GB,  100MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉| 2.60GB / 2.60GB,  100MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      : 100%|█████████▉| 2.60GB / 2.60GB, 98.2MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|█████████▉| 2.60GB / 2.60GB, 98.2MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+[1AProcessing Files (0 / 1)      : 100%|█████████▉| 2.60GB / 2.60GB, 93.3MB/s  
+
+[1A
+[1ANew Data Upload               : 100%|██████████| 2.60GB / 2.60GB, 93.3MB/s  [A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A
+
+
+
+[1AValidating                    :           |   0%            [A[A[A
+
+  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+
+[1A
+[1AValidating                    :           |   0%            [A[A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+
+[1AValidating                    :           |   0%            [A[A[A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+
+[1AValidating                    :           |   0%            [A[A[A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+
+[1AValidating                    :           |   0%            [A[A[A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+
+[1AValidating                    :           |   0%            [A[A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+
+[1A
+[1AValidating                    : ██████████| 100%            [A[A[A
+
+
+[1A
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+
+[1A
+[1AValidating                    : ██████████| 100%            [A[A[A
+
+
+[1A  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            [A[A
+
+
+Validating                    : ██████████| 100%            [A[A[AProcessing Files (0 / 1)      : 100%|█████████▉| 2.60GB / 2.60GB, 87.2MB/s  
+New Data Upload               : 100%|██████████| 2.60GB / 2.60GB, 87.2MB/s  
+Validating                    : ██████████| 100%            
+  ...a/lm/si_corpus/corpus.txt: 100%|█████████▉| 2.60GB / 2.60GB            
+Sync completed.
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/chatgptgroup321/main/ap-8kWMDU7MQSPY2JqA9lRkDW

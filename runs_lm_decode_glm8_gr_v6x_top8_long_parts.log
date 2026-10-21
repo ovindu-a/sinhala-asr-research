@@ -1,0 +1,44 @@
+✓ Initialized. View run at 
+https://modal.com/apps/chatgptgroup321/main/ap-JKZmbo5KYNdpuMz1UOEYza
+✓ Created objects.
+├── ✓ Uploaded /workspace/sinhala-asr-research/modal_app.py
+├── ✓ Uploaded runs/v6x_top8_lm_test.hyps.jsonl
+├── ✓ Uploaded /workspace/sinhala-asr-research/scripts
+├── ✓ Uploaded PythonPackage:sinhala_asr
+├── ✓ Created Function prep.
+├── ✓ Created Function pack.
+├── ✓ Created Function pack_v6.
+├── ✓ Created Function slr52_extra.
+├── ✓ Created Function fetch_reference.
+├── ✓ Created Function _sha256.
+├── ✓ Created Function train.
+├── ✓ Created Function evaluate.
+├── ✓ Created Function eval_whisper.
+├── ✓ Created Function grapheme_units.
+├── ✓ Created Function build_lm.
+├── ✓ Created Function lm_corpus.
+├── ✓ Created Function grapheme_lm.
+├── ✓ Created Function lm_dump.
+├── ✓ Created Function lm_decode.
+├── ✓ Created Function benchmark.
+├── ✓ Created Function punct_data.
+├── ✓ Created Function punct_train.
+└── ✓ Created Function punct_eval.
++ python scripts/08_lm_decode.py decode --ckpt /runs/gr_v6x_top8_long_parts/best --lm /data/lm/si_graph8 --out /runs/gr_v6x_top8_long_parts/best/lm --lm-kind grapheme --tag _glm8 --tune-limit 2000 --alphas 0.3 0.5 0.7 --betas 0.5 1.0 2.0
+alpha 0.30 beta 0.5 space +0.0: WER 16.78% WER_seg 10.54% CER 4.45% GER 5.40% hyp/ref words 0.996
+alpha 0.30 beta 1.0 space +0.0: WER 16.69% WER_seg 10.45% CER 4.38% GER 5.34% hyp/ref words 1.005
+alpha 0.30 beta 2.0 space +0.0: WER 17.52% WER_seg 10.58% CER 4.51% GER 5.55% hyp/ref words 1.026
+alpha 0.50 beta 0.5 space +0.0: WER 16.31% WER_seg 10.18% CER 4.37% GER 5.29% hyp/ref words 0.990
+alpha 0.50 beta 1.0 space +0.0: WER 16.09% WER_seg 10.01% CER 4.27% GER 5.21% hyp/ref words 0.999
+alpha 0.50 beta 2.0 space +0.0: WER 16.37% WER_seg 9.99% CER 4.32% GER 5.27% hyp/ref words 1.016
+alpha 0.70 beta 0.5 space +0.0: WER 16.43% WER_seg 10.22% CER 4.47% GER 5.42% hyp/ref words 0.986
+alpha 0.70 beta 1.0 space +0.0: WER 16.00% WER_seg 10.03% CER 4.33% GER 5.27% hyp/ref words 0.993
+alpha 0.70 beta 2.0 space +0.0: WER 16.05% WER_seg 9.92% CER 4.26% GER 5.19% hyp/ref words 1.010
+best on dev2k {'alpha': 0.7, 'beta': 1.0, 'space_offset': 0.0, 'dual': None, 'hyp_ref_words': 0.9931896726977028, 'wer': 0.1599918682659077, 'cer': 0.0433000301680538, 'cer_nospace': 0.040793189454373054, 'wer_seg': 0.10032526936369181, 'ger': 0.052733776188042925, 'utts': 2000}
+overall    WER 13.89%  WER_seg 7.87%  CER 3.15%  CER_nospace 2.80%  GER 3.98%  (15860 utts)
+bizbrains  WER 35.72%  WER_seg 31.63%  CER 18.57%  CER_nospace 19.24%  GER 19.17%  (98 utts)
+linga      WER 17.28%  WER_seg 6.54%  CER 2.80%  CER_nospace 1.98%  GER 3.65%  (86 utts)
+openslr    WER 12.71%  WER_seg 6.64%  CER 2.44%  CER_nospace 2.06%  GER 3.18%  (15500 utts)
+youtube    WER 28.15%  WER_seg 22.19%  CER 9.82%  CER_nospace 9.93%  GER 11.07%  (176 utts)
+✓ App completed. View run at 
+https://modal.com/apps/chatgptgroup321/main/ap-JKZmbo5KYNdpuMz1UOEYza
