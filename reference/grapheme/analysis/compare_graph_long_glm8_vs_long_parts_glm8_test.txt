@@ -1,0 +1,33 @@
+75,338 reference words, 15,860 utterances
+
+category       |      total graph_long_glm8 | total graph_long_parts_glm8 |       only graph_long_glm8 | only graph_long_parts_glm8
+spacing        |   3,112  ( 4.13% of words) |   3,436  ( 4.56% of words) |     375  ( 0.50% of words) |     693  ( 0.92% of words)
+orthographic   |   1,075  ( 1.43% of words) |   1,084  ( 1.44% of words) |      46  ( 0.06% of words) |      54  ( 0.07% of words)
+one_letter     |   2,380  ( 3.16% of words) |   2,330  ( 3.09% of words) |     176  ( 0.23% of words) |     146  ( 0.19% of words)
+near_miss      |     595  ( 0.79% of words) |     594  ( 0.79% of words) |      34  ( 0.05% of words) |      47  ( 0.06% of words)
+wrong_word     |   1,228  ( 1.63% of words) |   1,233  ( 1.64% of words) |     104  ( 0.14% of words) |     117  ( 0.16% of words)
+missed_word    |     184  ( 0.24% of words) |     253  ( 0.34% of words) |       3  ( 0.00% of words) |      39  ( 0.05% of words)
+digits         |      60  ( 0.08% of words) |      60  ( 0.08% of words) |       0  ( 0.00% of words) |       0  ( 0.00% of words)
+english        |     128  ( 0.17% of words) |     143  ( 0.19% of words) |       3  ( 0.00% of words) |      16  ( 0.02% of words)
+ALL word errs  |   8,762  (11.63% of words) |   9,133  (12.12% of words) |     741  ( 0.98% of words) |   1,112  ( 1.48% of words)
+
+words both get wrong: 8,021 ({'same output': 7440, 'different outputs': 581})
+extra (inserted) words: graph_long_glm8 1,865, graph_long_parts_glm8 1,331; runaway utterances (>=4 extra words): graph_long_glm8 14, graph_long_parts_glm8 10
+
+examples of errors only graph_long_glm8 makes (ref -> graph_long_glm8):
+  spacing       තේරෙයිද -> ∅; බලනකොට -> ∅; මුල්කොට -> ∅; දෙන්නෙක්ද -> ∅
+  orthographic  වීතරාගී -> වීතරාගි; පසුතැවුණා -> පසුතැවුනා; තමන්ගේ -> තමන්ගෙ; කොහේ -> කොහෙ
+  one_letter    පෘතග්ජන -> පෘථග්ජන; අපායේ -> අපාය; ප්‍රශ්නෙන් -> ප්‍රශ්නයෙන්; හිටිය -> හිටියා
+  near_miss     වෙන්නැතුව -> වෙන්නේනැතුව; කියන්නම් -> කියන්න; කරන්නෑ -> කරන්නේනෑ; මිනිසුන්ට -> මිනිස්සුන්ට
+  wrong_word    නෑ -> නැහැ; අහනවා -> නවා; පොඩි -> ඕකේ; පිහපු -> කියපු
+  missed_word   හොද -> ∅; මේ -> ∅; බං -> ∅
+  english       operation -> ination; highland -> හයිලන්ඩ්; going -> gin
+
+examples of errors only graph_long_parts_glm8 makes (ref -> graph_long_parts_glm8):
+  spacing       පවත් -> ∅; වනු -> ∅; තුන් -> ∅; පාරක් -> ∅
+  orthographic  මැරුණොත් -> මැරුනොත්; ඔළුවේ -> ඔලුවේ; ලෝකේ -> ලෝකෙ; මෙහෙ -> මෙහේ
+  one_letter    කිසිඳු -> කිසිදු; ඉන්න -> න්න; තරහ -> තරහා; පටලය -> පටලව
+  near_miss     කියනවා -> කියන; ශ්‍රාවකයෙක් -> ශ්‍රාවකයෝ; පැහැදිලි -> පැහැදිලියි; දැවිලා -> විලා
+  wrong_word    කිය -> කී; මලක් -> මල; ඊට -> et; වඩා -> ලා
+  missed_word   මහා -> ∅; එක -> ∅; අපි -> ∅; මේ -> ∅
+  english       ministers -> insters; drinks -> drinkඑ; hit -> හිට; day -> d

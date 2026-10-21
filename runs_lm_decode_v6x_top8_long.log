@@ -1,0 +1,19 @@
++ python scripts/08_lm_decode.py decode --ckpt /runs/v6x_top8_long/best --lm /data/lm/si_4gram --out /runs/v6x_top8_long/best/lm --tune-limit 2000
+alpha 0.20 beta 0.0 space +0.0: WER 16.67% WER_seg 11.44% CER 5.06% GER 6.19% hyp/ref words 0.999
+alpha 0.20 beta 1.0 space +0.0: WER 16.90% WER_seg 11.37% CER 5.01% GER 6.15% hyp/ref words 1.012
+alpha 0.20 beta 2.0 space +0.0: WER 17.79% WER_seg 11.43% CER 5.06% GER 6.27% hyp/ref words 1.026
+alpha 0.35 beta 0.0 space +0.0: WER 16.49% WER_seg 11.03% CER 5.03% GER 6.17% hyp/ref words 0.992
+alpha 0.35 beta 1.0 space +0.0: WER 16.22% WER_seg 10.87% CER 4.90% GER 6.02% hyp/ref words 1.005
+alpha 0.35 beta 2.0 space +0.0: WER 16.65% WER_seg 10.85% CER 4.90% GER 6.04% hyp/ref words 1.018
+alpha 0.50 beta 0.0 space +0.0: WER 16.63% WER_seg 11.05% CER 5.13% GER 6.26% hyp/ref words 0.985
+alpha 0.50 beta 1.0 space +0.0: WER 16.13% WER_seg 10.82% CER 5.01% GER 6.11% hyp/ref words 0.998
+alpha 0.50 beta 2.0 space +0.0: WER 16.19% WER_seg 10.64% CER 4.90% GER 6.01% hyp/ref words 1.010
+alpha 0.70 beta 0.0 space +0.0: WER 17.14% WER_seg 11.57% CER 5.48% GER 6.69% hyp/ref words 0.974
+alpha 0.70 beta 1.0 space +0.0: WER 16.72% WER_seg 11.16% CER 5.23% GER 6.37% hyp/ref words 0.987
+alpha 0.70 beta 2.0 space +0.0: WER 16.42% WER_seg 10.86% CER 5.08% GER 6.18% hyp/ref words 1.000
+best on dev2k {'alpha': 0.5, 'beta': 1.0, 'space_offset': 0.0, 'dual': None, 'hyp_ref_words': 0.9978654198007725, 'wer': 0.16131327505590567, 'cer': 0.05007896931731469, 'cer_nospace': 0.04839939809947849, 'wer_seg': 0.10815206342752592, 'ger': 0.06111394992335207, 'utts': 2000}
+overall    WER 14.26%  WER_seg 8.67%  CER 3.61%  CER_nospace 3.31%  GER 4.52%  (15860 utts)
+bizbrains  WER 36.77%  WER_seg 32.98%  CER 21.36%  CER_nospace 22.28%  GER 22.99%  (98 utts)
+linga      WER 20.16%  WER_seg 7.85%  CER 3.29%  CER_nospace 2.39%  GER 4.36%  (86 utts)
+openslr    WER 12.97%  WER_seg 7.34%  CER 2.74%  CER_nospace 2.43%  GER 3.50%  (15500 utts)
+youtube    WER 30.79%  WER_seg 26.02%  CER 12.59%  CER_nospace 12.79%  GER 14.45%  (176 utts)

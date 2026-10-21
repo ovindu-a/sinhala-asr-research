@@ -77,6 +77,9 @@ the next one. Approximate rates: A100-80GB ≈ $2.50/h, CPU ≈ $0.05/core-h (ch
 | 2026-10-20 | §15 extension (_tr best gα 0.3, gβ 1, g2α 0.5 all on grid edges; chosen from dev only, launched before the _tr test result): α β 0 × gα {0.2, 0.3} × gβ {1.0, 1.5} × g2α {0.5, 0.7, 1.0}; tag _tr2 | 32 CPU, 64 GB | ~25 min actual | | |
 | 2026-10-20 | `modal run upload_hf_bucket.py --what tr` (dry run, upload, re-dry-run = 7 skipped): /data/lm/tr_graph8 (21 MB) + eval_lm_test_tr{,2}.{json,hyps.jsonl} | 4 CPU | ~1 min | < $0.01 | |
 | 2026-10-20 | **`modal billing summary`** after §15 (tr_graph8 build, _tr, _tr2, upload) | | | | **$20.71 metered** |
+| 2026-10-21 | GRAPHEME_PLAN §16 (training on molab, not Modal): `upload_hf_bucket.py --what pull` for v6x_top8_long, gr_v6x_top8_long, gr_v6x_top8_long_parts (bucket → /runs/<run>/best) | 4 CPU | ~1 min each | < $0.01 | |
+| 2026-10-21 | §16 decodes, 3 in parallel: lm_decode v6x_top8_long/best --lm si_4gram (default α {0.2, 0.35, 0.5, 0.7} × β {0, 1, 2}); gr_v6x_top8_long{,_parts}/best --lm si_graph8 --lm-kind grapheme α {0.3, 0.5, 0.7} × β {0.5, 1, 2}, tag _glm8; all on 2,000 dev2k, then test. The two B decodes had run once before (logs in runs_lm_decode_glm8_*.log); the rerun gave identical numbers | 32 CPU, 64 GB | | | |
+| 2026-10-21 | **`modal billing summary`** after the §16 pulls and decodes | | | | **$21.60 metered** (credits; $0.00 billed) |
 
 Check actual spend any time: `modal billing summary` (this month) / `modal billing report --for today --show-resources`.
 
@@ -227,6 +230,9 @@ identical to si_4gram (gate 1), so A / B / C saw the same audio, transcripts and
 | B + grapheme 8-gram (2026-10-20) | | | | **14.26** / **8.05** / **3.20** / **4.06** (0.5, 1.0) | **19.23** / **11.70** / **4.81** / **5.98** |
 | B + word 4-gram + grapheme 8-gram (2026-10-20) | | | | 14.59 / **7.90** / 3.23 / 4.10 (0.2, 1.0; g 0.3, 1.0) | 19.88 / **11.59** / 4.87 / 6.06 |
 | B + si_graph8 + in-domain tr_graph8 (2026-10-20; dev pick, `_tr2`) | | | | **11.77** / 7.18 / **2.88** / **3.59** (g 0.2, 1.5; g2 0.7; word LM off) | 20.09 / 12.74 / 5.16 / 6.36 (seen WER **5.08**) |
+| A longer, +6,000 steps (2026-10-21) + word 4-gram | | | 18.38 / 12.78 / 4.67 / 5.92 | 14.26 / 8.67 / 3.61 / 4.52 (0.5, 1.0) | 20.62 / 13.20 / 5.69 / 7.07 |
+| B longer, +6,000 steps (2026-10-21) + grapheme 8-gram | | | 18.70 / 11.36 / 4.15 / 5.18 | 14.11 / 7.86 / 3.13 / 3.97 (0.7, 2.0) | 19.57 / 11.70 / 4.79 / 5.98 |
+| B longer + head parts (2026-10-21) + grapheme 8-gram | | | 18.65 / 11.32 / 4.15 / 5.17 | 13.89 / 7.87 / 3.15 / 3.98 (0.7, 1.0) | 19.38 / 11.86 / 4.89 / 6.05 |
 
 Seen-sentence subset + KenLM (9,352): A 10.01 / 5.61 / 2.13 / 2.70, C 9.85 / 5.51 / 2.09 / 2.65, B 10.66 / 5.18 / 2.01 / 2.61.
 B's KenLM grid best was β = 2.0 (edge); extended once (α 0.2/0.35/0.5 × β 2/3/4): β 3 and 4 raise dev WER, so 2.0 stays.
@@ -399,3 +405,52 @@ compare_graph_glm8_vs_tr{,2}_test{,_seen,_unseen}.txt, compare_gemma_lm_vs_graph
 - Honest headline: **11.77 WER overall but only because 59% of test sentences are in the training transcripts**; for
   new sentences the best decoder is still B + si_graph8 (unseen 19.23). A deployment that hears prompts from the
   OpenSLR scripts would benefit; general Sinhala speech would not.
+
+### A longer, B longer, B longer + head parts (2026-10-21; GRAPHEME_PLAN §16, docs/MOLAB.md; reference/grapheme/training/{v6x_top8_long,gr_v6x_top8_long,gr_v6x_top8_long_parts}/)
+
+All three: +6,000 steps on molab from the v6x_top8 checkpoint, a fresh cosine schedule from 5e-5, v6 + SLR-52, top 8.
+`_parts` = `--head-parts` (shared output rows for base / vowel sign / ං ඃ, starting at zero). Decoded on Modal with each
+system's own LM: A longer with the word 4-gram (default grid), B longer and B longer + head parts with si_graph8
+(`--lm-kind grapheme`, α {0.3, 0.5, 0.7} × β {0.5, 1, 2}). All grids ran on the full 2,000 dev2k utterances. A's
+original grid used only 1,000.
+
+Dev2k picks: A longer α 0.5, β 1.0 (WER 16.13, hyp/ref 0.998). B longer α 0.7, β 2.0 (16.10, hyp/ref 1.010; **both on
+grid edges**). B longer + head parts α 0.7, β 1.0 (16.00, hyp/ref 0.993; α on an edge). At B's earlier pick (α 0.5, β 1.0),
+dev WER is 16.71 for B and 16.20 for B longer.
+
+| v6 test + LM | all WER / WER_seg / CER / GER | seen (9,352) WER / CER | unseen (6,508) WER / WER_seg / CER / GER | WER openslr / linga / youtube / bizbrains |
+|---|---|---|---|---|
+| A + word 4-gram | 14.72 / 8.95 / 3.68 / 4.61 | 10.01 / 2.13 | 20.57 / 13.10 / 5.59 / 6.94 | 13.51 / 21.20 / 30.46 / 35.55 |
+| A longer + word 4-gram | 14.26 / 8.67 / 3.61 / 4.52 | 9.13 / 1.91 | 20.62 / 13.20 / 5.69 / 7.07 | 12.97 / 20.16 / 30.79 / 36.77 |
+| B + si_graph8 | 14.26 / 8.05 / 3.20 / 4.06 | 10.25 / 1.90 | **19.23** / **11.70** / 4.81 / **5.98** | 13.09 / 18.59 / 29.14 / 34.92 |
+| B longer + si_graph8 | 14.11 / **7.86** / **3.13** / **3.97** | 9.71 / 1.78 | 19.57 / **11.70** / **4.79** / **5.98** | 12.96 / 19.90 / **28.15** / **34.54** |
+| B longer + head parts + si_graph8 | **13.89** / 7.87 / 3.15 / 3.98 | **9.46** / **1.74** | 19.38 / 11.86 / 4.89 / 6.05 | **12.71** / **17.28** / **28.15** / 35.72 |
+
+Greedy (test, WER / WER_seg / CER / GER; seen / unseen WER): A 19.27 / 13.47 / 4.91 / 6.22 (15.13 / 24.41) → longer
+18.38 / 12.78 / 4.67 / 5.92 (13.72 / 24.16). B 19.58 / 11.71 / 4.32 / 5.40 (15.86 / 24.19) → longer 18.70 / 11.36 /
+4.15 / 5.18 (14.68 / 23.70), + head parts 18.65 / 11.32 / 4.15 / 5.17 (14.58 / 23.70).
+
+Findings (rescore.py: reference/grapheme/analysis/rescore_long_test.json; compare_errors.py:
+reference/grapheme/analysis/compare_{graph_glm8_vs_long_glm8,graph_long_glm8_vs_long_parts_glm8,
+gemma_long_lm_vs_graph_long_glm8,gemma_lm_vs_gemma_long_lm}_test.txt):
+- **Longer training helps A and B equally greedy (−0.89 / −0.88 WER), and mostly on seen sentences.** Greedy seen WER
+  drops 1.2–1.4, unseen only 0.25 (A) and 0.49 (B). A's flat dev CER at the end of v6x_top8 did not mean it had
+  converged on test. With the LM, A longer gains 0.46 WER overall, but all of it is seen (10.01 → 9.13). Unseen stays
+  the same (20.57 → 20.62).
+- **B longer + si_graph8 is better overall and on seen sentences. Unseen WER and linga WER (86 utts) get worse.** Word errors 9,268 → 8,762, spacing-only errors
+  3,441 → 3,112, missed words 233 → 184. Inserted words rise 1,474 → 1,865 (runaway utts 11 → 14), so
+  WER = (8,762 + 1,865) / 75,338 = 14.11 gains only 0.15. This is the same failure mode as dual: the dev pick is the
+  β-edge point (β 2.0, hyp/ref 1.010), and the extra words cost more on test than on dev. Unseen WER_seg (11.70) and
+  CER (4.79) match or beat B's, so unseen WER 19.23 → 19.57 is boundaries and insertions, not spelling.
+- **Head parts ≈ no effect.** Greedy, parts and flat are within 0.05 on every metric. With the LM, parts leads flat by
+  0.22 WER (13.89, best WER of any system without the in-domain LM). That lead comes from its dev pick of β 1.0 instead
+  of 2.0: inserted words 1,331 vs 1,865, but word errors 9,133 vs 8,762 and spacing errors 3,436 vs 3,112. Its WER_seg
+  and CER are not better than flat.
+- **B longer vs A longer (same steps, each with its own LM): B is ahead on everything.** WER 14.11 vs 14.26, WER_seg
+  7.86 vs 8.67, CER 3.13 vs 3.61, unseen WER 19.57 vs 20.62. Word errors 8,762 vs 9,146 (fewer one_letter, near_miss,
+  wrong_word, missed_word and english errors), but 1,865 vs 1,597 inserted words and more spacing errors (3,112 vs 2,850).
+  Word boundaries are still B's weak point.
+- Next if continuing (CPU only, ~$0.3 each): decode B longer (flat) at α 0.7, β 1.0. Dev is 16.13, against 16.10 at
+  the pick, with hyp/ref 0.994. That gives a like-for-like comparison with parts and avoids the β-edge insertions. Or
+  use the one allowed grid extension around α 0.7–1.0 × β 1–3 with a hyp/ref ≤ 1.00 constraint. The best general
+  (unseen) decoder is still B + si_graph8 (19.23).

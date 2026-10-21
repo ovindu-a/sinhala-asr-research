@@ -12,8 +12,9 @@ budget: NOTES.md, "Grapheme-level units". Checkpoints stay on the `sinhala-asr-r
 | `training/gr_v6x_top8/eval_lm_test_glm8.json` | B + grapheme 8-gram (`--lm-kind grapheme`), α × β grid on all 2,000 dev2k + test; picked α 0.5, β 1.0 (2026-10-20) |
 | `training/gr_v6x_top8/eval_lm_test_dual{,2}.json` | B + word 4-gram + grapheme 8-gram (`--lm-kind dual`), grid on all 2,000 dev2k + test; `_dual2` = edge extension; picked α 0.2, β 1.0, gα 0.3, gβ 1.0 (2026-10-20) |
 | `training/gr_v6x_top8/eval_lm_test_tr{,2}.json` | B + si_graph8 + in-domain tr_graph8 (training transcripts), word LM off; `_tr2` = edge extension, dev pick gα 0.2, gβ 1.5, g2α 0.7 (2026-10-20). Read seen/unseen: analysis/rescore_tr_test.json |
+| `training/{v6x_top8_long,gr_v6x_top8_long,gr_v6x_top8_long_parts}/` | §16 runs (+6,000 steps on molab, 2026-10-21): greedy `eval_ss_v6_test.json`; A longer + word 4-gram `eval_lm_test.json` (α 0.5, β 1.0); B longer / + head parts + si_graph8 `eval_lm_test_glm8.json` (α 0.7, β 2.0 / α 0.7, β 1.0). Seen/unseen: analysis/rescore_long_test.json |
 | `units/` | grapheme alphabet (`graphemes.json`), units.json for B and C, Phase 2 reports, SentencePiece vocab, corpus stats |
-| `hyps/*.hyps.jsonl.gz` | test hypotheses: C greedy / + KenLM, B greedy / + KenLM β 2 (`lm`) / β 1 (`lm_b1`) / + grapheme 8-gram (`glm8`) / + both LMs (`dual`) / + in-domain grapheme LM (`tr`, `tr2`) |
+| `hyps/*.hyps.jsonl.gz` | test hypotheses: C greedy / + KenLM, B greedy / + KenLM β 2 (`lm`) / β 1 (`lm_b1`) / + grapheme 8-gram (`glm8`) / + both LMs (`dual`) / + in-domain grapheme LM (`tr`, `tr2`); §16: `v6x_top8_long` greedy / + word LM (`lm`), `gr_v6x_top8_long{,_parts}` greedy / + grapheme 8-gram (`glm8`) |
 | `analysis/` | `rescore.py` (all metrics, per source, seen/unseen) and `compare_errors.py` outputs |
 
 Unpack the hypotheses next to the baselines: `for f in reference/grapheme/hyps/*.gz; do gunzip -c $f > runs/$(basename $f .gz); done`
@@ -23,3 +24,5 @@ B graphemes (β 1) 14.78 / 8.33 / 3.41 / 4.29.
 B + grapheme 8-gram (α 0.5, β 1.0; 2026-10-20): 14.26 / 8.05 / 3.20 / 4.06.
 B + word 4-gram + grapheme 8-gram (α 0.2, β 1.0, gα 0.3, gβ 1.0): 14.59 / 7.90 / 3.23 / 4.10.
 B + si_graph8 + tr_graph8 (dev pick, `_tr2`): 11.77 / 7.18 / 2.88 / 3.59 overall, but seen 5.08 / unseen 20.09 WER (si_graph8 alone: 10.25 / 19.23).
+Longer runs (§16, 2026-10-21): A longer + word 4-gram 14.26 / 8.67 / 3.61 / 4.52; B longer + grapheme 8-gram 14.11 / 7.86 / 3.13 / 3.97;
+B longer + head parts + grapheme 8-gram 13.89 / 7.87 / 3.15 / 3.98 (unseen WER 20.62 / 19.57 / 19.38; B + si_graph8 19.23).
